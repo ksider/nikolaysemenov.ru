@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>дезигн</title>
+    <meta name="description" content="My template">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body class="">
+
+<div class="wrap">
+
+<section>
+    <div class="about">
+        <div class="signe">
+            <a href="http://nikolaysemenov.ru">Николай Семенов</a>
+            <div class="p"><a href="mailto:info@iam.ras.ru">info@iam.ras.ru</a></div>
+        </div>
+    </div> 	 	 
+</section>
+<section>
+    <div class="txt">
+        <p><span id="due"></span>&nbsp;года разрабатываю и поддерживаю сайты института. За это время с нуля сделал <a href="https://iam.ras.ru">главный сайт</a>, переделал <a href="http://mkmk.ras.ru">сайт журнала</a>, перевел на CMS, добавил импорт из елайбрари, поиск и английский вариант. Для проводимых в Институте конференций разработал <a href="https://iam.ras.ru/conferences">раздел</a> с регистрацией, автоматической обработкой оплаты и созданием программки конференции, которая импортируется в RTF. Для каждого участника сделана персональная страничка, а для организаторов раздел управления и страница создания бейджиков. Для аспирантов разработал <a href="https://iam.ras.ru/dls">цифровое портфолио</a>.</p>
+    </div>
+</section>
+
+</div>
+
+<script>
+   var st = 2016;
+   var cur = new Date().getFullYear(); 
+    d = cur - st;
+    console.log(d);
+     var due = document.getElementById('due');
+    due.textContent = d;
+</script>
+</body>
+</html>

@@ -58,7 +58,6 @@ $(document).ready(function() {
     });
 
 
-
     $('.mark_submit').click(function() {
         inlineTemplate();
         ganerate();

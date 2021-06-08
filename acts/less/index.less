@@ -1,0 +1,63 @@
+// out: ../style.css
+
+@import 'lib/index.less';
+
+
+
+@wid:210mm;
+@hig:297mm;
+
+.page {
+    position: relative;
+    font-size: 14px;
+   // font-family: 'PT Sans';
+    font-family: 'Times New Roman';
+    background-color: #fff;
+    overflow: hidden;
+
+   width: @wid;
+   max-height: @hig;    
+   padding: 20mm 20mm 20mm 20mm;  
+    
+   border: 1px dashed #000;
+    
+table {
+       width: 147mm;
+       td {
+           padding: 0.7mm;
+           //  border: 1px solid #ddd;
+           p {
+               margin: 0;
+               padding: 0;
+           }
+           span {
+               font-size: 0.8em;
+               padding: 0;
+               // padding-right: 0.5em;
+           }
+       }
+   }
+    
+    .signe {
+        position: relative;
+        width: 20mm;height: 15mm;
+        &:before {
+            position: absolute;
+            top: -25mm;bottom: 0;right: 10mm;
+            width: 50mm;height: 50mm;
+            content: '';
+            .bgc;
+            background-image: url(s.png);
+        }
+    }
+}
+
+    @media only print {
+            html, body {
+                background-color: #fff;
+            }
+        // .a4 { page-break-before: always;}
+            .page { 
+                page-break-before: always;
+                }
+        }

@@ -1396,6 +1396,13 @@ th {
 .wrap.margined {
   margin: 2em auto;
 }
+.wrap #switch-lang {
+  position: fixed;
+  top: 2em;
+  right: 2em;
+  font-size: 2em;
+  letter-spacing: 0.2em;
+}
 .frontpage.blog .header {
   display: -webkit-box;
   display: flex;
@@ -1428,57 +1435,9 @@ th {
 .frontpage.blog .header .fp_resume {
   font-size: 2em;
 }
-.frontpage.blog .header .fp_resume a.hh,
-.frontpage.blog .header .fp_resume a.in {
-  position: relative;
-  color: #fff;
+.frontpage.blog .header .fp_resume a {
+  color: #f1c40f;
   text-decoration: none;
-  display: inline-block;
-  display: -webkit-inline-box;
-  display: inline-flex;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
-  width: 1em;
-  height: 1em;
-  vertical-align: middle;
-}
-.frontpage.blog .header .fp_resume a.hh:after,
-.frontpage.blog .header .fp_resume a.in:after {
-  content: ' ';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-}
-.frontpage.blog .header .fp_resume a.hh:after,
-.frontpage.blog .header .fp_resume a.in:after {
-  background-color: #f00;
-  border-radius: 50%;
-  opacity: 0.5;
-  color: #fff;
-}
-.frontpage.blog .header .fp_resume a.hh:before,
-.frontpage.blog .header .fp_resume a.in:before {
-  content: 'hh';
-  font-size: 0.5em;
-  z-index: 2;
-}
-.frontpage.blog .header .fp_resume a.in:after {
-  background-color: #0077b5;
-  border-radius: 6px;
-}
-.frontpage.blog .header .fp_resume a.in:before {
-  content: 'in';
-}
-.frontpage.blog .header .fp_resume a.hh:after {
-  background-color: #e74c3c;
-  border-radius: 50%;
-}
-.frontpage.blog .header .fp_resume a.hh:before {
-  content: 'hh';
 }
 .frontpage.blog .resume p,
 .frontpage.blog .info p {
@@ -1593,6 +1552,9 @@ th {
   line-height: 1.3;
   position: relative;
   z-index: 2;
+}
+.frontpage.blog .items .item .item_titel .big_titel span {
+  display: block;
 }
 .frontpage.blog .items .item .item_titel .link_titel {
   margin-top: -1em;
@@ -1727,9 +1689,6 @@ th {
   font-size: 2em;
   color: #f1f1f1;
   text-align: center;
-}
-.frontpage.blog .berezka .berezka_description p span {
-  color: #666;
 }
 .frontpage.blog .er {
   background-size: cover;

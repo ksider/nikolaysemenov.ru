@@ -1,0 +1,58 @@
+﻿[
+    {
+        "name": "name[ru]",
+        "value": "Николай Семенов"
+    },
+    {
+        "name": "name[en]",
+        "value": "Nikolay Semenov"
+    },
+    {
+        "name": "spec[ru]",
+        "value": "Инженер, материаловед"
+    },
+    {
+        "name": "spec[en]",
+        "value": "Engineer, materials scientist"
+    },
+    {
+        "name": "resumelink[ru]",
+        "value": "<p>Резюме в <a href=\"https://ru.linkedin.com/in/nikolay-semenov-ab5b3957\" class=\"in\"></a> и <a href=\"https://hh.ru/resume/05deef85ff044a1fed0039ed1f717575554b49\" class=\"hh\"></a> </p>"
+    },
+    {
+        "name": "resumelink[en]",
+        "value": "<p>Resumes at <a href=\"https://ru.linkedin.com/in/nikolay-semenov-ab5b3957\" class=\"in\"></a> and <a href=\"https://hh.ru/resume/05deef85ff044a1fed0039ed1f717575554b49\" class=\"hh\"></a> </p>"
+    },
+    {
+        "name": "shorts[ru]",
+        "value": "<span id=\"due\"></span>&nbsp;лет разрабатываю и&nbsp;изучаю полимерные композиты. Знаю ABS, PVC, SEBS, NR, SBR, PI, PA, ASA, PP, HIPS, PE&nbsp;и&nbsp;много других аббревиатур. Знаком с&nbsp;процессами смешения, переработки и&nbsp;контроля качества."
+    },
+    {
+        "name": "shorts[en]",
+        "value": "<span id=\"due\"></span>&nbsp;years developing and&nbsp;studying polymer composites. I know ABS, PVC, SEBS, NR, SBR, PI, PA, ASA, PP, HIPS, PE&nbsp;and&nbsp;many other acronyms. Familiar with&nbsp;mixing, processing, and&nbsp;quality control processes."
+    },
+    {
+        "name": "science[ru]",
+        "value": "Занимаюсь наукой — мой профиль на <i class=\"icon-researchgate\"></i> <a href=\"https://www.researchgate.net/profile/Nikolay_Semenov4\" class=\"rg \">ресечгейт</a> и <i class=\"icon-googlescholar\"></i> <a href=\"https://scholar.google.ru/citations?user=QD5YQOMAAAAJ\" class=\"google \">Гугл академия</a>."
+    },
+    {
+        "name": "science[en]",
+        "value": ""
+    },
+    {
+        "name": "woodcup[ru]",
+        "value": "<div class=\"berezka_plashka\"><span>berёzka</span></div>\r\n<div class=\"berezka_description\"><p>Биоразлагаемая посуда</p></div>"
+    },
+    {
+        "name": "woodcup[en]",
+        "value": "<div class=\"berezka_plashka\"><span>berёzka</span></div>\r\n <div class=\"berezka_description\"><p>Biodegradable tableware</p></div>"
+    },
+    {
+        "name": "wpc[ru]",
+        "value": "<span>Древесно</span><br><span>полимерный</span><br><span>композит</span>"
+    },
+    {
+        "name": "wpc[en]",
+        "value": "<span>Wood</span><br><span>polymer</span><br> <span>composite</span>"
+    }
+]

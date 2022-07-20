@@ -1,9 +1,16 @@
+$(document).ready(function() {
 
-$(function () {
-  ///// Language Switching (2 languages: English and Chinese). /////
-
-  // Initially disable language switching button.
-  $('#switch-lang').css({'pointer-events':'none',
+	$('.image-popup').magnificPopup({
+		type: 'image',
+		closeOnContentClick: true,
+		mainClass: 'mfp-img-mobile',
+		image: {
+			verticalFit: true
+		}	
+	});
+ 
+ 
+$('#switch-lang').css({'pointer-events':'none',
    'cursor':'default'}).attr('disabled','disabled');
 
   function langButtonListen() {
@@ -38,8 +45,8 @@ $(function () {
       $('[lang="ru"]').hide();
       $.cookie('lang', 'en', { expires: 7 });
       langButtonListen();
-    
   }
+
+    
+    
 });
-
-

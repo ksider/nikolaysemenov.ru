@@ -229,7 +229,7 @@ function getlist() {
 
 
 
-var tpl_raw = '<div class="checkbox"><label for="comp_{{id}}"><input type="checkbox" value="{{data}}" id="comp_{{id}}" data-pid="{{amount}}" class="raw_check" {{checked}} /> {{name}}({{amount}})</label></div>';
+var tpl_raw = '<div class="checkbox"><label for="comp_{{id}}"><input type="checkbox" value="{{data}}" id="comp_{{id}}" data-pid="{{amount}}" class="raw_check" {{checked}} /> {{name}}</label></div>';
 
 
 function composite(data, amount) {

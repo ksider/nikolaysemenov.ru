@@ -76,6 +76,7 @@ $(document).ready(function() {
         return false;
     });
 
+    
     // Размера бейджа
     bsize();
     $(document).on('change', '.checksize', function() {

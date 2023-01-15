@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-    
     a = composite(raw, 0);
     ganerate();
 
@@ -14,7 +13,6 @@ $(document).ready(function () {
       function () {
        reciept(); 
     });
-
 
 });
 

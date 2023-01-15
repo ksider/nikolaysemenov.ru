@@ -193,23 +193,6 @@ function addRawtoLS(id) {
     return list;
 }
 
-/*
-
-{
-    "Кора" : count,
-}
-
-{
-    "Кора": "100",
-    "Крахмал": "10",
-    "Альгинат натрия": "10",
-    "Глицерин": "10",
-    "Лимонная кислота": "10",
-    "Карбонат кальция": "10",
-    "Тальк": "10"
-}
-
-*/
 
 function addSelect(id) {
     var getLs = getLS('count');
@@ -224,7 +207,6 @@ function addSelect(id) {
 
     return list;
 }
-
 
 function getlist() {
     delAll();
@@ -251,7 +233,7 @@ var tpl_raw = '<div class="checkbox"><label for="comp_{{id}}"><input type="check
 
 
 function composite(data, amount) {
-    count_arr = getLS('count');
+    count_arr = getLS('count')  || Object();
     
     $.each(data, function (key, val) {
         checked = 'none';
@@ -370,8 +352,3 @@ var weight = 0;
     addSelect(SaveCount);   
     
 }
-
-/*
-    <tr><td></td><td></td><td></td></tr>
-*/
-

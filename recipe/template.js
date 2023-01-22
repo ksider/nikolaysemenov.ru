@@ -195,15 +195,15 @@ function addRawtoLS(id) {
 
 
 function addSelect(id) {
-    var getLs = getLS('count');
-    list = getLs || Object();
+   // var getLs = getLS('count')getLs ||;
+    list =  Object();
     
     newop = $.extend(list, id);
     
     un = JSON.stringify(newop);
     addDataList('count', un);
     
-   console.log(un);
+    console.log(un);
 
     return list;
 }
@@ -263,7 +263,10 @@ function composite(data, amount) {
 }
 
 
-var tpl_recipe = '<div class="row makeArray"  id="f_{{amount}}" ><div class="col-md-9"><label>{{name}}</label></div><div class="col-md-3"><input type="hidden" name="data" class="data" value="{{data}}"> <input type="text" name="count" class="form-control count" value="{{value}}"></div></div>';
+// var tpl_recipe = '<div   id="f_{{amount}}" ><div class="col-md-9"><label>{{name}}</label></div><div class="col-md-3"><input type="hidden" name="data" class="data" value="{{data}}"> <input type="text" name="count" class="form-control count" value="{{value}}"></div></div>';
+
+var tpl_recipe = '<tr id="f_{{amount}}" class="makeArray"><td>{{name}}<input type="hidden" name="data" class="data" value="{{data}}"></td><td><input type="text" name="count" class="form-control count" value="{{value}}"></td><td class="percent"> %</td></tr>';
+
 
 function ganerate() {
 
@@ -283,7 +286,7 @@ function ganerate() {
         
         if (count_arr[ma]) {
            counts = count_arr[ma]; 
-           console.log(counts);
+         //  console.log(counts);
         } else {
             counts = 1;
         }
@@ -305,12 +308,13 @@ function ganerate() {
     reciept();
 } 
 
+
 function reciept() {
-$('#fin_recip').html(' ');
-get_data = getLS('mix');
-new_array = {};    
-SaveCount = {};    
-var weight = 0;
+    $('#fin_recip').html(' ');
+    get_data = getLS('mix');
+    new_array = {};    
+    SaveCount = {};    
+    var weight = 0;
     
     $.each(get_data, function (key, val) {
         
@@ -335,7 +339,7 @@ var weight = 0;
         }
         
         weight = +weight + +inner;
-        console.log(weight);
+     //   console.log(weight);
        });
    
     });
@@ -349,6 +353,27 @@ var weight = 0;
       $('#fin_recip').append(Tr_row);
   });
     
+    per();
     addSelect(SaveCount);   
+    
+}
+
+function per() {
+     allweight = 0;
+    
+     $('.makeArray').each(function () {
+        var that = $(this);
+        cnt = that.find('.count').val();
+        allweight = +allweight + +cnt;
+     }); 
+    
+    console.log(allweight);
+    
+    $('.makeArray').each(function () {
+        var that = $(this);
+        cnt = that.find('.count').val();
+        perc = (+cnt * 100 / +allweight).toFixed(2);
+        that.find('.percent').html(perc);
+     }); 
     
 }

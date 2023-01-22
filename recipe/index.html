@@ -15,12 +15,10 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
-            <form role="form" id="">
+            <form role="form" id="" class="side_list">
                 <div class="form-group">
                     <div class="form-group composition" id="composite"></div>
                 </div>
-                <hr>
-                <div class="form-group raw_materials" id="raw"></div>
             </form>
         </div>
         <div class="col-md-5">
@@ -29,22 +27,26 @@
                 <div class="form-group">
                     <div class="form-group">
 
-                        <div class="container" id="recipe"></div>
+ <table class="table">
+  <thead>
+    <tr>
+      <th style="width: 60%;">Сырье</th>
+      <th style="width: 20%;">м.ч.</th>
+      <th style="width: 20%;">%</th>
+    </tr>
+  </thead>
+  <tbody id="recipe">
 
-                    </div>
+  </tbody>
+</table>
+                      </div>
                 </div>
             </form>
-
-            <hr>
-            <div id="output_c" class=""></div>
-
-            <hr>
-            <code id="gen"></code>
 
         </div>
         <div class="col-md-4">
            
-<table class="table">
+<table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">Сырье</th>

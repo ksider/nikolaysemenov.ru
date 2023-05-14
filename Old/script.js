@@ -1,5 +1,8 @@
 
 $(function () {
+  ///// Language Switching (2 languages: English and Chinese). /////
+
+  // Initially disable language switching button.
   $('#switch-lang').css({'pointer-events':'none',
    'cursor':'default'}).attr('disabled','disabled');
 
@@ -10,7 +13,7 @@ $(function () {
       $('[lang="en"]').toggle();
       // Switch cookie stored language.
       if ($.cookie('lang') === 'en') {
-        $.cookie('lang', 'ru', { expires: 7 });
+        $.cookie('lang', 'zh', { expires: 7 });
       } else {
         $.cookie('lang', 'en', { expires: 7 });
       }

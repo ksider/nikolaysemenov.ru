@@ -1,5 +1,10 @@
 // main: main.less
 
+// --xs-min: 30;
+// --sm-min: 48;
+// --md-min: 64;
+// --lg-min: 75;
+
 .block {
   width: 80%;
   max-width: 1144px;
@@ -204,13 +209,14 @@
                     width: 67%;
                 }
 
-                .max(48em, {
+                .max(64em, {
                     flex-wrap: wrap;
                     &.col1 {
                         width: 100%;
                     }
                     &.col2 {
                         width: 100%;
+                        min-height: 66vh;
                     }
                 });   
             }
@@ -347,6 +353,7 @@
          .foolline {
                 width: 100%;
                 background-color: #0043CE;
+                overflow: hidden; 
                 .inner;
   
                 .woodlogo { 
@@ -364,6 +371,10 @@
                 }
                 .wood_video {
                     padding: 2em;
+
+                    .max(64em, {
+                        padding: 0;
+                    }); 
                 }
             }
        }

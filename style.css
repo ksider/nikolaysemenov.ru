@@ -758,7 +758,7 @@ code {
   flex: 1 2 67%;
   width: 67%;
 }
-@media (max-width: 47em) {
+@media (max-width: 63em) {
   .main-block .main_right .portfolio_block .column,
   .main-block .main_right .portfolio_block .foolline {
     flex-wrap: wrap;
@@ -770,6 +770,7 @@ code {
   .main-block .main_right .portfolio_block .column.col2,
   .main-block .main_right .portfolio_block .foolline.col2 {
     width: 100%;
+    min-height: 66vh;
   }
 }
 .main-block .main_right .portfolio_block .block.video {
@@ -918,6 +919,7 @@ code {
 }
 .main-block .main_right .portfolio_block .foolline {
   background-color: #0043CE;
+  overflow: hidden;
   width: 100%;
   padding: 15px;
 }
@@ -934,6 +936,11 @@ code {
 }
 .main-block .main_right .portfolio_block .foolline .wood_video {
   padding: 2em;
+}
+@media (max-width: 63em) {
+  .main-block .main_right .portfolio_block .foolline .wood_video {
+    padding: 0;
+  }
 }
 .main-block .main_right .teach_block {
   background-color: #F1C21B;

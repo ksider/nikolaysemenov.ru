@@ -14,7 +14,8 @@
 
 .inner {
     width: 100%;
-    padding: 15px;
+    padding: 35px;
+    .max(64em, {padding: 15px;});
 }
 
 .siderpadding {
@@ -170,8 +171,12 @@
             display: flex;
             align-items: flex-end;
             justify-content: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+
+            background-image: url(img/flow.svg);
             p {
-                color: #fff;
+                color: #ffffff;
                 font-size: 2.3em;
                 line-height: 1.2;
             }
@@ -250,6 +255,9 @@
                         opacity: 0.3;
                         background-color: #000;
                         z-index: 1;
+                        &:hover {
+                            opacity: 0.5;
+                        }
                     }
 
                     &.sub_videolinl {
@@ -297,7 +305,7 @@
               span {
                 position: relative;
                 z-index: 2;
-                font-size: 2em;
+                font-size: 1.6em;
               }
             }
 
@@ -384,6 +392,10 @@
          .inner;
          padding-top: 2em;
          position: relative;
+
+         .teach_card {
+            padding-bottom: 2em;
+         }
 
          .teach_titel {
             font-size: 2.2em;

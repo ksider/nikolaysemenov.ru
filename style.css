@@ -578,7 +578,12 @@ code {
 }
 .inner {
   width: 100%;
-  padding: 15px;
+  padding: 35px;
+}
+@media (max-width: 63em) {
+  .inner {
+    padding: 15px;
+  }
 }
 .siderpadding {
   padding: 2em;
@@ -714,13 +719,21 @@ code {
 .main-block .main_right .fist_block {
   min-height: 100vh;
   width: 100%;
-  padding: 15px;
+  padding: 35px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url(img/flow.svg);
+}
+@media (max-width: 63em) {
+  .main-block .main_right .fist_block {
+    padding: 15px;
+  }
 }
 .main-block .main_right .fist_block p {
-  color: #fff;
+  color: #ffffff;
   font-size: 2.3em;
   line-height: 1.2;
 }
@@ -742,10 +755,16 @@ code {
 .main-block .main_right .portfolio_block .column .block,
 .main-block .main_right .portfolio_block .foolline .block {
   width: 100%;
-  padding: 15px;
+  padding: 35px;
   display: flex;
   align-items: center;
   justify-content: start;
+}
+@media (max-width: 63em) {
+  .main-block .main_right .portfolio_block .column .block,
+  .main-block .main_right .portfolio_block .foolline .block {
+    padding: 15px;
+  }
 }
 .main-block .main_right .portfolio_block .column.col1,
 .main-block .main_right .portfolio_block .foolline.col1 {
@@ -810,6 +829,9 @@ code {
   background-color: #000;
   z-index: 1;
 }
+.main-block .main_right .portfolio_block .block.video a:after:hover {
+  opacity: 0.5;
+}
 .main-block .main_right .portfolio_block .block.video a.sub_videolinl {
   font-size: 1.3em;
   color: #F1C21B;
@@ -860,7 +882,7 @@ code {
 .main-block .main_right .portfolio_block .block.science span {
   position: relative;
   z-index: 2;
-  font-size: 2em;
+  font-size: 1.6em;
 }
 .main-block .main_right .portfolio_block .block.berezka {
   position: relative;
@@ -921,7 +943,12 @@ code {
   background-color: #0043CE;
   overflow: hidden;
   width: 100%;
-  padding: 15px;
+  padding: 35px;
+}
+@media (max-width: 63em) {
+  .main-block .main_right .portfolio_block .foolline {
+    padding: 15px;
+  }
 }
 .main-block .main_right .portfolio_block .foolline .woodlogo .big_titel {
   padding-bottom: 0.5em;
@@ -945,9 +972,17 @@ code {
 .main-block .main_right .teach_block {
   background-color: #F1C21B;
   width: 100%;
-  padding: 15px;
+  padding: 35px;
   padding-top: 2em;
   position: relative;
+}
+@media (max-width: 63em) {
+  .main-block .main_right .teach_block {
+    padding: 15px;
+  }
+}
+.main-block .main_right .teach_block .teach_card {
+  padding-bottom: 2em;
 }
 .main-block .main_right .teach_block .teach_titel {
   font-size: 2.2em;

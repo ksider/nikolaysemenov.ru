@@ -605,7 +605,7 @@ code {
   flex: 0 1 auto;
 }
 .main-block .main_left .fixed_wrap {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
@@ -737,23 +737,36 @@ code {
   font-size: 2.3em;
   line-height: 1.2;
 }
-.main-block .main_right .portfolio_block {
+@media (max-width: 47em) {
+  .main-block {
+    flex-wrap: wrap;
+  }
+  .main-block .main_left {
+    width: 100%;
+    flex: 1 0 auto;
+  }
+  .main-block .main_right {
+    width: 100%;
+    flex: 1 0 auto;
+  }
+}
+.portfolio .portfolio_block {
   min-height: 100vh;
   display: flex;
   align-items: stretch;
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.main-block .main_right .portfolio_block .column,
-.main-block .main_right .portfolio_block .foolline {
+.portfolio .portfolio_block .column,
+.portfolio .portfolio_block .foolline {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: space-between;
 }
-.main-block .main_right .portfolio_block .column .block,
-.main-block .main_right .portfolio_block .foolline .block {
+.portfolio .portfolio_block .column .block,
+.portfolio .portfolio_block .foolline .block {
   width: 100%;
   padding: 35px;
   display: flex;
@@ -761,43 +774,43 @@ code {
   justify-content: start;
 }
 @media (max-width: 63em) {
-  .main-block .main_right .portfolio_block .column .block,
-  .main-block .main_right .portfolio_block .foolline .block {
+  .portfolio .portfolio_block .column .block,
+  .portfolio .portfolio_block .foolline .block {
     padding: 15px;
   }
 }
-.main-block .main_right .portfolio_block .column.col1,
-.main-block .main_right .portfolio_block .foolline.col1 {
+.portfolio .portfolio_block .column.col1,
+.portfolio .portfolio_block .foolline.col1 {
   flex: 1 1 33%;
   width: 33%;
   background-color: #A7F0BA;
 }
-.main-block .main_right .portfolio_block .column.col2,
-.main-block .main_right .portfolio_block .foolline.col2 {
+.portfolio .portfolio_block .column.col2,
+.portfolio .portfolio_block .foolline.col2 {
   flex: 1 2 67%;
   width: 67%;
 }
 @media (max-width: 63em) {
-  .main-block .main_right .portfolio_block .column,
-  .main-block .main_right .portfolio_block .foolline {
+  .portfolio .portfolio_block .column,
+  .portfolio .portfolio_block .foolline {
     flex-wrap: wrap;
   }
-  .main-block .main_right .portfolio_block .column.col1,
-  .main-block .main_right .portfolio_block .foolline.col1 {
+  .portfolio .portfolio_block .column.col1,
+  .portfolio .portfolio_block .foolline.col1 {
     width: 100%;
   }
-  .main-block .main_right .portfolio_block .column.col2,
-  .main-block .main_right .portfolio_block .foolline.col2 {
+  .portfolio .portfolio_block .column.col2,
+  .portfolio .portfolio_block .foolline.col2 {
     width: 100%;
     min-height: 66vh;
   }
 }
-.main-block .main_right .portfolio_block .block.video {
+.portfolio .portfolio_block .block.video {
   width: 100%;
   padding-bottom: 66%;
   position: relative;
 }
-.main-block .main_right .portfolio_block .block.video a {
+.portfolio .portfolio_block .block.video a {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -814,11 +827,11 @@ code {
   text-decoration: none;
   font-size: 2em;
 }
-.main-block .main_right .portfolio_block .block.video a i {
+.portfolio .portfolio_block .block.video a i {
   position: relative;
   z-index: 2;
 }
-.main-block .main_right .portfolio_block .block.video a:after {
+.portfolio .portfolio_block .block.video a:after {
   content: '';
   position: absolute;
   top: 0;
@@ -829,10 +842,10 @@ code {
   background-color: #000;
   z-index: 1;
 }
-.main-block .main_right .portfolio_block .block.video a:after:hover {
+.portfolio .portfolio_block .block.video a:after:hover {
   opacity: 0.5;
 }
-.main-block .main_right .portfolio_block .block.video a.sub_videolinl {
+.portfolio .portfolio_block .block.video a.sub_videolinl {
   font-size: 1.3em;
   color: #F1C21B;
   align-self: flex-end;
@@ -841,16 +854,16 @@ code {
   z-index: 3;
   padding: 6px;
 }
-.main-block .main_right .portfolio_block .block.video a.er {
+.portfolio .portfolio_block .block.video a.er {
   background-image: url('img/ervideo.png');
 }
-.main-block .main_right .portfolio_block .block.video a.wood {
+.portfolio .portfolio_block .block.video a.wood {
   background-image: url('img/fire.png');
 }
-.main-block .main_right .portfolio_block .block.bookblock {
+.portfolio .portfolio_block .block.bookblock {
   background-color: #000;
 }
-.main-block .main_right .portfolio_block .block.bookblock .book {
+.portfolio .portfolio_block .block.bookblock .book {
   display: block;
   text-decoration: none;
   width: 100%;
@@ -860,13 +873,13 @@ code {
   background-position: 50% 50%;
   background-image: url('img/book.png');
 }
-.main-block .main_right .portfolio_block .block.science {
+.portfolio .portfolio_block .block.science {
   background-color: #A7F0BA;
 }
-.main-block .main_right .portfolio_block .block.science .txt {
+.portfolio .portfolio_block .block.science .txt {
   position: relative;
 }
-.main-block .main_right .portfolio_block .block.science .txt:before {
+.portfolio .portfolio_block .block.science .txt:before {
   content: ' ';
   position: absolute;
   top: 0;
@@ -879,18 +892,18 @@ code {
   background-image: url('img/iamlogo.png');
   z-index: 1;
 }
-.main-block .main_right .portfolio_block .block.science span {
+.portfolio .portfolio_block .block.science span {
   position: relative;
   z-index: 2;
   font-size: 1.6em;
 }
-.main-block .main_right .portfolio_block .block.berezka {
+.portfolio .portfolio_block .block.berezka {
   position: relative;
   flex: 2 1 auto;
   background-color: #FF832B;
   justify-content: center;
 }
-.main-block .main_right .portfolio_block .block.berezka a.blink {
+.portfolio .portfolio_block .block.berezka a.blink {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -899,7 +912,7 @@ code {
   text-decoration: none;
   z-index: 10;
 }
-.main-block .main_right .portfolio_block .block.berezka:before {
+.portfolio .portfolio_block .block.berezka:before {
   content: ' ';
   position: absolute;
   top: 0;
@@ -912,7 +925,7 @@ code {
   background-image: url('img/bergrad.png');
   z-index: 1;
 }
-.main-block .main_right .portfolio_block .block.berezka:after {
+.portfolio .portfolio_block .block.berezka:after {
   content: ' ';
   position: absolute;
   top: 0;
@@ -926,50 +939,50 @@ code {
   background-image: url('img/jcycler.png');
   z-index: 2;
 }
-.main-block .main_right .portfolio_block .block.berezka .berezka_txt {
+.portfolio .portfolio_block .block.berezka .berezka_txt {
   font-size: 2.2em;
   position: relative;
   z-index: 3;
   color: #fff;
   font-family: 'PT Serif', Georgia, 'Times New Roman', Times, serif;
 }
-.main-block .main_right .portfolio_block .block.berezka .berezka_txt .b_titel {
+.portfolio .portfolio_block .block.berezka .berezka_txt .b_titel {
   letter-spacing: 0.4em;
 }
-.main-block .main_right .portfolio_block .block.berezka .berezka_txt .b_moto {
+.portfolio .portfolio_block .block.berezka .berezka_txt .b_moto {
   font-size: 0.7em;
 }
-.main-block .main_right .portfolio_block .foolline {
+.portfolio .portfolio_block .foolline {
   background-color: #0043CE;
   overflow: hidden;
   width: 100%;
   padding: 35px;
 }
 @media (max-width: 63em) {
-  .main-block .main_right .portfolio_block .foolline {
+  .portfolio .portfolio_block .foolline {
     padding: 15px;
   }
 }
-.main-block .main_right .portfolio_block .foolline .woodlogo .big_titel {
+.portfolio .portfolio_block .foolline .woodlogo .big_titel {
   padding-bottom: 0.5em;
 }
-.main-block .main_right .portfolio_block .foolline .woodlogo .big_titel span {
+.portfolio .portfolio_block .foolline .woodlogo .big_titel span {
   color: #FFF;
   font-size: 2.2em;
   line-height: 1;
 }
-.main-block .main_right .portfolio_block .foolline .woodlogo .wood_moto {
+.portfolio .portfolio_block .foolline .woodlogo .wood_moto {
   color: #fff;
 }
-.main-block .main_right .portfolio_block .foolline .wood_video {
+.portfolio .portfolio_block .foolline .wood_video {
   padding: 2em;
 }
 @media (max-width: 63em) {
-  .main-block .main_right .portfolio_block .foolline .wood_video {
+  .portfolio .portfolio_block .foolline .wood_video {
     padding: 0;
   }
 }
-.main-block .main_right .teach_block {
+.portfolio .teach_block {
   background-color: #F1C21B;
   width: 100%;
   padding: 35px;
@@ -977,39 +990,39 @@ code {
   position: relative;
 }
 @media (max-width: 63em) {
-  .main-block .main_right .teach_block {
+  .portfolio .teach_block {
     padding: 15px;
   }
 }
-.main-block .main_right .teach_block .teach_card {
+.portfolio .teach_block .teach_card {
   padding-bottom: 2em;
 }
-.main-block .main_right .teach_block .teach_titel {
+.portfolio .teach_block .teach_titel {
   font-size: 2.2em;
   color: #000;
   padding-bottom: 1em;
 }
-.main-block .main_right .teach_block .teach_list {
+.portfolio .teach_block .teach_list {
   padding-bottom: 2.2em;
 }
-.main-block .main_right .teach_block .teach_list .lectname {
+.portfolio .teach_block .teach_list .lectname {
   font-weight: bold;
   font-size: 1.2em;
 }
-.main-block .main_right .teach_block .teach_list .lectdescr {
+.portfolio .teach_block .teach_list .lectdescr {
   padding: 1.2em 0;
 }
-.main-block .main_right .teach_block .teach_list .lectdate {
+.portfolio .teach_block .teach_list .lectdate {
   font-size: 1em;
 }
-.main-block .main_right .teach_block .teach_list .supervising {
+.portfolio .teach_block .teach_list .supervising {
   position: relative;
 }
-.main-block .main_right .teach_block .teach_list .supervising p {
+.portfolio .teach_block .teach_list .supervising p {
   padding: 0;
   margin: 0;
 }
-.main-block .main_right .teach_block .teach_list .supervising:before {
+.portfolio .teach_block .teach_list .supervising:before {
   content: '';
   position: absolute;
   z-index: 10;
@@ -1023,13 +1036,13 @@ code {
   background-size: contain;
   background-image: url('img/scetch.png');
 }
-.main-block .main_right .last_photo {
+.portfolio .last_photo {
   position: relative;
 }
-.main-block .main_right .last_photo img {
+.portfolio .last_photo img {
   display: block;
 }
-.main-block .main_right .last_photo:after {
+.portfolio .last_photo:after {
   content: '';
   position: absolute;
   top: 0;
@@ -1043,16 +1056,17 @@ code {
   z-index: 1;
 }
 @media (max-width: 47em) {
-  .main-block {
-    flex-wrap: wrap;
-  }
-  .main-block .main_left {
+  .portfolio {
+    position: relative;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: flex-start;
     width: 100%;
-    flex: 1 0 auto;
+    min-height: 100vh;
   }
-  .main-block .main_right {
-    width: 100%;
-    flex: 1 0 auto;
+  .portfolio .portrait_block {
+    height: 70vh;
+    align-self: flex-end;
   }
 }
 .ovfh {

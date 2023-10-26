@@ -717,7 +717,7 @@ code {
   flex: 3 1 60%;
 }
 .main-block .main_right .fist_block {
-  min-height: 100vh;
+  min-height: 102vh;
   width: 100%;
   padding: 35px;
   display: flex;

@@ -64,7 +64,8 @@
                     </div>
                 </div>
                 <div class="portrait_block">
-                    <img src="img/LP.jpg" alt="">
+                    <img src="img/LP.jpg" alt="" id="mip">
+                    <!-- <img src="img/metwo.png" alt=""> -->
                 </div>
             </div>
         </div>
@@ -75,9 +76,7 @@
             </div>
 
 <div class="portfolio">
-
     <div class="portfolio_block">
-
             <div class="column col1">
                 <div class="block bookblock">
                     <a href="mono.pdf" class="book"></a>
@@ -89,7 +88,7 @@
                     <a href="https://www.youtube.com/watch?v=bEgNZA_mlrk&t=203s" class="ervideo er"><i class="icon-play1"></i></a>
                 </div>    
             </div>
-            
+         
             <div class="column col2">
                <div class="block berezka">
                 <a href="https://woodcup.ru" class="blink">&nbsp;</a>
@@ -100,7 +99,7 @@
                </div>
             </div>
             
-            <div class="foolline wpc">
+            <div class="foolline wpc" >
                 <div class="row middle-xs">
                     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
                         <div class="woodlogo">
@@ -187,8 +186,8 @@
                     
     </div>
                     
-    <div class="last_photo">
-        <img src="img/me.jpg" alt="" width="100%">
+    <div class="last_photo" id="scrollblock">
+        <img src="img/me.jpg" alt="" width="100%" id="teach">
     </div>        
 </div>
 
@@ -196,15 +195,26 @@
 </div>
 
 
+<script>
+// Получаем ссылки на элементы
+const teachBlock = document.getElementById('teach');
+const image = document.getElementById('mip');
 
-    <script>
-        var st = 2009;
-        var cur = new Date().getFullYear();
-        d = cur - st;
-        console.log(d);
-        var due = document.getElementById('due');
-        due.textContent = d;
-    </script>
+// Функция для обновления картинки при появлении блока на экране
+function updateImageOnIntersection(entries) {
+  if (entries[0].isIntersecting) {
+    image.src = 'img/metwo.png';
+  } else {
+    image.src = 'img/LP.jpg';
+  }
+}
+
+// Создаем экземпляр Intersection Observer
+const observer = new IntersectionObserver(updateImageOnIntersection);
+
+// Наблюдаем за блоком #teach
+observer.observe(teachBlock);
+</script>
 
     <!-- Yandex.Metrika counter -->   
     <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(16681432, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/16681432" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 

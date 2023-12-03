@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap" rel="stylesheet">
+    <style>
+        html {
+        font-family: serif;
+        font-size: 137.5%;
+        -webkit-font-smoothing: antialiased;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Noto Sans', sans-serif;
+        }
+
+        p {
+                line-height: 1.5rem;
+                margin-top: 1.5rem;
+                margin-bottom: 0;
+            }
+
+        #meme-container {
+            text-align: center;
+            margin-bottom: 20px;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        #meme-text {
+            font-size: 24px;
+            margin-bottom: 20px;
+
+        }
+
+        .emoji {
+            font-size: 24px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+    </style>
+ <script>
+    const emojis = [
+        "😂", "❤️", "😍", "👍", "😊", "🔥", "🙌", "💯", "👏", "🎉",
+        "😎", "🤔", "😘", "🤣", "👌", "🙏", "🔴", "🌟", "😁", "💪",
+        "😜", "💕", "😭", "🤗", "💖", "✨", "🎶", "😅", "😋", "👀",
+        "🚀", "🤩", "👉", "😏", "👊", "💥", "😱", "😃", "👇", "💔",
+        "🌹", "🌈", "🤷", "🤦", "🤑", "😇", "🤢", "💩", "🙈", "🙊",
+        "😴", "👅", "💦", "🍑", "🍕", "🍦", "🍻", "🎁", "🎈", "🎊",
+        "🎮", "🚗", "🏆", "🏅", "🏀", "🏝️", "🍾", "👑", "📷", "📚",
+        "🔑", "💼", "💻", "📱", "🎓", "🎤", "🏋️", "🍸", "🚲", "🎨",
+        "🚁", "⛵", "🍩", "🍔", "🌭", "🍟", "🍿", "🍷", "🍹", "🍺",
+        "🎸", "🎤", "🎭", "🎬", "📽️", "🎼", "🎵", "🍎", "🍌", "🍇",
+        "🍓", "🍒", "🍍", "🍈", "🍅", "🍋", "🥑", "🥕", "🥒", "🥔",
+        "🥖", "🥓", "🥞", "🧀", "🍕", "🍟", "🌭", "🍔", "🍟", "🍗",
+        "🍖", "🍤", "🍱", "🍣", "🍛", "🍜", "🍝", "🍠", "🍢", "🍤",
+        "🍥", "🍡", "🍦", "🍧", "🍨", "🍩", "🍪", "🎂", "🍰", "🧁",
+        "🍫", "🍬", "🍭", "🍮", "🍯", "🍰", "🍱", "🍲", "🍳", "🍴"
+    ];
+
+    function changeAllEmojis() {
+        const emojiElements = document.querySelectorAll(".emoji");
+
+        emojiElements.forEach((element, index) => {
+            const nextIndex = Math.floor(Math.random() * emojis.length);
+            element.textContent = emojis[nextIndex];
+        });
+    }
+
+    function changeEmoji(index) {
+        const emojiElement = document.getElementById(`emoji${index}`);
+        const nextIndex = Math.floor(Math.random() * emojis.length);
+        emojiElement.textContent = emojis[nextIndex];
+    }
+
+    function postToTwitter() {
+        const tweetText = document.getElementById("meme-text").innerText;
+        const tweetUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetText);
+        window.open(tweetUrl, "_blank");
+    }
+
+    function resetEmojis() {
+        const emojiElements = document.querySelectorAll(".emoji");
+        emojiElements.forEach((element, index) => {
+            element.textContent = emojis[index % emojis.length];
+        });
+    }
+</script>
+</head>
+<body>
+    <div id="meme-container">
+        <div id="meme-text"> <p>
+            <span id="emoji0" class="emoji" onclick="changeEmoji(0)">🦄</span>
+            меня персонально мочат
+            Ну то есть если кто совсем в танке и не понял, что это скоординированная кампания
+            <span id="emoji1" class="emoji" onclick="changeEmoji(1)">🫰</span>
+            ничего без
+            <span id="emoji2" class="emoji" onclick="changeEmoji(2)">🧌</span>
+            и команды делать не будут
+            <span id="emoji3" class="emoji" onclick="changeEmoji(3)">🪬</span></p>
+        </div>
+
+        <button class="pure-button" onclick="changeAllEmojis()">Изменить все эмоджи</button>
+        <button class="pure-button" onclick="resetEmojis()">Ресет</button>
+        <button class="pure-button" onclick="postToTwitter()">Постинг в Твиттер</button>
+    </div>
+</body>
+</html>

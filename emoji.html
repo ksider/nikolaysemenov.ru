@@ -49,7 +49,36 @@
         }
     </style>
  <script>
-    const emojis = [
+
+async function fetchAndFlattenEmojiArrays(jsonUrl) {
+    try {
+        const response = await fetch(jsonUrl);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const jsonData = await response.json();
+        if (typeof jsonData === 'object' && jsonData !== null) {
+            const flattenedArray = Object.values(jsonData).flat();
+            return flattenedArray;
+        } else {
+            throw new Error('Invalid JSON structure. Please provide a valid JSON object with nested arrays.');
+        }
+    } catch (error) {
+        console.error('Error:', error.message);
+        return null;
+    }
+}
+
+// Пример использования
+const jsonUrl = 'https://gist.githubusercontent.com/leon-do/8dfcb6ffefb9bb0c20e5b74e080177b1/raw/609bb63932c4c4f8effe950921850acbdadba331/emojis.json';
+
+fetchAndFlattenEmojiArrays(jsonUrl)
+    .then(flattenedArray => {
+        if (flattenedArray !== null) {
+            console.log(flattenedArray);
+            emojis = flattenedArray;
+        } else {
+            emojis = [
         "😂", "❤️", "😍", "👍", "😊", "🔥", "🙌", "💯", "👏", "🎉",
         "😎", "🤔", "😘", "🤣", "👌", "🙏", "🔴", "🌟", "😁", "💪",
         "😜", "💕", "😭", "🤗", "💖", "✨", "🎶", "😅", "😋", "👀",
@@ -66,6 +95,12 @@
         "🍥", "🍡", "🍦", "🍧", "🍨", "🍩", "🍪", "🎂", "🍰", "🧁",
         "🍫", "🍬", "🍭", "🍮", "🍯", "🍰", "🍱", "🍲", "🍳", "🍴"
     ];
+            console.log('Failed to fetch and flatten JSON data.');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+
+
 
     function changeAllEmojis() {
         const emojiElements = document.querySelectorAll(".emoji");
@@ -110,7 +145,7 @@
         </div>
 
         <button class="pure-button" onclick="changeAllEmojis()">Изменить все эмоджи</button>
-        <button class="pure-button" onclick="resetEmojis()">Ресет</button>
+      <!-- <button class="pure-button" onclick="resetEmojis()">Ресет</button>--> 
         <button class="pure-button" onclick="postToTwitter()">Постинг в Твиттер</button>
     </div>
 </body>

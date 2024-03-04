@@ -40,6 +40,47 @@
         
         .bgc;
         background-image: url(img/base_layer.png);
+
+        .m_grid_text {
+            display: none;
+
+            .max(48em, {  
+                position: absolute;
+                bottom: 0;right: 0;left: 0;
+
+                width: 100%;
+                display: block;
+                padding: 1em;
+
+                .subt {
+                     font-size: 2em;
+                     color: #fff;
+                     a {
+                        color: #f7ff06;
+                     }
+                }
+                .titel {
+                    color: #fff;
+                    font-size: 1.5em;
+                    margin: 1em 0;
+                    .social_block {                
+                        ul {
+                            display: block;
+                            margin: 0;padding:1em 0;
+
+                            li {
+                                display: inline-block;
+                                margin: 0;padding: 0;
+                                padding-right: 1em;    
+                                a {
+                                    color: #eaeaea;
+                                }
+                            } 
+                        }
+                    }
+            } 
+        });
+        }
     }
 
     .grid_layer {
@@ -70,6 +111,9 @@
             }
             .subt {
                 padding-top: 1em; 
+                .max(48em, {
+                    display: none;
+                 });     
             }
         }
 
@@ -109,7 +153,6 @@
         .max(48em, {  
             flex-direction: column; 
             height: 100%;
-
             .grid_text {
                 width: 50%;  
             }
@@ -126,19 +169,17 @@
                 }
         } 
     });
-
     }
 
     .max(48em, { 
-    background-image: url(img/mobile.jpg);
-    .seconf_layer {
-        background-image: url(img/mobile.png); 
-        z-index: 3;
-    }
-    .grid_layer {
-        z-index: 2;
-    }
-
+        background-image: url(img/mobile.jpg);
+        .seconf_layer {
+            background-image: url(img/mobile.png); 
+            z-index: 3;
+        }
+        .grid_layer {
+            z-index: 2;
+        }
     });
  
 }

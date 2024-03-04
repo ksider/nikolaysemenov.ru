@@ -350,6 +350,46 @@ code {
   background-position: 50% 50%;
   background-image: url(img/base_layer.png);
 }
+.first_page .seconf_layer .m_grid_text {
+  display: none;
+}
+@media (max-width: 47em) {
+  .first_page .seconf_layer .m_grid_text {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    display: block;
+    padding: 1em;
+  }
+  .first_page .seconf_layer .m_grid_text .subt {
+    font-size: 2em;
+    color: #fff;
+  }
+  .first_page .seconf_layer .m_grid_text .subt a {
+    color: #f7ff06;
+  }
+  .first_page .seconf_layer .m_grid_text .titel {
+    color: #fff;
+    font-size: 1.5em;
+    margin: 1em 0;
+  }
+  .first_page .seconf_layer .m_grid_text .titel .social_block ul {
+    display: block;
+    margin: 0;
+    padding: 1em 0;
+  }
+  .first_page .seconf_layer .m_grid_text .titel .social_block ul li {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    padding-right: 1em;
+  }
+  .first_page .seconf_layer .m_grid_text .titel .social_block ul li a {
+    color: #eaeaea;
+  }
+}
 .first_page .grid_layer {
   display: flex;
   flex-direction: row;
@@ -375,6 +415,11 @@ code {
 }
 .first_page .grid_layer .name .subt {
   padding-top: 1em;
+}
+@media (max-width: 47em) {
+  .first_page .grid_layer .name .subt {
+    display: none;
+  }
 }
 .first_page .grid_layer .titel {
   padding-top: 3em;

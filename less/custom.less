@@ -36,7 +36,7 @@
     .seconf_layer {
         position: absolute;
         top: 0;bottom: 0;right: 0;left: 0;
-        z-index: 3;
+        z-index: 2;
         
         .bgc;
         background-image: url(img/base_layer.png);
@@ -53,7 +53,7 @@
         padding-top: 10%;
 
         position: relative;
-        z-index: 2;
+        z-index: 3;
         width: 100%;
         height: 100vh;
 
@@ -133,6 +133,10 @@
     background-image: url(img/mobile.jpg);
     .seconf_layer {
         background-image: url(img/mobile.png); 
+        z-index: 3;
+    }
+    .grid_layer {
+        z-index: 2;
     }
 
     });

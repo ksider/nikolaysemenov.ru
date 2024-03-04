@@ -344,7 +344,7 @@ code {
   bottom: 0;
   right: 0;
   left: 0;
-  z-index: 3;
+  z-index: 2;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -360,7 +360,7 @@ code {
   padding: 1em;
   padding-top: 10%;
   position: relative;
-  z-index: 2;
+  z-index: 3;
   width: 100%;
   height: 100vh;
 }
@@ -427,6 +427,10 @@ code {
   }
   .first_page .seconf_layer {
     background-image: url(img/mobile.png);
+    z-index: 3;
+  }
+  .first_page .grid_layer {
+    z-index: 2;
   }
 }
 .ovfh {

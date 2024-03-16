@@ -415,6 +415,11 @@ code {
 .first_page .grid_layer .name .subt {
   padding-top: 1em;
 }
+.first_page .grid_layer .name .subt abbr {
+  text-decoration: none;
+  background-color: #bdc3c7;
+  border: 0;
+}
 @media (max-width: 47em) {
   .first_page .grid_layer .name .subt {
     display: none;

@@ -335,7 +335,6 @@ code {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  background-image: url(img/dotes.png);
   z-index: 1;
 }
 .first_page .seconf_layer {

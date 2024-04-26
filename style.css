@@ -343,7 +343,7 @@ code {
   bottom: 0;
   right: 0;
   left: 0;
-  z-index: 2;
+  z-index: 3;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -399,9 +399,12 @@ code {
   padding: 1em;
   padding-top: 10%;
   position: relative;
-  z-index: 3;
+  z-index: 2;
   width: 100%;
   height: 100vh;
+}
+.first_page .grid_layer:hover {
+  z-index: 4;
 }
 .first_page .grid_layer .grid_text {
   font-size: 1.5em;
@@ -422,6 +425,28 @@ code {
 }
 @media (max-width: 47em) {
   .first_page .grid_layer .name .subt {
+    display: none;
+  }
+}
+.first_page .grid_layer .name .subt_other {
+  overflow-y: hidden;
+  min-height: 30%;
+  margin-top: 10%;
+  font-size: 0.8em;
+  line-height: 1.3;
+}
+.first_page .grid_layer .name .subt_other ul {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+.first_page .grid_layer .name .subt_other ul li {
+  display: block;
+  padding-bottom: 1rem;
+  color: #bfbfbf;
+}
+@media (max-width: 47em) {
+  .first_page .grid_layer .name .subt_other {
     display: none;
   }
 }

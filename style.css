@@ -399,7 +399,7 @@ code {
   padding: 1em;
   padding-top: 10%;
   position: relative;
-  z-index: 2;
+  z-index: 4;
   width: 100%;
   height: 100vh;
 }
@@ -429,6 +429,7 @@ code {
   }
 }
 .first_page .grid_layer .name .subt_other {
+  display: none;
   overflow-y: hidden;
   min-height: 30%;
   margin-top: 10%;

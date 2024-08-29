@@ -420,7 +420,6 @@ code {
 }
 .first_page .grid_layer .name .subt abbr {
   text-decoration: none;
-  background-color: #bdc3c7;
   border: 0;
 }
 @media (max-width: 47em) {

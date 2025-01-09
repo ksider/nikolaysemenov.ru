@@ -471,7 +471,7 @@ code {
   padding: 0;
   padding-top: 0.5em;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 }
 .first_page .grid_layer .social_block ul li {

@@ -452,6 +452,7 @@ code {
 }
 .first_page .grid_layer .titel {
   padding-top: 3em;
+  text-align: right;
 }
 .first_page .grid_layer .social_block {
   padding-top: 1em;

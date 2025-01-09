@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-X25WXQ0818"></script>
-<script>
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-X25WXQ0818"></script> -->
+<!-- <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments); }
   gtag('js', new Date());
   gtag('config', 'G-X25WXQ0818');
-</script>
+</script> -->
 
     <meta charset="UTF-8">
     <title>Nikolay Semenov</title>
     <meta name="description" content="Material scientist">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="./favicon.ico">
-
+    <link rel="icon" type="image/x-icon" href="favicon.svg">
+     
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <script src="jquery.js"></script>
     <script src="jquery.cookie.min.js"></script>
     <script src="script.js"></script>
+
+    <script src="wow.js"></script>
+    
 </head>
 
 <body class="">
@@ -30,9 +34,9 @@
     
         <div class="grid_layer">
             <div class="name grid_text">
-              <div class="myname">Nikolay<br>Semenov</div>
-              <div class="subt">
-              <span lang="en" alt="Polymer Scientist, Rheologist, and Materials Engineer"><abbr title="Chief Scientific Officer">CSO</abbr> in <a href="https://bpacks.eco">Bpacks</a> Lab</span>
+              <div class="myname wow animate__animated animate__fadeInLeft">Nikolay<br>Semenov</div>
+              <div class="subt wow animate__animated animate__fadeInUp">
+              <span lang="en" alt="Polymer Scientist, Rheologist, and Materials Engineer"><abbr title="Chief Scientific Officer">CSO</abbr> in <a href="https://bpacks.eco">Bpacks</a>&nbsp;Lab</span>
             </div>
             <!--and <abbr title="Chief Technology Officer">CTO</abbr> -->
 
@@ -45,24 +49,26 @@
             </div>
 
             </div>
+
+            <div class="social_block wow animate__animated animate__slideInUp">
+              <ul class="social_round">
+                <li><a href="https://t.me/nikolaysemenov"><i class="icon-send"></i></a></li>
+                <li><a href="https://ru.linkedin.com/in/nikolay-semenov-ab5b3957"><i class="icon-linkedin"></i></a></li>
+              <!-- </ul>
+            
+              <ul class="social_round"> -->
+                <li><a href="https://www.youtube.com/channel/UCMXMWV1WJLaMRaTcsEFLWVA"><i class="icon-youtube"></i></a></li>
+                <li><a href="https://www.flickr.com/photos/nikolaysemenov/"><i class="icon-instagram"></i></a></li>
+                <li><a href="https://x.com/Ksider"><i class="icon-twitter"></i> </a></li>
+                <li><a href="https://yandex.ru/q/profile/ksider/"><i class="icon-award"></i></a></li>
+              </ul>
+            </div>          
+
             <div class="titel grid_text">
-              <div class="ttl">Polymer Scientist,<br>Engineer.</div>
-              <div class="social_block">
-            
-                <ul class="social_round">
-                  <li><a href="https://t.me/nikolaysemenov"><i class="icon-send"></i></a></li>
-                  <li><a href="https://ru.linkedin.com/in/nikolay-semenov-ab5b3957"><i class="icon-linkedin"></i></a></li>
-                </ul>
-            
-                <ul class="social_round">
-                  <li><a href="https://www.youtube.com/channel/UCMXMWV1WJLaMRaTcsEFLWVA"><i class="icon-youtube"></i></a></li>
-                  <li><a href="https://www.flickr.com/photos/nikolaysemenov/"><i class="icon-instagram"></i></a></li>
-                  <li><a href="https://x.com/Ksider"><i class="icon-twitter"></i> </a></li>
-                  <li><a href="https://yandex.ru/q/profile/ksider/"><i class="icon-award"></i></a></li>
-                </ul>
-            
-              </div>
+              <div class="ttl wow animate__animated animate__fadeInRight">Polymer Scientist,<br>Engineer.</div>
             </div>
+
+            
         </div> 
 
 <div class="seconf_layer">&nbsp;
@@ -85,30 +91,14 @@
 </div>  
   
 </div>
-    
+
+
 </div>
 
-
 <script>
-// Получаем ссылки на элементы
-const teachBlock = document.getElementById('teach');
-const image = document.getElementById('mip');
-
-// Функция для обновления картинки при появлении блока на экране
-function updateImageOnIntersection(entries) {
-  if (entries[0].isIntersecting) {
-    image.src = 'img/metwo.png';
-  } else {
-    image.src = 'img/LP.jpg';
-  }
-}
-
-// Создаем экземпляр Intersection Observer
-const observer = new IntersectionObserver(updateImageOnIntersection);
-
-// Наблюдаем за блоком #teach
-observer.observe(teachBlock);
+  new WOW().init();
 </script>
+
 
 <!-- Yandex.Metrika counter -->   
 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(16681432, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/16681432" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 

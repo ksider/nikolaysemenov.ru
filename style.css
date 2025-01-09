@@ -408,7 +408,7 @@ code {
 }
 .first_page .grid_layer .grid_text {
   font-size: 1.5em;
-  width: 20%;
+  flex-grow: 2;
 }
 .first_page .grid_layer .name .myname {
   font-size: 2em;
@@ -453,16 +453,17 @@ code {
 .first_page .grid_layer .titel {
   padding-top: 3em;
 }
-.first_page .grid_layer .titel .social_block {
+.first_page .grid_layer .social_block {
   padding-top: 1em;
-  width: 100%;
   position: relative;
   z-index: 2;
+  align-self: flex-end;
+  flex-grow: 1;
 }
-.first_page .grid_layer .titel .social_block .social {
+.first_page .grid_layer .social_block .social {
   width: 100%;
 }
-.first_page .grid_layer .titel .social_block ul {
+.first_page .grid_layer .social_block ul {
   display: block;
   text-align: center;
   margin: 0;
@@ -472,13 +473,13 @@ code {
   justify-content: flex-start;
   align-items: center;
 }
-.first_page .grid_layer .titel .social_block ul li {
+.first_page .grid_layer .social_block ul li {
   display: inline-block;
   padding-right: 1.2em;
 }
-.first_page .grid_layer .titel .social_block ul li a {
+.first_page .grid_layer .social_block ul li a {
   text-decoration: none;
-  color: #000;
+  color: #fff;
 }
 @media (max-width: 47em) {
   .first_page .grid_layer {
@@ -487,6 +488,9 @@ code {
   }
   .first_page .grid_layer .grid_text {
     width: 50%;
+  }
+  .first_page .grid_layer .social_block {
+    display: none;
   }
   .first_page .grid_layer .titel {
     color: #fff;

@@ -409,6 +409,11 @@ code {
 .first_page .grid_layer .grid_text {
   font-size: 1.5em;
 }
+@media (max-width: 47em) {
+  .first_page .grid_layer .grid_text {
+    flex-grow: 2;
+  }
+}
 .first_page .grid_layer .name .myname {
   font-size: 2em;
   line-height: 1;

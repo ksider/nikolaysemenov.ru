@@ -393,7 +393,7 @@ code {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: flex-star;
   align-content: stretch;
   padding: 1em;
@@ -408,7 +408,6 @@ code {
 }
 .first_page .grid_layer .grid_text {
   font-size: 1.5em;
-  flex-grow: 2;
 }
 .first_page .grid_layer .name .myname {
   font-size: 2em;
@@ -459,7 +458,6 @@ code {
   position: relative;
   z-index: 2;
   align-self: flex-end;
-  flex-grow: 1;
 }
 .first_page .grid_layer .social_block .social {
   width: 100%;

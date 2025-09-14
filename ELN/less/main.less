@@ -1,0 +1,310 @@
+// out: ../style.css, compress:true
+
+@import (inline) url('https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@100;300&family=PT+Sans+Narrow:wght@400;700&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Dawning+of+a+New+Day&display=swap');
+@import (inline) url('https://cdn.jsdelivr.net/npm/orbitcss/css/orbit.min.css');
+
+* {
+    -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+     box-sizing: border-box;
+ }
+ 
+ html, body {
+     height: 100%;
+     background-color: #ffeaa7;
+     overflow-x: hidden;
+   //  overflow-y: scroll;
+     width: 100%;
+ }
+ 
+ 
+ @baseFontSize: 18; 
+ @baseLineHeight: 1.3; 
+ @leading: @baseLineHeight * 1rem;
+ @sans:'PT Sans', Helvetica, Arial, sans-serif;
+ @narrow:'PT Sans Narrow', Helvetica, Arial, sans-serif;
+ @serif:'PT Serif', Georgia, 'Times New Roman', Times, serif;
+ @mono:'PT Mono', monospace;
+ @logo: 'Noto Serif Display', serif;
+ @cur: 'Dawning of a New Day', cursive;
+ 
+ 
+ // @scale: 1.414;
+ @scale: 1.333;
+ 
+ 
+ html {
+   font-family: @sans;
+   font-size: @baseFontSize / 16 * 100%;
+   -webkit-font-smoothing: antialiased;   
+     
+   color: @darkgray;
+ }
+ 
+ a {
+     .animation(0.4s);
+     color: @blue;
+     &:hover {color: @red;}
+     &:active {color: @linkactive;}
+     text-decoration-skip: ink;
+     &[href*='#'] {
+         text-decoration: none;
+         border-bottom: 1px dashed @blue;
+     }
+ }
+ 
+ 
+ p {
+   line-height: @leading;
+   margin-top: @leading;
+   margin-bottom: 0;
+   hyphens: auto;
+ }
+ 
+ ul, ol {
+   margin-top: @leading;
+   margin-bottom: @leading;
+ 
+   li {
+     line-height: @leading;
+   }
+ 
+   ul, ol {
+     margin-top: 0;
+     margin-bottom: 0;
+   }
+ }
+ 
+ 
+ blockquote {
+   line-height: @leading;
+   margin-top: @leading;
+   margin-bottom: @leading;
+ }
+ 
+ h1, h2, h3, h4, h5, h6 {
+   font-family: @sans;
+   margin-top: @leading;
+   margin-bottom: 0;
+   line-height: @leading;
+ }
+ 
+ h1 { font-size: 3 * @scale * 1rem; line-height: 3 * @leading; margin-top: 2 * @leading; }
+ h2 { font-size: 2 * @scale * 1rem; line-height: 2 * @leading; margin-top: 2 * @leading; }
+ h3 { font-size: 1 * @scale * 1rem; }
+ h4 { font-size: @scale / 1 * 1rem; }
+ h5 { font-size: @scale / 2 * 1rem; }
+ h6 { font-size: @scale / 3 * 1rem; }
+ 
+ table {
+   margin-top: @leading;
+   border-spacing: 0px;
+   border-collapse: collapse;
+ 
+   td, th {
+     padding: 0;
+     line-height: @baseLineHeight * @baseFontSize - 0px;
+   }
+ }
+ 
+ 
+ code {
+   vertical-align: bottom;
+ }
+ 
+ /* Leading paragraph text */
+ .lead {
+   font-size: @scale * 1rem;
+ }
+ 
+ /* Hug a the block above you */
+ .hug {
+   margin-top: 0;
+ }
+ 
+// --xs-min: 30;
+// --sm-min: 48;
+// --md-min: 64;
+// --lg-min: 75;
+
+.block {
+    width: 80%;
+    max-width: 1144px;
+    margin: 0 auto;
+    .max(48em, {width: 95%;});
+  }
+  
+  .inner {
+      width: 100%;
+      padding: 35px;
+      .max(64em, {padding: 15px;});
+  }
+  
+ 
+@gray: #ecf0f1;
+@darkgray:#2d3436;
+@lightgray:#ffeaa7;
+@bgcolor:rgb(46, 37, 28);
+@bgcolor_l:#ffb62e;
+
+@white: #ecf0f1;
+@red: #c0392b;
+@blue: #2980b9;
+
+@linkhover: #d35400;
+@linkactive: #d35400;
+
+.animation(@dur) {
+   -webkit-transition: all @dur ease-in-out;
+    transition: all @dur ease-in-out;
+    }
+
+.bgc {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    }
+
+.vertical {
+    display: flex;
+    align-items: center;
+    }
+
+.upper(@fz) {
+    font-size: @fz;
+    letter-spacing: @fz * 0.2;
+    text-transform: uppercase;
+    }
+
+.gradient (@startColor: #eee, @endColor: white) {
+	background-color: @startColor;
+	background: -webkit-gradient(linear, left top, left bottom, from(@startColor), to(@endColor));
+	background: -webkit-linear-gradient(top, @startColor, @endColor);
+	background: -moz-linear-gradient(top, @startColor, @endColor);
+	background: -ms-linear-gradient(top, @startColor, @endColor);
+	background: -o-linear-gradient(top, @startColor, @endColor);
+}
+
+
+.ovfh {
+    overflow-y: hidden;
+}
+
+.clearfix 
+    {
+       &:before {
+         content: " ";
+         display: table;
+       }
+       &:after {
+           clear: both;
+           content: " ";
+           display: table;
+       }
+       *zoom: 1;
+   }
+
+
+
+
+.center {text-align:center;}
+.left{text-align:left;}
+.right{text-align:right;}
+.hide{display:none;}
+.show{display:block;}
+
+
+
+
+// Width Screen
+// ------------------------------------
+.min(@min, @ruleset) {
+    @media (min-width: @min) {
+      @ruleset();
+    }
+  }
+  
+  .max(@max, @ruleset) {
+    @media (max-width: (@max - 1)) {
+      @ruleset();
+    }
+  }
+  
+  .screen(@min, @max, @ruleset) {
+    @media (min-width: @min) and (max-width: (@max - 1)) {
+      @ruleset();
+    }
+  }
+  
+  
+  // Height
+  // ------------------------------------
+  .min-height(@min, @ruleset) {
+    @media (min-height: @min) {
+      @ruleset();
+    }
+  }
+  
+  .max-height(@max, @ruleset) {
+    @media (max-height: (@max - 1)) {
+      @ruleset();
+    }
+  }
+  
+  .screen-height(@min, @max, @ruleset) {
+    @media (min-height: @min) and (max-height: (@max - 1)) {
+      @ruleset();
+    }
+  }
+  
+
+  // Orientation
+  // ------------------------------------
+  .landscape(@ruleset) {
+    @media (orientation: landscape) {
+      @ruleset();
+    }
+  }
+  
+  .portrait(@ruleset) {
+    @media (orientation: portrait) {
+      @ruleset();
+    }
+  }
+  
+  
+  // HiDPI (Alias: ratio and retina)
+  // ------------------------------------
+  .hdpi(@ratio: 1.5, @ruleset: default) {
+    & when (isnumber(@ratio)) {
+      @media
+      only screen and (min-resolution: (round(@ratio * 96dpi))),
+      only screen and (min-resolution: (@ratio * 1dppx)) {
+        @ruleset();
+      }
+    }
+  
+    & when (isruleset(@ratio)) {
+      @media
+      only screen and ( min-resolution: 144dpi),
+      only screen and ( min-resolution: 1.5dppx) {
+        @ratio();
+      }
+    }
+  }
+  
+  .ratio(@ratio, @ruleset: default) {
+    .hdpi(@ratio, @ruleset);
+  }
+  
+  
+  // Print
+  // ------------------------------------
+  .print(@ruleset) {
+    @media print {
+      @ruleset();
+    }
+  }
+  
+
+  @import 'custom.less';

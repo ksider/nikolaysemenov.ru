@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторный журнал</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="function.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h2 { color: #333; }
+        .container { margin-bottom: 20px; }
+        .item { border: 1px solid #ccc; padding: 10px; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>Лабораторный журнал</h1>
+
+    <div class="container">
+        <h2>Проекты</h2>
+        <button onclick="loadProjects()">Загрузить проекты</button>
+        <div id="projects"></div>
+
+        <h3>Создать проект</h3>
+        <form id="projectForm">
+            <input type="text" id="projectName" placeholder="Название проекта" required>
+            <input type="text" id="projectDesc" placeholder="Описание проекта">
+            <button type="submit">Создать</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <h2>Серии экспериментов</h2>
+        <button onclick="loadExperiments()">Загрузить серии</button>
+        <div id="experiments"></div>
+
+        <h3>Создать серию экспериментов</h3>
+        <form id="experimentForm">
+            <input type="text" id="experimentName" placeholder="Название серии" required>
+            <input type="text" id="experimentDesc" placeholder="Описание">
+            <button type="submit">Создать</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <h2>Образцы</h2>
+        <button onclick="loadSamples()">Загрузить образцы</button>
+        <div id="samples"></div>
+
+        <h3>Добавить образец</h3>
+        <form id="sampleForm">
+            <input type="text" id="sampleName" placeholder="Название образца" required>
+            <input type="text" id="sampleDesc" placeholder="Описание">
+            <button type="submit">Добавить</button>
+        </form>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://zefwgjwlwpbsulqbhcmp.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplZndnandsd3Bic3VscWJoY21wIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MDQwODgxMywiZXhwIjoyMDU1OTg0ODEzfQ.YnS5UUVewQ1kBWX3edYGWrRqR3Jumi0HASL9gN5n_fE';
+        const labApi = initLabJournalAPI(SUPABASE_URL, SUPABASE_KEY);
+
+        document.getElementById('projectForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const name = document.getElementById('projectName').value.trim();
+            const description = document.getElementById('projectDesc').value.trim();
+            await labApi.createProject({ name, description });
+            loadProjects();
+        });
+
+        document.getElementById('experimentForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const name = document.getElementById('experimentName').value.trim();
+            const description = document.getElementById('experimentDesc').value.trim();
+            await labApi.createExperiment({ name, description });
+            loadExperiments();
+        });
+
+        document.getElementById('sampleForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const name = document.getElementById('sampleName').value.trim();
+            const description = document.getElementById('sampleDesc').value.trim();
+            await labApi.createSample({ name, description });
+            loadSamples();
+        });
+
+        async function loadProjects() {
+            const container = document.getElementById('projects');
+            const { data, error } = await labApi.getProjects();
+            container.innerHTML = data.map(p => `<div class='item'><strong>${p.name}</strong>: ${p.description}, ${p.created_by}</div>`).join('');
+        }
+
+        async function loadExperiments() {
+            const container = document.getElementById('experiments');
+            const { data, error } = await labApi.getExperimentSeries();
+            container.innerHTML = data.map(e => `<div class='item'><strong>${e.name}</strong>: ${e.description}</div>`).join('');
+        }
+
+        async function loadSamples() {
+            const container = document.getElementById('samples');
+            const { data, error } = await labApi.getSamples();
+            container.innerHTML = data.map(s => `<div class='item'><strong>${s.name}</strong>: ${s.description}</div>`).join('');
+        }
+    </script>
+</body>
+</html>

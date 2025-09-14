@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello, world!</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+  <!-- <link rel="icon" href="favicon.png"> -->
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="function.js"></script>
+
+</head>
+<body>
+
+    <div class="block">
+        <div class="container" >
+          <div class="grid">
+            <div class="column is-one-third">
+            <h2>Projectes</h2>
+            <ul id="projects"></ul>
+            </div>
+            <div class="column is-two-thirds" id="samples">
+
+
+
+            </div>
+          </div>
+
+        </div>
+    </div>
+
+
+    <script src="eln.js"></script>
+    <script>
+  const SUPABASE_URL = 'https://zefwgjwlwpbsulqbhcmp.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplZndnandsd3Bic3VscWJoY21wIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MDQwODgxMywiZXhwIjoyMDU1OTg0ODEzfQ.YnS5UUVewQ1kBWX3edYGWrRqR3Jumi0HASL9gN5n_fE';
+  const labApi = initLabJournalAPI(SUPABASE_URL, SUPABASE_KEY);
+  document.onload = loadProjects();
+
+// Назначаем обработчики на ссылки
+document.addEventListener('click', (event) => {
+    const link = event.target.closest('a.project'); // Проверяем, кликнули ли по ссылке проекта
+    if (!link) return;
+    event.preventDefault(); 
+    const projectId = link.dataset.id; // Получаем ID проекта
+   
+    const seriesList = document.getElementById(`proj${projectId}`); 
+    serist = loadExperiments(projectId).then(serist => {
+    if (seriesList) seriesList.innerHTML = serist;}).catch(error => console.error("Ошибка загрузки экспериментов:", error));
+
+
+});
+
+// Назначаем обработчики на ссылки
+document.addEventListener('click', (event) => {
+    const link = event.target.closest('a.series'); 
+    if (!link) return;
+    event.preventDefault(); 
+    const serId = link.dataset.id;
+    const samplesList = document.getElementById('samples').innerHTML = 'началось'; 
+
+    samples = loadSamples(serId).then(sl => {
+      console.log(sl);
+    document.getElementById('samples').innerHTML = sl;}).catch(error => console.error("Ошибка загрузки экспериментов:", error));
+
+// 
+});
+  
+    </script>
+</body>
+</html>

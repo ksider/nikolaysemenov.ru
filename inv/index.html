@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Inventory Manager</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <script type="module" crossorigin src="/inv/assets/index-DSOlsGQm.js"></script>
+  <script type="module" crossorigin src="/inv/assets/index-Bg-l_-hx.js"></script>
   <link rel="stylesheet" crossorigin href="/inv/assets/index-CHRGKzhC.css">
 </head>
 <body>
@@ -13,6 +13,20 @@
   <div class="head-menu">
   <span id="sheet-title" class="current_tab"></span>
   <span id="sheet-links" class="other_tabs"></span>
+  <span id="auth-box" class="right">
+    <span id="auth-signed-out">
+      <div class="input-field inline" style="margin:0 0.5rem; display:inline-flex; align-items:center; gap:4px;">
+        <input id="auth-email" type="text" placeholder="username" style="width: 12rem;" />
+        <span class="grey-text text-darken-1">@bpacks.eco</span>
+      </div>
+      <a id="auth-signin" class="btn-small waves-effect">Sign in</a>
+    </span>
+    <span id="auth-signed-in" style="display:none;">
+      <span id="auth-user-email" class="grey-text text-darken-1"></span>
+      <span class="new badge" id="auth-user-role" data-badge-caption="role"></span>
+      <a id="auth-signout" class="btn-small waves-effect btn-flat">Sign out</a>
+    </span>
+  </span>
 </div>
 <ul class="collapsible">
   <li class="active">

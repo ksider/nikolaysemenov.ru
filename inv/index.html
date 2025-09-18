@@ -4,104 +4,10 @@
   <meta charset="UTF-8" />
   <title>Inventory Manager</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <script type="module" crossorigin src="/inv/assets/index-p2wSk_UC.js"></script>
+  <script type="module" crossorigin src="/inv/assets/index-dSBkDQ5d.js"></script>
   <link rel="stylesheet" crossorigin href="/inv/assets/index-D2ceY5vG.css">
 </head>
 <body>
-
-<div class="container">
-  <div class="head-menu">
-  <span id="sheet-title" class="current_tab"></span>
-  <span id="sheet-links" class="other_tabs"></span>
-  <span class="right" id="auth-panel" style="display:inline-flex; align-items:center; gap:8px;">
-    <span id="auth-email-label" class="grey-text text-darken-1">Guest</span>
-    <span id="auth-signed-out">
-      <input id="auth-email" type="email" placeholder="you@example.com" style="width:14rem; text-align:left;" />
-      <a id="auth-signin" class="btn-small waves-effect">Sign in</a>
-    </span>
-    <span id="auth-signed-in" style="display:none;">
-      <a id="auth-signout" class="btn-small waves-effect btn-flat">Sign out</a>
-    </span>
-  </span>
-</div>
-<ul class="collapsible">
-  <li class="active">
-    <div class="collapsible-header">
-      <span>Filters</span>
-    </div>
-    <div class="collapsible-body">
-      <div id="tags-container"></div>
-    </div>
-  </li>
-</ul>
-<div class="progress hide" id="preloader-wrapper">
-      <div class="indeterminate"></div>
-</div>
-<div class="row">
-  <div id="table-container" class="col s12 m6"></div>
-  <div id="card-container" class="col s12 m6"></div>
-</div>
-</div>
-  <!-- Add Item Modal -->
-  <div id="add-item-modal" class="modal">
-    <div class="modal-content">
-      <h5>Add New Item</h5>
-      <form id="add-item-form">
-        <div class="row">
-          <div class="input-field col s12 m6">
-            <input id="add-title" type="text" />
-            <label for="add-title">Title</label>
-          </div>
-          <div class="input-field col s12 m6">
-            <input id="add-amount" type="number" />
-            <label for="add-amount">Amount</label>
-          </div>
-          <div class="input-field col s12 m6">
-            <input id="add-zone" type="text" />
-            <label for="add-zone">Zone</label>
-          </div>
-          <div class="input-field col s12 m6">
-            <input id="add-type" type="text" />
-            <label for="add-type">Type</label>
-          </div>
-          <div class="input-field col s12 m6">
-            <input id="add-supplier" type="text" />
-            <label for="add-supplier">Supplier</label>
-          </div>
-          <div class="input-field col s12 m6">
-            <input id="add-opened" type="text" />
-            <label for="add-opened">Opened</label>
-          </div>
-        </div>
-
-        <div class="section">
-          <h6>Additional Fields</h6>
-          <div id="add-extra-list" class="row"></div>
-          <a id="add-extra-add" class="btn-small waves-effect"><i class="material-icons left">add</i>Add field</a>
-        </div>
-
-        <div class="section">
-          <h6>TDS Paste (optional)</h6>
-          <div class="input-field">
-            <textarea id="add-tds" class="materialize-textarea" placeholder="Key: Value\nKey2: Value2 or JSON"></textarea>
-            <label for="add-tds">TDS Raw</label>
-          </div>
-          <a id="add-tds-parse" class="btn-flat waves-effect"><i class="material-icons left">playlist_add</i>Parse into fields</a>
-        </div>
-
-        <div class="modal-footer" style="padding:0; border-top:none;">
-          <button type="submit" class="modal-close btn waves-effect"><i class="material-icons left">save</i>Create</button>
-          <a class="modal-close btn-flat">Cancel</a>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Floating Add Button -->
-  <div class="fixed-action-btn">
-    <a id="add-item-btn" class="btn-floating btn-large red waves-effect waves-light">
-      <i class="large material-icons">add</i>
-    </a>
-  </div>
+  <div id="app-root"></div>
 </body>
 </html>

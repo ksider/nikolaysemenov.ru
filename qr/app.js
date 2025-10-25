@@ -51,6 +51,7 @@
       btnDownloadPng: 'Скачать PNG',
       btnDownloadSvg: 'Скачать SVG',
       btnClearLogo: 'Очистить логотип',
+      btnCopyLink: 'Скопировать ссылку',
       previewAria: 'Предпросмотр QR',
       langSwitcherAria: 'Переключатель языка',
       colorPickerAria: 'Выбор цвета',
@@ -62,6 +63,8 @@
       errorLogoLoadTryAnother: 'Не удалось загрузить логотип. Попробуйте другой файл.',
       errorLogoRead: 'Ошибка чтения файла логотипа.',
       warnLogoDataUrl: 'Не удалось загрузить логотип из data URL.',
+      copySuccess: 'Ссылка с настройками скопирована.',
+      copyError: 'Не удалось скопировать ссылку. Скопируйте вручную из адресной строки.',
     },
     en: {
       pageTitle: 'QR Code Generator',
@@ -107,6 +110,7 @@
       btnDownloadPng: 'Download PNG',
       btnDownloadSvg: 'Download SVG',
       btnClearLogo: 'Clear logo',
+      btnCopyLink: 'Copy link',
       previewAria: 'QR preview',
       langSwitcherAria: 'Language selector',
       colorPickerAria: 'Select color',
@@ -118,6 +122,8 @@
       errorLogoLoadTryAnother: 'Could not load the logo. Try a different file.',
       errorLogoRead: 'Error reading the logo file.',
       warnLogoDataUrl: 'Could not load logo from data URL.',
+      copySuccess: 'Settings link copied.',
+      copyError: 'Could not copy link. Please copy it manually from the address bar.',
     },
   };
 
@@ -184,9 +190,6 @@
   }
 
   function detectInitialLang(){
-    const params = new URLSearchParams(window.location.search);
-    const fromQuery = normalizeLang(params.get('lang'));
-    if (fromQuery) return fromQuery;
     const stored = normalizeLang(safeGetStorage('qrLang'));
     if (stored) return stored;
     if (Array.isArray(navigator.languages)){
@@ -312,6 +315,7 @@
     logoPad: document.getElementById('logoPad'),
     logoPadVal: document.getElementById('logoPadVal'),
     btnGenerate: document.getElementById('btnGenerate'),
+    btnCopyLink: document.getElementById('btnCopyLink'),
     btnDownload: document.getElementById('btnDownload'),
     btnDownloadSvg: document.getElementById('btnDownloadSvg'),
     btnClearLogo: document.getElementById('btnClearLogo'),
@@ -419,6 +423,11 @@
     return state;
   }
 
+  function updateCopyButtonState(hasQuery){
+    if (!els.btnCopyLink) return;
+    els.btnCopyLink.classList.toggle('has-query', hasQuery);
+  }
+
   function syncStateToUrl(){
     if (isApplyingState) return;
     const url = new URL(window.location.href);
@@ -444,18 +453,9 @@
       }
     });
 
-    if (currentLang && currentLang !== FALLBACK_LANG){
-      if (params.get('lang') !== currentLang){
-        params.set('lang', currentLang);
-        mutated = true;
-      }
-    } else if (params.has('lang')){
-      params.delete('lang');
-      mutated = true;
-    }
-
     const newSearch = params.toString();
     const currentSearch = window.location.search.replace(/^\?/, '');
+    updateCopyButtonState(newSearch.length > 0);
     if (!mutated && newSearch === currentSearch){
       return;
     }
@@ -474,6 +474,7 @@
       }
     });
     applyControlsFromState(state);
+    updateCopyButtonState(params.toString().length > 0);
     if (render){
       renderQR();
     }
@@ -615,6 +616,34 @@
     }
   }
 
+  async function copySettingsLink(){
+    try {
+      syncStateToUrl();
+      const url = window.location.href;
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function'){
+        await navigator.clipboard.writeText(url);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = url;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'absolute';
+        textarea.style.opacity = '0';
+        textarea.style.pointerEvents = 'none';
+        document.body.appendChild(textarea);
+        textarea.select();
+        const success = document.execCommand ? document.execCommand('copy') : false;
+        document.body.removeChild(textarea);
+        if (!success){
+          throw new Error('execCommand copy failed');
+        }
+      }
+      alert(t('copySuccess'));
+    } catch (err){
+      console.error(err);
+      alert(t('copyError'));
+    }
+  }
+
   function handleLogoFile(file){
     if (!file){
       return;
@@ -693,6 +722,12 @@
     e.preventDefault();
     renderQR();
   });
+  if (els.btnCopyLink){
+    els.btnCopyLink.addEventListener('click', async (e) => {
+      e.preventDefault();
+      await copySettingsLink();
+    });
+  }
   els.btnDownload.addEventListener('click', (e) => {
     e.preventDefault();
     download('png');
@@ -711,12 +746,7 @@
 
   window.addEventListener('popstate', () => {
     const params = new URLSearchParams(window.location.search);
-    const langFromUrl = normalizeLang(params.get('lang')) || FALLBACK_LANG;
-    if (langFromUrl !== currentLang){
-      setLanguage(langFromUrl, {store: true, sync: false});
-    }
     applyStateFromParams(params, {render: true, sync: false});
-    syncStateToUrl();
   });
 
   window.addEventListener('load', () => {

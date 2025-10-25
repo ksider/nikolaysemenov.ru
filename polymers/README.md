@@ -19,17 +19,6 @@ This repository hosts a fully client-side map that helps lab technicians and stu
 ## Data Source
 - [Plastics Identification Flow Chart – Stanmech Technologies Inc.](https://www.stanmech.com/articles/plastics-identification-flow-chart#:~:text=Plastics%20Identification%20Flow%20Chart%20-%20Articles,Roofing)
 
-## Root Diagram
-```mermaid
-flowchart TD
-    A[polymers/]
-    A --> B[index.html]
-    A --> C[classic.html]
-    A --> D[flow-map.html]
-    A --> E[2025-10-04 22.46.55.jpg]
-    A --> F[README.md]
-    A --> G[LICENSE]
-```
 
 ## Technology Stack
 - HTML5 and modern CSS (custom layout, gradients, glassmorphism effects).

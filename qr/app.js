@@ -121,6 +121,42 @@
     },
   };
 
+  const STATE_CONTROL_MAP = {
+    text: 'text',
+    ecc: 'ecc',
+    size: 'size',
+    margin: 'margin',
+    fg: 'fg',
+    bg: 'bg',
+    quiet: 'quiet',
+    cornerSquare: 'cornerSquare',
+    cornerSquareColor: 'cornerSquareColor',
+    cornerDot: 'cornerDot',
+    cornerDotColor: 'cornerDotColor',
+    logoSize: 'logoSize',
+    logoPad: 'logoPad',
+  };
+
+  const STATE_KEYS = Object.keys(STATE_CONTROL_MAP);
+
+  const DEFAULT_STATE = {
+    text: 'https://nikolaysemenov.ru/qr',
+    ecc: 'H',
+    size: '1024',
+    margin: '2',
+    fg: '#1B2923',
+    bg: '#ffffff',
+    quiet: 'square',
+    cornerSquare: 'square',
+    cornerSquareColor: '#1B2923',
+    cornerDot: 'dot',
+    cornerDotColor: '#1B2923',
+    logoSize: '55',
+    logoPad: '8',
+  };
+
+  const COLOR_STATE_KEYS = new Set(['fg', 'bg', 'cornerSquareColor', 'cornerDotColor']);
+
   function normalizeLang(lang){
     if (!lang) return null;
     const lower = String(lang).toLowerCase();
@@ -148,6 +184,9 @@
   }
 
   function detectInitialLang(){
+    const params = new URLSearchParams(window.location.search);
+    const fromQuery = normalizeLang(params.get('lang'));
+    if (fromQuery) return fromQuery;
     const stored = normalizeLang(safeGetStorage('qrLang'));
     if (stored) return stored;
     if (Array.isArray(navigator.languages)){
@@ -160,6 +199,7 @@
   }
 
   let currentLang = detectInitialLang();
+  let isApplyingState = false;
 
   function getDict(lang){
     return TRANSLATIONS[lang] || TRANSLATIONS[FALLBACK_LANG];
@@ -222,12 +262,15 @@
     updateLangButtons(lang);
   }
 
-  function setLanguage(lang, {store = true} = {}){
+  function setLanguage(lang, {store = true, sync = true} = {}){
     const normalized = normalizeLang(lang) || FALLBACK_LANG;
     currentLang = normalized;
     applyTranslations(normalized);
     if (store){
       safeSetStorage('qrLang', normalized);
+    }
+    if (sync){
+      syncStateToUrl();
     }
   }
 
@@ -235,7 +278,7 @@
     return translateKey(key, currentLang);
   }
 
-  setLanguage(currentLang, {store: false});
+  setLanguage(currentLang, {store: false, sync: false});
 
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -274,6 +317,170 @@
     btnClearLogo: document.getElementById('btnClearLogo'),
     canvas: document.getElementById('canvas'),
   };
+
+  const initialParams = new URLSearchParams(window.location.search);
+  applyStateFromParams(initialParams, {render: false, sync: false});
+
+  function setSelectValue(selectEl, value, fallback){
+    if (!selectEl) return;
+    const options = Array.from(selectEl.options).map(opt => opt.value);
+    const desired = typeof value === 'string' && options.includes(value) ? value : null;
+    const fallbackValue = options.includes(fallback) ? fallback : options[0];
+    const finalValue = desired || fallbackValue || '';
+    if (finalValue){
+      selectEl.value = finalValue;
+    }
+  }
+
+  function setRangeValue(rangeEl, value, fallback){
+    if (!rangeEl) return;
+    const min = rangeEl.min !== '' ? parseFloat(rangeEl.min) : null;
+    const max = rangeEl.max !== '' ? parseFloat(rangeEl.max) : null;
+    const step = rangeEl.step !== '' ? parseFloat(rangeEl.step) : null;
+    const rawNumber = parseFloat(value);
+    const fallbackNumber = parseFloat(fallback);
+    let numeric = Number.isFinite(rawNumber) ? rawNumber : fallbackNumber;
+    if (!Number.isFinite(numeric)){
+      numeric = Number.isFinite(fallbackNumber) ? fallbackNumber : rawNumber;
+    }
+    if (Number.isFinite(min)) numeric = Math.max(numeric, min);
+    if (Number.isFinite(max)) numeric = Math.min(numeric, max);
+    if (Number.isFinite(step) && step > 0){
+      const base = Number.isFinite(min) ? min : 0;
+      numeric = Math.round((numeric - base) / step) * step + base;
+      if (Number.isFinite(min)) numeric = Math.max(numeric, min);
+      if (Number.isFinite(max)) numeric = Math.min(numeric, max);
+    }
+    rangeEl.value = String(numeric);
+  }
+
+  function isValidHexColor(value){
+    if (typeof value !== 'string') return false;
+    const trimmed = value.trim();
+    return /^#([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(trimmed);
+  }
+
+  function setColorValue(inputEl, value, fallback){
+    if (!inputEl) return;
+    const candidate = isValidHexColor(value) ? value.trim() : null;
+    const finalColor = candidate || (isValidHexColor(fallback) ? fallback : inputEl.value);
+    if (finalColor){
+      inputEl.value = finalColor.toUpperCase();
+    }
+  }
+
+  function updateRangeOutputs(){
+    if (els.size && els.sizeVal){
+      els.sizeVal.textContent = els.size.value;
+    }
+    if (els.margin && els.marginVal){
+      els.marginVal.textContent = els.margin.value;
+    }
+    if (els.logoSize && els.logoSizeVal){
+      els.logoSizeVal.textContent = els.logoSize.value;
+    }
+    if (els.logoPad && els.logoPadVal){
+      els.logoPadVal.textContent = els.logoPad.value;
+    }
+  }
+
+  function applyControlsFromState(state){
+    isApplyingState = true;
+    try {
+      if (els.text){
+        els.text.value = typeof state.text === 'string' ? state.text : DEFAULT_STATE.text;
+      }
+      setSelectValue(els.ecc, state.ecc, DEFAULT_STATE.ecc);
+      setRangeValue(els.size, state.size, DEFAULT_STATE.size);
+      setRangeValue(els.margin, state.margin, DEFAULT_STATE.margin);
+      setColorValue(els.fg, state.fg, DEFAULT_STATE.fg);
+      setColorValue(els.bg, state.bg, DEFAULT_STATE.bg);
+      setSelectValue(els.quiet, state.quiet, DEFAULT_STATE.quiet);
+      setSelectValue(els.cornerSquare, state.cornerSquare, DEFAULT_STATE.cornerSquare);
+      setColorValue(els.cornerSquareColor, state.cornerSquareColor, DEFAULT_STATE.cornerSquareColor);
+      setSelectValue(els.cornerDot, state.cornerDot, DEFAULT_STATE.cornerDot);
+      setColorValue(els.cornerDotColor, state.cornerDotColor, DEFAULT_STATE.cornerDotColor);
+      setRangeValue(els.logoSize, state.logoSize, DEFAULT_STATE.logoSize);
+      setRangeValue(els.logoPad, state.logoPad, DEFAULT_STATE.logoPad);
+    } finally {
+      isApplyingState = false;
+    }
+    updateRangeOutputs();
+  }
+
+  function collectStateFromControls(){
+    const state = {};
+    STATE_KEYS.forEach(key => {
+      const controlKey = STATE_CONTROL_MAP[key];
+      const control = els[controlKey];
+      if (!control) return;
+      state[key] = control.value;
+    });
+    return state;
+  }
+
+  function syncStateToUrl(){
+    if (isApplyingState) return;
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
+    const state = collectStateFromControls();
+    let mutated = false;
+
+    STATE_KEYS.forEach(key => {
+      const value = state[key];
+      const defaultValue = DEFAULT_STATE[key];
+      const stringValue = value != null ? String(value) : '';
+      const defaultString = defaultValue != null ? String(defaultValue) : '';
+      const comparableValue = COLOR_STATE_KEYS.has(key) ? stringValue.toUpperCase() : stringValue;
+      const comparableDefault = COLOR_STATE_KEYS.has(key) ? defaultString.toUpperCase() : defaultString;
+      if (comparableValue === comparableDefault || comparableValue === '' && comparableDefault === ''){
+        if (params.has(key)){
+          params.delete(key);
+          mutated = true;
+        }
+      } else if (params.get(key) !== stringValue){
+        params.set(key, stringValue);
+        mutated = true;
+      }
+    });
+
+    if (currentLang && currentLang !== FALLBACK_LANG){
+      if (params.get('lang') !== currentLang){
+        params.set('lang', currentLang);
+        mutated = true;
+      }
+    } else if (params.has('lang')){
+      params.delete('lang');
+      mutated = true;
+    }
+
+    const newSearch = params.toString();
+    const currentSearch = window.location.search.replace(/^\?/, '');
+    if (!mutated && newSearch === currentSearch){
+      return;
+    }
+
+    const newUrl = `${url.pathname}${newSearch ? `?${newSearch}` : ''}${url.hash}`;
+    if (newUrl !== `${window.location.pathname}${window.location.search}${window.location.hash}`){
+      history.replaceState(null, '', newUrl);
+    }
+  }
+
+  function applyStateFromParams(params, {render = true, sync = false} = {}){
+    const state = {};
+    STATE_KEYS.forEach(key => {
+      if (params.has(key)){
+        state[key] = params.get(key);
+      }
+    });
+    applyControlsFromState(state);
+    if (render){
+      renderQR();
+    }
+    if (sync){
+      syncStateToUrl();
+    }
+  }
 
   if (!els.canvas){
     console.error(t('errorCanvasMissing'));
@@ -452,27 +659,19 @@
     img.src = dataUrl;
   }
 
-  // UI bindings
-  els.size.addEventListener('input', () => {
-    els.sizeVal.textContent = els.size.value;
+  function handleControlInput(){
+    updateRangeOutputs();
     renderQR();
-  });
-  els.margin.addEventListener('input', () => {
-    els.marginVal.textContent = els.margin.value;
-    renderQR();
-  });
-  els.logoSize.addEventListener('input', () => {
-    els.logoSizeVal.textContent = els.logoSize.value;
-    renderQR();
-  });
-  els.logoPad.addEventListener('input', () => {
-    els.logoPadVal.textContent = els.logoPad.value;
-    renderQR();
-  });
+    if (!isApplyingState){
+      syncStateToUrl();
+    }
+  }
 
   [
     els.text,
     els.ecc,
+    els.size,
+    els.margin,
     els.fg,
     els.bg,
     els.quiet,
@@ -480,10 +679,12 @@
     els.cornerSquareColor,
     els.cornerDot,
     els.cornerDotColor,
+    els.logoSize,
+    els.logoPad,
   ].forEach(el => {
     if (!el) return;
-    el.addEventListener('input', renderQR);
-    el.addEventListener('change', renderQR);
+    el.addEventListener('input', handleControlInput);
+    el.addEventListener('change', handleControlInput);
   });
 
   els.logo.addEventListener('change', () => handleLogoFile(els.logo.files[0]));
@@ -505,18 +706,23 @@
     els.logo.value = '';
     logoDataUrl = null;
     renderQR();
+    syncStateToUrl();
   });
 
-  // Defaults
-  els.text.value = 'https://bpacks.eco/?utm_source=qr';
-  els.sizeVal.textContent = els.size.value;
-  els.marginVal.textContent = els.margin.value;
-  els.logoSizeVal.textContent = els.logoSize.value;
-  els.logoPadVal.textContent = els.logoPad.value;
+  window.addEventListener('popstate', () => {
+    const params = new URLSearchParams(window.location.search);
+    const langFromUrl = normalizeLang(params.get('lang')) || FALLBACK_LANG;
+    if (langFromUrl !== currentLang){
+      setLanguage(langFromUrl, {store: true, sync: false});
+    }
+    applyStateFromParams(params, {render: true, sync: false});
+    syncStateToUrl();
+  });
 
   window.addEventListener('load', () => {
     try {
       renderQR();
+      syncStateToUrl();
       if (window.DEFAULT_LOGO_DATA_URL){
         loadLogoDataUrl(String(window.DEFAULT_LOGO_DATA_URL));
       } else if (logoDataUrl){

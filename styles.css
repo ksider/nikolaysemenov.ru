@@ -115,9 +115,13 @@ body {
 .experience__title {
   font-family:'PT Serif', serif;
   margin: 0;
-  font-size: clamp(2rem, 3vw, 2.4rem);
+  font-size: clamp(2.25rem, 3.3vw, 4rem);
   line-height: 1;
   font-weight: 400;
+}
+
+.hand {
+  font-family: 'Homemade Apple', cursive;
 }
 
 .experience__org {
@@ -148,9 +152,34 @@ body {
 }
 .experience__body {
   margin: 0;
-  font-family:  'PT Sans', sans-serif; font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.2;
+  font-family: 'PT Sans', sans-serif;
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1.65;
+  color: var(--accent);
+  max-width: 58ch;
+  text-wrap: pretty;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-feature-settings: 'liga' 1, 'kern' 1;
+  hanging-punctuation: first;
+}
+
+.experience__body + .experience__body {
+  margin-top: 1.1rem;
+}
+
+.experience__body a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-decoration-color: rgba(255, 255, 255, 0.35);
+  text-underline-offset: 0.18em;
+}
+
+.experience__body a:hover,
+.experience__body a:focus-visible {
+  text-decoration-color: currentColor;
 }
 
 .education {
@@ -405,6 +434,10 @@ body {
 
   .placeholder--portrait {
     min-height: clamp(460px, 90vw, 680px);
+  }
+
+  .experience__body {
+    max-width: 100%;
   }
 }
 

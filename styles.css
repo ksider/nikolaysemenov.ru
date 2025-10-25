@@ -207,6 +207,10 @@ body {
 }
 
 /* Section layout overrides */
+.section--hero {
+  position: relative;
+}
+
 .section--hero .section__text {
   grid-column: 1 / span 4;
 }
@@ -340,13 +344,6 @@ body {
   fill: currentColor;
 }
 
-.section--social .section__media {
-  grid-column: 9 / -1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .social__preview {
   position: relative;
   display: flex;
@@ -388,6 +385,46 @@ body {
   filter: saturate(1.1);
 }
 
+.social__preview--hero {
+  position: absolute;
+  left: clamp(1.5rem, 6vw, 3rem);
+  bottom: clamp(1.75rem, 7vw, 3.5rem);
+  z-index: 3;
+}
+
+.section--social .section__media {
+  grid-column: 9 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-preview {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(4.5rem, 12vw, 6rem);
+  aspect-ratio: 3 / 4;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.45);
+  text-decoration: none;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.qr-preview:hover,
+.qr-preview:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  outline: none;
+}
+
+.qr-preview__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -424,6 +461,11 @@ body {
 
   .section--hero .section__media {
     grid-column: 4 / -1;
+  }
+
+  .social__preview--hero {
+    left: clamp(1.25rem, 1vw, 2rem);
+    bottom: clamp(1.5rem, 6vw, 2.75rem);
   }
 
   .section--director .section__media,
@@ -481,5 +523,27 @@ body {
 
   .hero__tagline {
     font-size: clamp(1.2rem, 5vw, 1.6rem);
+  }
+
+  .social__preview--hero {
+    position: absolute;
+    width: clamp(6.5rem, 38vw, 8.75rem);
+    height: clamp(6.5rem, 38vw, 8.75rem);;
+    aspect-ratio: 1;
+    left: inherit;
+    right: clamp(1.25rem, 0.5vw, 2.25rem);
+    /* top: clamp(3.25rem, 19vw, 4.45rem); */
+    top:25%;
+    margin: 0;
+    transform: translateY(-50%);
+    z-index: 4;
+  }
+
+  .section--social .section__media {
+    justify-content: flex-start;
+  }
+
+  .qr-preview {
+    width: clamp(3rem, 30vw, 7rem);
   }
 }

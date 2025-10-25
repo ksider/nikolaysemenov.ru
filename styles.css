@@ -248,7 +248,9 @@ body {
 .section--education .section__text {
   grid-column: 7 / span 4;
 }
-
+.section--social {
+  padding-bottom: 4em;
+}
 .section--social .section__text {
   grid-column: 2 / span 6;
 }

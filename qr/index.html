@@ -25,139 +25,164 @@
   </head>
   <body>
     <header class="app-header">
-      <h1>Генератор QR-кодов</h1>
-      <p class="sub"></p>
+      <div class="header-left">
+        <h1 data-i18n-key="appTitle">Генератор QR-кодов</h1>
+        <p class="sub" data-i18n-key="appSubtitle">Настройте внешний вид QR-кода</p>
+      </div>
+      <div class="lang-switch" role="group" aria-label="Language selector" data-i18n-key="langSwitcherAria" data-i18n-target="aria-label">
+        <button type="button" class="lang-btn is-active" data-lang="ru">RU</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+      </div>
     </header>
 
     <main class="container">
       <section class="controls">
-        <div class="field">
-          <label for="text">Текст или URL</label>
-          <textarea id="text" rows="3" placeholder="Введите текст, ссылку или любые данные"></textarea>
-        </div>
-
-        <div class="row">
+        <div class="control-group">
+          <h2 data-i18n-key="sectionContent">Содержимое</h2>
           <div class="field">
-            <label for="ecc">Коррекция ошибок</label>
-            <select id="ecc">
-              <option value="L">L (наименьшая, больше данных)</option>
-              <option value="M">M</option>
-              <option value="Q">Q</option>
-              <option value="H" selected>H (наибольшая, устойчивее с логотипом)</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="size">Размер (пикс.) <span id="sizeVal">1024</span></label>
-            <input type="range" id="size" min="320" max="2048" step="16" value="1024" />
-          </div>
-
-          <div class="field">
-            <label for="margin">Отступ (модули) <span id="marginVal">2</span></label>
-            <input type="range" id="margin" min="0" max="16" step="1" value="2" />
+            <label for="text" data-i18n-key="textLabel">Текст или URL</label>
+            <textarea id="text" rows="3" data-i18n-key="textPlaceholder" data-i18n-target="placeholder" placeholder="Введите текст, ссылку или любые данные"></textarea>
           </div>
         </div>
 
-        <div class="row">
-          <div class="field">
-            <label for="fg">Цвет QR</label>
-            <input type="color" id="fg" value="#1B2923" />
-            <div class="cpk" data-for="fg">
-              <div class="cpk-swatch" aria-label="Выбор цвета"></div>
-              <div class="cpk-pop cpk-hidden">
-                <div class="cpk-sv"><div class="cpk-dot"></div></div>
-                <div class="cpk-hue"><div class="cpk-thumb" style="left:0%"></div></div>
-                <div class="cpk-row"><span>HEX</span><input class="cpk-hex" value="#1B2923" maxlength="9" /></div>
-                <div class="cpk-row"><span>RGB</span><span>
-                  <input class="cpk-in cpk-r" type="number" min="0" max="255" step="1" />
-                  <input class="cpk-in cpk-g" type="number" min="0" max="255" step="1" />
-                  <input class="cpk-in cpk-b" type="number" min="0" max="255" step="1" />
-                </span></div>
+        <div class="control-group">
+          <h2 data-i18n-key="sectionSizing">Размер и точность</h2>
+          <div class="row">
+            <div class="field">
+              <label for="ecc" data-i18n-key="eccLabel">Коррекция ошибок</label>
+              <select id="ecc">
+                <option value="L" data-i18n-key="eccL">L (наименьшая, больше данных)</option>
+                <option value="M" data-i18n-key="eccM">M</option>
+                <option value="Q" data-i18n-key="eccQ">Q</option>
+                <option value="H" data-i18n-key="eccH" selected>H (наибольшая, устойчивее с логотипом)</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="size"><span data-i18n-key="sizeLabel">Размер (пикс.)</span> <span id="sizeVal">1024</span></label>
+              <input type="range" id="size" min="320" max="2048" step="16" value="1024" />
+            </div>
+
+            <div class="field">
+              <label for="margin"><span data-i18n-key="marginLabel">Отступ (модули)</span> <span id="marginVal">2</span></label>
+              <input type="range" id="margin" min="0" max="16" step="1" value="2" />
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <h2 data-i18n-key="sectionModules">Модули и цвета</h2>
+          <div class="row">
+            <div class="field">
+              <label for="fg" data-i18n-key="fgLabel">Цвет QR</label>
+              <input type="color" id="fg" value="#1B2923" />
+              <div class="cpk" data-for="fg">
+                <div class="cpk-swatch" aria-label="Выбор цвета" data-i18n-key="colorPickerAria" data-i18n-target="aria-label"></div>
+                <div class="cpk-pop cpk-hidden">
+                  <div class="cpk-sv"><div class="cpk-dot"></div></div>
+                  <div class="cpk-hue"><div class="cpk-thumb" style="left:0%"></div></div>
+                  <div class="cpk-row"><span>HEX</span><input class="cpk-hex" value="#1B2923" maxlength="9" /></div>
+                  <div class="cpk-row"><span>RGB</span><span>
+                    <input class="cpk-in cpk-r" type="number" min="0" max="255" step="1" />
+                    <input class="cpk-in cpk-g" type="number" min="0" max="255" step="1" />
+                    <input class="cpk-in cpk-b" type="number" min="0" max="255" step="1" />
+                  </span></div>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <label for="bg" data-i18n-key="bgLabel">Фон</label>
+              <input type="color" id="bg" value="#ffffff" />
+              <div class="cpk" data-for="bg">
+                <div class="cpk-swatch" aria-label="Выбор цвета" data-i18n-key="colorPickerAria" data-i18n-target="aria-label"></div>
+                <div class="cpk-pop cpk-hidden">
+                  <div class="cpk-sv"><div class="cpk-dot"></div></div>
+                  <div class="cpk-hue"><div class="cpk-thumb" style="left:0%"></div></div>
+                  <div class="cpk-row"><span>HEX</span><input class="cpk-hex" value="#ffffff" maxlength="9" /></div>
+                  <div class="cpk-row"><span>RGB</span><span>
+                    <input class="cpk-in cpk-r" type="number" min="0" max="24" step="1" />
+                    <input class="cpk-in cpk-g" type="number" min="0" max="41" step="1" />
+                    <input class="cpk-in cpk-b" type="number" min="0" max="35" step="1" />
+                  </span></div>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <label for="quiet" data-i18n-key="modulesShapeLabel">Форма модулей</label>
+              <select id="quiet">
+                <option value="square" data-i18n-key="modulesSquare" selected>Классические</option>
+                <option value="rounded" data-i18n-key="modulesRounded">Скруглённые</option>
+                <option value="dots" data-i18n-key="modulesDots">Круглые точки</option>
+                <option value="classy" data-i18n-key="modulesClassy">Classy</option>
+                <option value="classy-rounded" data-i18n-key="modulesClassyRounded">Classy округлённые</option>
+                <option value="extra-rounded" data-i18n-key="modulesExtraRounded">Максимальное скругление</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <h2 data-i18n-key="sectionCorners">Углы</h2>
+          <div class="row corner-layout">
+            <div class="field-stack">
+              <div class="field">
+                <label for="cornerSquare" data-i18n-key="cornerSquareLabel">Узоры углов (наружные)</label>
+                <select id="cornerSquare">
+                  <option value="square" data-i18n-key="cornerSquareClassic" selected>Классические</option>
+                  <option value="extra-rounded" data-i18n-key="cornerSquareRounded">Скруглённые</option>
+                  <option value="dot" data-i18n-key="cornerSquareDot">Точки</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="cornerDot" data-i18n-key="cornerDotLabel">Узоры углов (внутренние)</label>
+                <select id="cornerDot">
+                  <option value="dot" data-i18n-key="cornerDotDot" selected>Точка</option>
+                  <option value="square" data-i18n-key="cornerDotSquare">Квадрат</option>
+                  <option value="none" data-i18n-key="cornerDotNone">Без оформления</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-stack">
+              <div class="field">
+                <label for="cornerSquareColor" data-i18n-key="cornerSquareColorLabel">Цвет углов (наружные)</label>
+                <input type="color" id="cornerSquareColor" value="#1B2923" />
+              </div>
+              <div class="field">
+                <label for="cornerDotColor" data-i18n-key="cornerDotColorLabel">Цвет углов (внутренние)</label>
+                <input type="color" id="cornerDotColor" value="#1B2923" />
               </div>
             </div>
           </div>
-          <div class="field">
-            <label for="bg">Фон</label>
-            <input type="color" id="bg" value="#ffffff" />
-            <div class="cpk" data-for="bg">
-              <div class="cpk-swatch" aria-label="Выбор цвета"></div>
-              <div class="cpk-pop cpk-hidden">
-                <div class="cpk-sv"><div class="cpk-dot"></div></div>
-                <div class="cpk-hue"><div class="cpk-thumb" style="left:0%"></div></div>
-                <div class="cpk-row"><span>HEX</span><input class="cpk-hex" value="#ffffff" maxlength="9" /></div>
-                <div class="cpk-row"><span>RGB</span><span>
-                  <input class="cpk-in cpk-r" type="number" min="0" max="24" step="1" />
-                  <input class="cpk-in cpk-g" type="number" min="0" max="41" step="1" />
-                  <input class="cpk-in cpk-b" type="number" min="0" max="35" step="1" />
-                </span></div>
-              </div>
+        </div>
+
+        <div class="control-group">
+          <h2 data-i18n-key="sectionLogo">Логотип</h2>
+          <div class="row">
+            <div class="field">
+              <label for="logo" data-i18n-key="logoLabel">Логотип (PNG/JPG/SVG)</label>
+              <input type="file" id="logo" accept="image/*" />
             </div>
-          </div>
-          <div class="field">
-            <label for="quiet">Форма модулей</label>
-            <select id="quiet">
-              <option value="square" selected>Классические</option>
-              <option value="rounded">Скруглённые</option>
-              <option value="dots">Круглые точки</option>
-              <option value="classy">Classy</option>
-              <option value="classy-rounded">Classy округлённые</option>
-              <option value="extra-rounded">Максимальное скругление</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="field">
-            <label for="cornerSquare">Узоры углов (наружные)</label>
-            <select id="cornerSquare">
-              <option value="square" selected>Классические</option>
-              <option value="extra-rounded">Скруглённые</option>
-              <option value="dot">Точки</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="cornerSquareColor">Цвет углов (наружные)</label>
-            <input type="color" id="cornerSquareColor" value="#1B2923" />
-          </div>
-          <div class="field">
-            <label for="cornerDot">Узоры углов (внутренние)</label>
-            <select id="cornerDot">
-              <option value="dot" selected>Точка</option>
-              <option value="square">Квадрат</option>
-              <option value="none">Без оформления</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="cornerDotColor">Цвет углов (внутренние)</label>
-            <input type="color" id="cornerDotColor" value="#1B2923" />
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="field">
-            <label for="logo">Логотип (PNG/JPG/SVG)</label>
-            <input type="file" id="logo" accept="image/*" />
-          </div>
-          <div class="field">
-            <label for="logoSize">Размер логотипа (%) <span id="logoSizeVal">55</span></label>
-            <input type="range" id="logoSize" min="5" max="95" step="1" value="55" />
-          </div>
-          <div class="field">
-            <label for="logoPad">Отступ изображения (пикс.) <span id="logoPadVal">8</span></label>
-            <input type="range" id="logoPad" min="0" max="48" step="1" value="8" />
+            <div class="field">
+              <label for="logoSize"><span data-i18n-key="logoSizeLabel">Размер логотипа (%)</span> <span id="logoSizeVal">55</span></label>
+              <input type="range" id="logoSize" min="5" max="95" step="1" value="55" />
+            </div>
+            <div class="field">
+              <label for="logoPad"><span data-i18n-key="logoPaddingLabel">Отступ изображения (пикс.)</span> <span id="logoPadVal">8</span></label>
+              <input type="range" id="logoPad" min="0" max="48" step="1" value="8" />
+            </div>
           </div>
         </div>
 
         <div class="actions">
-          <button id="btnGenerate">Сгенерировать</button>
-          <button id="btnDownload" class="secondary">Скачать PNG</button>
-          <button id="btnDownloadSvg" class="secondary">Скачать SVG</button>
-          <button id="btnClearLogo" class="link">Очистить логотип</button>
+          <button id="btnGenerate" data-i18n-key="btnGenerate">Сгенерировать</button>
+          <button id="btnDownload" class="secondary" data-i18n-key="btnDownloadPng">Скачать PNG</button>
+          <button id="btnDownloadSvg" class="secondary" data-i18n-key="btnDownloadSvg">Скачать SVG</button>
+          <button id="btnClearLogo" class="link" data-i18n-key="btnClearLogo">Очистить логотип</button>
         </div>
       </section>
 
       <section class="preview">
-        <div id="canvas" aria-label="Предпросмотр QR" role="img"></div>
+        <div id="canvas" aria-label="Предпросмотр QR" data-i18n-key="previewAria" data-i18n-target="aria-label" role="img"></div>
       </section>
     </main>
 

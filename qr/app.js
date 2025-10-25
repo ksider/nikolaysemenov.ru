@@ -4,6 +4,251 @@
 */
 
 (function(){
+  const AVAILABLE_LANGS = ['ru', 'en'];
+  const FALLBACK_LANG = 'ru';
+  const TRANSLATIONS = {
+    ru: {
+      pageTitle: 'Генератор QR-кодов',
+      appTitle: 'Генератор QR-кодов',
+      appSubtitle: 'Настройте внешний вид QR-кода',
+      sectionContent: 'Содержимое',
+      textLabel: 'Текст или URL',
+      textPlaceholder: 'Введите текст, ссылку или любые данные',
+      sectionSizing: 'Размер и точность',
+      eccLabel: 'Коррекция ошибок',
+      eccL: 'L (наименьшая, больше данных)',
+      eccM: 'M',
+      eccQ: 'Q',
+      eccH: 'H (наибольшая, устойчивее с логотипом)',
+      sizeLabel: 'Размер (пикс.)',
+      marginLabel: 'Отступ (модули)',
+      sectionModules: 'Модули и цвета',
+      fgLabel: 'Цвет QR',
+      bgLabel: 'Фон',
+      modulesShapeLabel: 'Форма модулей',
+      modulesSquare: 'Классические',
+      modulesRounded: 'Скруглённые',
+      modulesDots: 'Круглые точки',
+      modulesClassy: 'Classy',
+      modulesClassyRounded: 'Classy округлённые',
+      modulesExtraRounded: 'Максимальное скругление',
+      sectionCorners: 'Углы',
+      cornerSquareLabel: 'Узоры углов (наружные)',
+      cornerSquareClassic: 'Классические',
+      cornerSquareRounded: 'Скруглённые',
+      cornerSquareDot: 'Точки',
+      cornerDotLabel: 'Узоры углов (внутренние)',
+      cornerDotDot: 'Точка',
+      cornerDotSquare: 'Квадрат',
+      cornerDotNone: 'Без оформления',
+      cornerSquareColorLabel: 'Цвет углов (наружные)',
+      cornerDotColorLabel: 'Цвет углов (внутренние)',
+      sectionLogo: 'Логотип',
+      logoLabel: 'Логотип (PNG/JPG/SVG)',
+      logoSizeLabel: 'Размер логотипа (%)',
+      logoPaddingLabel: 'Отступ изображения (пикс.)',
+      btnGenerate: 'Сгенерировать',
+      btnDownloadPng: 'Скачать PNG',
+      btnDownloadSvg: 'Скачать SVG',
+      btnClearLogo: 'Очистить логотип',
+      previewAria: 'Предпросмотр QR',
+      langSwitcherAria: 'Переключатель языка',
+      colorPickerAria: 'Выбор цвета',
+      errorCanvasMissing: 'Не найден контейнер для предпросмотра QR.',
+      errorLibraryMissing: 'Библиотека qr-code-styling не найдена.',
+      errorRender: 'Не удалось создать QR с текущими параметрами. Попробуйте изменить настройки.',
+      errorDownload: 'Не удалось сохранить файл.',
+      errorLogoLoad: 'Не удалось загрузить логотип.',
+      errorLogoLoadTryAnother: 'Не удалось загрузить логотип. Попробуйте другой файл.',
+      errorLogoRead: 'Ошибка чтения файла логотипа.',
+      warnLogoDataUrl: 'Не удалось загрузить логотип из data URL.',
+    },
+    en: {
+      pageTitle: 'QR Code Generator',
+      appTitle: 'QR Code Generator',
+      appSubtitle: 'Fine-tune the look of your QR code',
+      sectionContent: 'Content',
+      textLabel: 'Text or URL',
+      textPlaceholder: 'Enter text, link, or any data',
+      sectionSizing: 'Size & Accuracy',
+      eccLabel: 'Error correction',
+      eccL: 'L (lowest, more data)',
+      eccM: 'M',
+      eccQ: 'Q',
+      eccH: 'H (highest, better with logo)',
+      sizeLabel: 'Size (px)',
+      marginLabel: 'Margin (modules)',
+      sectionModules: 'Modules & Colors',
+      fgLabel: 'QR color',
+      bgLabel: 'Background',
+      modulesShapeLabel: 'Module style',
+      modulesSquare: 'Classic',
+      modulesRounded: 'Rounded',
+      modulesDots: 'Dots',
+      modulesClassy: 'Classy',
+      modulesClassyRounded: 'Classy rounded',
+      modulesExtraRounded: 'Extra rounded',
+      sectionCorners: 'Corners',
+      cornerSquareLabel: 'Corner patterns (outer)',
+      cornerSquareClassic: 'Classic',
+      cornerSquareRounded: 'Rounded',
+      cornerSquareDot: 'Dots',
+      cornerDotLabel: 'Corner patterns (inner)',
+      cornerDotDot: 'Dot',
+      cornerDotSquare: 'Square',
+      cornerDotNone: 'None',
+      cornerSquareColorLabel: 'Corner color (outer)',
+      cornerDotColorLabel: 'Corner color (inner)',
+      sectionLogo: 'Logo',
+      logoLabel: 'Logo (PNG/JPG/SVG)',
+      logoSizeLabel: 'Logo size (%)',
+      logoPaddingLabel: 'Logo padding (px)',
+      btnGenerate: 'Generate',
+      btnDownloadPng: 'Download PNG',
+      btnDownloadSvg: 'Download SVG',
+      btnClearLogo: 'Clear logo',
+      previewAria: 'QR preview',
+      langSwitcherAria: 'Language selector',
+      colorPickerAria: 'Select color',
+      errorCanvasMissing: 'Preview container not found.',
+      errorLibraryMissing: 'qr-code-styling library not found.',
+      errorRender: 'Failed to generate a QR code with the current settings. Please adjust the configuration.',
+      errorDownload: 'Could not save the file.',
+      errorLogoLoad: 'Could not load the logo.',
+      errorLogoLoadTryAnother: 'Could not load the logo. Try a different file.',
+      errorLogoRead: 'Error reading the logo file.',
+      warnLogoDataUrl: 'Could not load logo from data URL.',
+    },
+  };
+
+  function normalizeLang(lang){
+    if (!lang) return null;
+    const lower = String(lang).toLowerCase();
+    if (AVAILABLE_LANGS.includes(lower)) return lower;
+    const prefix = lower.split('-')[0];
+    return AVAILABLE_LANGS.includes(prefix) ? prefix : null;
+  }
+
+  function safeGetStorage(key){
+    try {
+      return window.localStorage ? window.localStorage.getItem(key) : null;
+    } catch (err){
+      return null;
+    }
+  }
+
+  function safeSetStorage(key, value){
+    try {
+      if (window.localStorage){
+        window.localStorage.setItem(key, value);
+      }
+    } catch (err){
+      // ignore storage errors
+    }
+  }
+
+  function detectInitialLang(){
+    const stored = normalizeLang(safeGetStorage('qrLang'));
+    if (stored) return stored;
+    if (Array.isArray(navigator.languages)){
+      for (const lng of navigator.languages){
+        const normalized = normalizeLang(lng);
+        if (normalized) return normalized;
+      }
+    }
+    return normalizeLang(navigator.language) || FALLBACK_LANG;
+  }
+
+  let currentLang = detectInitialLang();
+
+  function getDict(lang){
+    return TRANSLATIONS[lang] || TRANSLATIONS[FALLBACK_LANG];
+  }
+
+  function translateKey(key, lang = currentLang){
+    const dict = getDict(lang);
+    const fallbackDict = getDict(FALLBACK_LANG);
+    if (dict && Object.prototype.hasOwnProperty.call(dict, key)){
+      return dict[key];
+    }
+    if (fallbackDict && Object.prototype.hasOwnProperty.call(fallbackDict, key)){
+      return fallbackDict[key];
+    }
+    return key;
+  }
+
+  function updateLangButtons(lang){
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      const isActive = btn.dataset.lang === lang;
+      btn.classList.toggle('is-active', isActive);
+      btn.setAttribute('aria-pressed', String(isActive));
+    });
+  }
+
+  function applyTranslations(lang){
+    const dict = getDict(lang);
+    const fallbackDict = getDict(FALLBACK_LANG);
+    document.querySelectorAll('[data-i18n-key]').forEach(el => {
+      const key = el.dataset.i18nKey;
+      if (!key) return;
+      const target = el.dataset.i18nTarget || 'text';
+      const value = Object.prototype.hasOwnProperty.call(dict, key)
+        ? dict[key]
+        : (fallbackDict && Object.prototype.hasOwnProperty.call(fallbackDict, key) ? fallbackDict[key] : key);
+      switch (target){
+        case 'text':
+          el.textContent = value;
+          break;
+        case 'html':
+          el.innerHTML = value;
+          break;
+        case 'placeholder':
+          el.setAttribute('placeholder', value);
+          el.placeholder = value;
+          break;
+        case 'aria-label':
+          el.setAttribute('aria-label', value);
+          break;
+        default:
+          if (target in el){
+            el[target] = value;
+          } else {
+            el.setAttribute(target, value);
+          }
+      }
+    });
+    document.title = translateKey('pageTitle', lang);
+    document.documentElement.lang = lang;
+    updateLangButtons(lang);
+  }
+
+  function setLanguage(lang, {store = true} = {}){
+    const normalized = normalizeLang(lang) || FALLBACK_LANG;
+    currentLang = normalized;
+    applyTranslations(normalized);
+    if (store){
+      safeSetStorage('qrLang', normalized);
+    }
+  }
+
+  function t(key){
+    return translateKey(key, currentLang);
+  }
+
+  setLanguage(currentLang, {store: false});
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      setLanguage(btn.dataset.lang, {store: true});
+    });
+  });
+
+  window.addEventListener('storage', (event) => {
+    if (event.key === 'qrLang' && event.newValue){
+      setLanguage(event.newValue, {store: false});
+    }
+  });
+
   const els = {
     text: document.getElementById('text'),
     ecc: document.getElementById('ecc'),
@@ -31,12 +276,12 @@
   };
 
   if (!els.canvas){
-    console.error('Не найден контейнер для предпросмотра QR.');
+    console.error(t('errorCanvasMissing'));
     return;
   }
 
   if (typeof QRCodeStyling === 'undefined'){
-    console.error('qr-code-styling library not found.');
+    console.error(t('errorLibraryMissing'));
     return;
   }
 
@@ -144,7 +389,7 @@
       }
     } catch (err){
       console.error(err);
-      alert('Не удалось создать QR с текущими параметрами. Попробуйте изменить настройки.');
+      alert(t('errorRender'));
     }
   }
 
@@ -159,7 +404,7 @@
       qrCode.download({ name: 'qr', extension });
     } catch (err){
       console.error(err);
-      alert('Не удалось сохранить файл.');
+      alert(t('errorDownload'));
     }
   }
 
@@ -171,7 +416,7 @@
     reader.onload = () => {
       const dataUrl = typeof reader.result === 'string' ? reader.result : '';
       if (!dataUrl){
-        alert('Не удалось загрузить логотип.');
+        alert(t('errorLogoLoad'));
         return;
       }
       const img = new Image();
@@ -181,12 +426,12 @@
         renderQR();
       };
       img.onerror = () => {
-        alert('Не удалось загрузить логотип. Попробуйте другой файл.');
+        alert(t('errorLogoLoadTryAnother'));
       };
       img.src = dataUrl;
     };
     reader.onerror = () => {
-      alert('Ошибка чтения файла логотипа.');
+      alert(t('errorLogoRead'));
     };
     reader.readAsDataURL(file);
   }
@@ -202,7 +447,7 @@
       renderQR();
     };
     img.onerror = () => {
-      console.warn('Не удалось загрузить логотип из data URL');
+      console.warn(t('warnLogoDataUrl'));
     };
     img.src = dataUrl;
   }

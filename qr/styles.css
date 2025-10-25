@@ -89,6 +89,17 @@ body{
   background:rgba(46,160,67,0.2);
 }
 
+.reset-btn{
+  background:rgba(18,18,24,0.6);
+  border-color:var(--border);
+}
+
+.reset-btn.has-query{
+  color:#fff;
+  border-color:rgba(189,95,255,0.65);
+  background:rgba(189,95,255,0.2);
+}
+
 .lang-switch{
   display:inline-flex;
   border:1px solid var(--border);

@@ -52,6 +52,7 @@
       btnDownloadSvg: 'Скачать SVG',
       btnClearLogo: 'Очистить логотип',
       btnCopyLink: 'Скопировать ссылку',
+      btnReset: 'Сбросить настройки',
       previewAria: 'Предпросмотр QR',
       langSwitcherAria: 'Переключатель языка',
       colorPickerAria: 'Выбор цвета',
@@ -111,6 +112,7 @@
       btnDownloadSvg: 'Download SVG',
       btnClearLogo: 'Clear logo',
       btnCopyLink: 'Copy link',
+      btnReset: 'Reset settings',
       previewAria: 'QR preview',
       langSwitcherAria: 'Language selector',
       colorPickerAria: 'Select color',
@@ -316,6 +318,7 @@
     logoPadVal: document.getElementById('logoPadVal'),
     btnGenerate: document.getElementById('btnGenerate'),
     btnCopyLink: document.getElementById('btnCopyLink'),
+    btnResetDefaults: document.getElementById('btnResetDefaults'),
     btnDownload: document.getElementById('btnDownload'),
     btnDownloadSvg: document.getElementById('btnDownloadSvg'),
     btnClearLogo: document.getElementById('btnClearLogo'),
@@ -423,9 +426,15 @@
     return state;
   }
 
-  function updateCopyButtonState(hasQuery){
-    if (!els.btnCopyLink) return;
-    els.btnCopyLink.classList.toggle('has-query', hasQuery);
+  function updateQueryIndicators(hasQuery){
+    if (els.btnCopyLink){
+      els.btnCopyLink.classList.toggle('has-query', hasQuery);
+    }
+    if (els.btnResetDefaults){
+      els.btnResetDefaults.classList.toggle('has-query', hasQuery);
+      els.btnResetDefaults.disabled = !hasQuery;
+      els.btnResetDefaults.setAttribute('aria-disabled', String(!hasQuery));
+    }
   }
 
   function syncStateToUrl(){
@@ -455,7 +464,7 @@
 
     const newSearch = params.toString();
     const currentSearch = window.location.search.replace(/^\?/, '');
-    updateCopyButtonState(newSearch.length > 0);
+    updateQueryIndicators(newSearch.length > 0);
     if (!mutated && newSearch === currentSearch){
       return;
     }
@@ -474,7 +483,7 @@
       }
     });
     applyControlsFromState(state);
-    updateCopyButtonState(params.toString().length > 0);
+    updateQueryIndicators(params.toString().length > 0);
     if (render){
       renderQR();
     }
@@ -644,6 +653,12 @@
     }
   }
 
+  function resetToDefaults(){
+    applyControlsFromState(DEFAULT_STATE);
+    renderQR();
+    syncStateToUrl();
+  }
+
   function handleLogoFile(file){
     if (!file){
       return;
@@ -726,6 +741,14 @@
     els.btnCopyLink.addEventListener('click', async (e) => {
       e.preventDefault();
       await copySettingsLink();
+    });
+  }
+  if (els.btnResetDefaults){
+    els.btnResetDefaults.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!els.btnResetDefaults.disabled){
+        resetToDefaults();
+      }
     });
   }
   els.btnDownload.addEventListener('click', (e) => {

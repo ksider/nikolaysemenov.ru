@@ -69,6 +69,125 @@
     display: grid;
     gap: 18px;
     align-content: start;
+    transition: transform 0.28s ease, opacity 0.28s ease, visibility 0.28s ease;
+    z-index: 24;
+  }
+
+  .panel-controls.is-collapsed {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.96);
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .panel-scrim {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.6);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+    z-index: 18;
+  }
+
+  .panel-scrim.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .panel-toggle {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.32);
+    background: rgba(15, 23, 42, 0.78);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 18px 34px rgba(2, 6, 23, 0.45);
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    z-index: 30;
+  }
+
+  .panel-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .panel-toggle:hover {
+    border-color: rgba(56, 189, 248, 0.52);
+    background: rgba(15, 23, 42, 0.88);
+    transform: translateY(-1px);
+    box-shadow: 0 20px 40px rgba(14, 165, 233, 0.25);
+  }
+
+  .panel-toggle.is-active {
+    border-color: rgba(56, 189, 248, 0.6);
+    background: rgba(14, 165, 233, 0.22);
+    box-shadow: 0 18px 34px rgba(14, 165, 233, 0.28);
+  }
+
+  .panel-toggle-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    background: rgba(8, 47, 73, 0.65);
+  }
+
+  .panel-toggle-icon::before,
+  .panel-toggle-icon::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  .panel-toggle-icon::before {
+    inset: 3px;
+    border: 1px solid rgba(56, 189, 248, 0.65);
+    background: rgba(8, 47, 73, 0.85);
+  }
+
+  .panel-toggle-icon::after {
+    inset: 7px;
+    background: rgba(56, 189, 248, 0.78);
+  }
+
+  .map-actions {
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    background: rgba(8, 23, 43, 0.78);
+    box-shadow: 0 24px 48px rgba(2, 6, 23, 0.55);
+    backdrop-filter: blur(16px);
+    z-index: 28;
+  }
+
+  .map-actions .pill-button {
+    min-width: 140px;
+    padding: 12px 26px;
+  }
+
+  .map-actions .pill-button:focus-visible {
+    outline: 2px solid rgba(56, 189, 248, 0.65);
+    outline-offset: 4px;
   }
 
   .panel-controls h1 {
@@ -174,7 +293,6 @@
   .pill-button.ghost:hover:not(:disabled) {
     background: rgba(148, 163, 184, 0.12);
     border-color: var(--border-strong);
-    transform: translateY(-1px);
   }
 
   .pill-button.accent {
@@ -187,16 +305,16 @@
   .pill-button.accent:hover:not(:disabled) {
     background: rgba(56, 189, 248, 0.22);
     box-shadow: 0 16px 28px rgba(14, 165, 233, 0.2);
-    transform: translateY(-1px);
   }
 
   .panel-progress {
     top: 28px;
     left: 50%;
     transform: translateX(-50%);
-    min-width: 260px;
+    min-width: 220px;
     justify-items: center;
-    padding: 16px 22px;
+    padding: 12px 18px;
+    z-index: 18;
   }
 
   .progress-track {
@@ -661,9 +779,10 @@
     }
 
     .panel-progress {
-      top: auto;
-      bottom: 24px;
-      left: 20px;
+      top: 24px;
+      right: 20px;
+      left: auto;
+      bottom: auto;
       transform: none;
     }
 
@@ -671,17 +790,43 @@
   }
 
   @media (max-width: 768px) {
+    .panel-scrim {
+      display: block;
+    }
+
     .panel-controls {
-      top: 18px;
+      position: fixed;
+      top: 78px;
       left: 18px;
       right: 18px;
+      max-height: calc(100vh - 110px);
+      max-height: calc(100dvh - 110px);
+      overflow-y: auto;
+      backdrop-filter: blur(18px);
     }
 
     .panel-progress {
-      left: 50%;
-      bottom: auto;
       top: 18px;
-      transform: translateX(-50%);
+      right: 18px;
+      left: auto;
+      bottom: auto;
+      width: min(220px, calc(100% - 48px));
+      transform: none;
+    }
+
+    .map-actions {
+      bottom: 24px;
+      width: calc(100% - 48px);
+      max-width: 480px;
+      justify-content: center;
+      flex-wrap: nowrap;
+      padding: 12px;
+      gap: 10px;
+    }
+
+    .map-actions .pill-button {
+      flex: 1 1 0;
+      min-width: auto;
     }
 
   }
@@ -698,14 +843,34 @@
     }
 
     .panel-progress {
+      top: 18px;
+      width: calc(100% - 48px);
+    }
+
+    .map-actions {
+      bottom: 22px;
       width: calc(100% - 36px);
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 10px;
+      padding: 12px;
+    }
+
+    .map-actions .pill-button {
+      width: auto;
+      flex: 1 1 0;
     }
   }
   </style>
 </head>
 <body>
   <div class="map-shell">
-    <div class="floating-panel panel-controls">
+    <button type="button" class="panel-toggle" id="panelToggle" aria-controls="controlPanel" aria-expanded="true">
+      <span class="panel-toggle-icon" aria-hidden="true"></span>
+      <span id="panelToggleLabel"></span>
+    </button>
+    <div class="panel-scrim" id="panelScrim"></div>
+    <div class="floating-panel panel-controls" id="controlPanel">
       <div>
         <h1 id="headline"></h1>
         <p id="lead"></p>
@@ -714,10 +879,6 @@
         <div class="lang-switcher" role="group" aria-label="Language selector">
           <button type="button" class="lang-button" data-lang="ru">Русский</button>
           <button type="button" class="lang-button" data-lang="en">English</button>
-        </div>
-        <div class="action-buttons">
-          <button type="button" class="pill-button ghost" id="backButton">Назад</button>
-          <button type="button" class="pill-button accent" id="resetButton">Начать заново</button>
         </div>
       </div>
       <div class="control-links">
@@ -729,6 +890,10 @@
     <div class="floating-panel panel-progress">
       <div class="progress-track" id="progressTrack"></div>
       <span class="progress-label" id="progressLabel"></span>
+    </div>
+    <div class="map-actions">
+      <button type="button" class="pill-button ghost" id="backButton">Назад</button>
+      <button type="button" class="pill-button accent" id="resetButton">Начать заново</button>
     </div>
     <div class="map-space" id="mapSpace">
       <div class="map-pan" id="mapPan">
@@ -788,6 +953,18 @@ const uiText = {
       languageSwitcher: {
         ru: 'Переключатель языка',
         en: 'Language selector'
+      },
+      panelToggleLabel: {
+        ru: 'Инфо',
+        en: 'Info'
+      },
+      panelToggleShow: {
+        ru: 'Открыть панель маршрута',
+        en: 'Open the route panel'
+      },
+      panelToggleHide: {
+        ru: 'Скрыть панель маршрута',
+        en: 'Hide the route panel'
       }
     };
 
@@ -2174,12 +2351,17 @@ const mapPanEl = document.getElementById('mapPan');
 const mapCanvasEl = document.getElementById('mapCanvas');
 const mapLinksEl = document.getElementById('mapLinks');
 const historySectionEl = document.getElementById('historySection');
+const panelControlsEl = document.getElementById('controlPanel');
+const panelToggleBtn = document.getElementById('panelToggle');
+const panelToggleLabel = document.getElementById('panelToggleLabel');
+const panelScrim = document.getElementById('panelScrim');
 const langButtons = document.querySelectorAll('.lang-button');
 const langSwitcher = document.querySelector('.lang-switcher');
 const classicLinkEl = document.getElementById('classicLink');
 const sourceLinkEl = document.getElementById('sourceLink');
 const backBtn = document.getElementById('backButton');
 const resetBtn = document.getElementById('resetButton');
+const mobileViewport = window.matchMedia('(max-width: 768px)');
 
 if (historySectionEl) {
   historySectionEl.setAttribute('role', 'log');
@@ -2201,6 +2383,9 @@ let scale = 1;
 const SCALE_MIN = 0.45;
 const SCALE_MAX = 2.75;
 let pendingFocusIndex = 0;
+let panelExpanded = !mobileViewport.matches;
+const initialView = { panX: pan.x, panY: pan.y, scale };
+let initialViewCaptured = false;
 
 const dragState = {
   active: false,
@@ -2223,6 +2408,33 @@ langButtons.forEach((button) => {
 backBtn.addEventListener('click', () => goBack());
 resetBtn.addEventListener('click', () => resetFlow());
 
+if (panelToggleBtn) {
+  panelToggleBtn.addEventListener('click', () => {
+    const isExpanded = panelToggleBtn.getAttribute('aria-expanded') === 'true';
+    const nextState = !isExpanded;
+    setPanelExpanded(nextState, { origin: panelToggleBtn });
+    if (nextState && panelControlsEl) {
+      panelControlsEl.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+}
+
+if (panelScrim) {
+  panelScrim.addEventListener('click', () => setPanelExpanded(false));
+}
+
+if (typeof mobileViewport.addEventListener === 'function') {
+  mobileViewport.addEventListener('change', handleViewportChange);
+} else if (typeof mobileViewport.addListener === 'function') {
+  mobileViewport.addListener(handleViewportChange);
+}
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && mobileViewport.matches && panelExpanded) {
+    setPanelExpanded(false);
+  }
+});
+
 if (mapSpaceEl) {
   mapSpaceEl.addEventListener('pointerdown', handlePointerDown);
   mapSpaceEl.addEventListener('pointermove', handlePointerMove);
@@ -2233,6 +2445,7 @@ if (mapSpaceEl) {
 }
 
 applyTransform();
+setPanelExpanded(panelExpanded, { skipFocus: true });
 setLanguage(state.lang, true);
 render();
 
@@ -2262,6 +2475,52 @@ function translate(value) {
   return '';
 }
 
+function updatePanelToggleText() {
+  if (!panelToggleBtn || !panelToggleLabel) {
+    return;
+  }
+  panelToggleLabel.textContent = translate(uiText.panelToggleLabel);
+  const isExpanded = panelToggleBtn.getAttribute('aria-expanded') !== 'false';
+  const ariaText = isExpanded ? uiText.panelToggleHide : uiText.panelToggleShow;
+  panelToggleBtn.setAttribute('aria-label', translate(ariaText));
+}
+
+function setPanelExpanded(expanded, options = {}) {
+  if (!panelControlsEl || !panelToggleBtn) {
+    return;
+  }
+  const { skipFocus = false, origin = null } = options;
+  panelExpanded = expanded;
+  const isMobile = mobileViewport.matches;
+  panelControlsEl.classList.toggle('is-collapsed', !expanded);
+  panelControlsEl.setAttribute('aria-hidden', expanded ? 'false' : 'true');
+  panelToggleBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  panelToggleBtn.classList.toggle('is-active', expanded);
+  if (panelScrim) {
+    panelScrim.classList.toggle('is-visible', expanded && isMobile);
+    if (!isMobile) {
+      panelScrim.classList.remove('is-visible');
+    }
+  }
+  if (!expanded && !skipFocus) {
+    const target = origin || panelToggleBtn;
+    if (target && typeof target.focus === 'function') {
+      target.focus();
+    }
+  }
+  updatePanelToggleText();
+}
+
+function handleViewportChange(event) {
+  if (event.matches) {
+    panelExpanded = false;
+    setPanelExpanded(false, { skipFocus: true });
+  } else {
+    panelExpanded = true;
+    setPanelExpanded(true, { skipFocus: true });
+  }
+}
+
 function setLanguage(lang, skipRender = false) {
   if (!supportedLanguages.includes(lang)) {
     lang = 'ru';
@@ -2278,6 +2537,7 @@ function setLanguage(lang, skipRender = false) {
     sourceLinkEl.textContent = translate(uiText.sourceLink);
   }
   langSwitcher.setAttribute('aria-label', translate(uiText.languageSwitcher));
+  updatePanelToggleText();
   updateLangButtons();
   updateActions();
   if (!skipRender) {
@@ -2748,9 +3008,17 @@ function goBack() {
 function resetFlow() {
   state.steps = [{ nodeId: 'start', optionIndex: null }];
   state.selectedMaterial = null;
-  pendingFocusIndex = 0;
-  centerMap();
+  pendingFocusIndex = null;
+  pan.x = initialView.panX;
+  pan.y = initialView.panY;
+  scale = initialView.scale;
+  applyTransform();
   render();
+  window.requestAnimationFrame(() => {
+    if (panelControlsEl) {
+      panelControlsEl.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
 }
 
 function focusOnStep(index) {
@@ -2767,6 +3035,12 @@ function focusOnStep(index) {
   const offsetY = (spaceRect.top + spaceRect.height / 2) - (nodeRect.top + nodeRect.height / 2);
   pan.x += offsetX;
   pan.y += offsetY;
+  if (!initialViewCaptured && index === 0) {
+    initialView.panX = pan.x;
+    initialView.panY = pan.y;
+    initialView.scale = scale;
+    initialViewCaptured = true;
+  }
   applyTransform();
 }
 

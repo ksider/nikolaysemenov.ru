@@ -1,107 +1,185 @@
 <!DOCTYPE html>
-<html>
-<head>
-<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-X25WXQ0818"></script> -->
-<!-- <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments); }
-  gtag('js', new Date());
-  gtag('config', 'G-X25WXQ0818');
-</script> -->
-
-    <meta charset="UTF-8">
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Nikolay Semenov</title>
-    <meta name="description" content="Material scientist">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.svg">
-     
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@900&family=PT+Sans:wght@400;700&family=PT+Serif:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="resume">
+      <section class="section section--hero">
+        <div class="section__text hero">
+          <h1 class="hero__name">
+            <span>Nikolay</span>
+            <span>Semenov</span>
+          </h1>
+          <p class="hero__tagline">Polymer Scientist,<br />Engineer.</p>
+        </div>
+        <div class="section__media">
+          <div class="placeholder placeholder--portrait" aria-hidden="true">&nbsp;</div>
+        </div>
+      </section>
 
-    <script src="jquery.js"></script>
-    <script src="jquery.cookie.min.js"></script>
-    <script src="script.js"></script>
+      <section class="section section--lead">
+        <div class="section__text">
+          <h2 class="experience__title">Lead of R&amp;D</h2>
+          <p class="experience__org"><a href="https://bpacks.eco" class="bpacks">Bpacks Lab</a></p>
+          <p class="experience__body">
+            Lead development of biobased packaging materials and scalable polymer formulations.
+            Delivered 5+ R&amp;D projects from lab concepts to functional prototypes. Developed materials
+            suitable for injection molding and thermoforming. Coordinated testing and pilot production
+            with partner laboratories.
+          </p>
+        </div>
+      </section>
 
-    <script src="wow.js"></script>
-    
-</head>
+      <section class="section section--director">
+        <div class="section__media">
+          <div class="placeholder placeholder--forks" aria-hidden="true"><img src="assets/o.png" alt=""></div>
+        </div>
+        <div class="section__text">
+          <h2 class="experience__title">Director of Innovation</h2>
+          <p class="experience__org">BEREZKA</p>
+          <p class="experience__body">
+            Created a plant-based polymer composite with rapid degradation in saline water. Designed
+            and tested MVP products (cups, tableware) at pilot scale. Confirmed home-compostability and
+            moisture-driven hydrolysis.
+          </p>
+        </div>
+      </section>
 
-<body class="">
+      <section class="section section--senior">
+        <div class="section__text">
+          <h2 class="experience__title">Senior Researcher</h2>
+          <p class="experience__org">IAM RAS</p>
+          <p class="experience__body">
+            Conducted research in rheology, non-Newtonian fluids, and polymer-filler systems. Used AFM,
+            interferometry, and mechanical testing to study surface topography. Developed polymer
+            compounds; taught and supervised graduate students.
+          </p>
+        </div>
+      </section>
 
-    
-<div class="first_page">
-    <!-- <div class="dot_layer">&nbsp;</div>  -->
-    
-        <div class="grid_layer">
-            <div class="name grid_text">
-              <div class="myname wow animate__animated animate__fadeInLeft">Nikolay<br>Semenov</div>
-              <div class="subt wow animate__animated animate__fadeInUp">
-              <span lang="en" alt="Polymer Scientist, Rheologist, and Materials Engineer">CSO, Head of R&D</span>
-            </div>
-            <!--and <abbr title="Chief Technology Officer">CTO</abbr> -->
+      <section class="section section--education">
+        <div class="section__media">
+          <div class="placeholder placeholder--tv" aria-hidden="true">
+            <img src="assets/tv.png" alt="" height="150px"/>
+          </div>
+        </div>
+        <div class="section__text education">
+          <p class="education__item">
+            <span class="education__degree">PhD</span>
+            <span class="education__details">Mechanics of Fluid, Gas, and Plasma</span>
+          </p>
+          <p class="education__item">
+            <span class="education__degree">Engineer &amp; BSc</span>
+            <span class="education__details">Materials Science and Technology of New Materials</span>
+          </p>
+        </div>
+      </section>
 
-            <!-- <div class="subt_other">
-              <ul>
-                <li>Senior Researcher, Institute of Applied Mechanics Moscow, iam.ras.ru</li>
-                <li>Director of innovation (CSO), eco-startup BERЁZKA, woodcup.ru</li>
-                <li>Technology Consultant, Self-employer, nikolaysemenov.ru</li>
-              </ul>
-            </div> -->
+      <section class="section section--social">
+        <div class="section__text">
+          <div class="social">
+            <h2 class="social__title">Let’s stay in touch</h2>
+            <p class="social__email">I’m just one email away → <a href="mailto:semenov.ne@gmail.com">semenov.ne@gmail.com</a>
+            </p>
+            <p class="social__description">
+              or catch me on socials:
+            </p>
+            <ul class="social__list" aria-label="Social media">
+              <li class="social__item">
+                <a class="social__link" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+                  <svg class="social__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path
+                      d="M4.5 9h3.6v11H4.5zM6.3 4a2.1 2.1 0 110.02-4.2 2.1 2.1 0 01-0.02 4.2zM10.6 9h3.4v1.5h0.1c0.5-0.9 1.7-1.8 3.6-1.8 3.8 0 4.6 2.4 4.6 5.6V20h-3.6v-5c0-1.2-0.02-2.9-1.9-2.9-1.9 0-2.1 1.3-2.1 2.9V20h-3.6z"
+                    />
+                  </svg>
+                  <span class="sr-only">LinkedIn</span>
+                </a>
+              </li>
+              <li class="social__item">
+                <a class="social__link" href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                  <svg class="social__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path
+                      d="M21 6.8a6.3 6.3 0 01-1.8.5 3.2 3.2 0 001.4-1.7 6.4 6.4 0 01-2 0.8 3.2 3.2 0 00-5.5 2.2c0 .3 0 .6.1.9a9.1 9.1 0 01-6.6-3.3 3.2 3.2 0 001 4.3 3.2 3.2 0 01-1.5-.4v.1a3.2 3.2 0 002.6 3.1 3.2 3.2 0 01-1.5.1 3.2 3.2 0 002.9 2.1A6.5 6.5 0 013 17a9.1 9.1 0 004.9 1.4c5.9 0 9.1-4.9 9.1-9.1v-.4A6.5 6.5 0 0021 6.8z"
+                    />
+                  </svg>
+                  <span class="sr-only">Twitter</span>
+                </a>
+              </li>
+              <li class="social__item">
+                <a class="social__link" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
+                  <svg class="social__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path
+                      d="M21.6 7.2a2.6 2.6 0 00-1.8-1.8C18 5 12 5 12 5s-6 0-7.8.4a2.6 2.6 0 00-1.8 1.8A27.3 27.3 0 002 12a27.3 27.3 0 00.4 4.8 2.6 2.6 0 001.8 1.8C6 19 12 19 12 19s6 0 7.8-.4a2.6 2.6 0 001.8-1.8A27.3 27.3 0 0022 12a27.3 27.3 0 00-.4-4.8zM10 15V9l5 3z"
+                    />
+                  </svg>
+                  <span class="sr-only">YouTube</span>
+                </a>
+              </li>
+              <li class="social__item">
+                <a class="social__link" href="https://t.me" target="_blank" rel="noopener noreferrer">
+                  <svg class="social__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path
+                      d="M21.5 3.4l-19 8a1 1 0 00.1 1.9l4.8 1.5 2 6.3a1 1 0 001.7.4l2.8-3.6 5.1 3.7a1 1 0 001.6-.6l3-15a1 1 0 00-1.1-1.2zM9.2 17.2l-1-3.2 7.5-4.7-4.9 6.1 4.7 3.4z"
+                    />
+                  </svg>
+                  <span class="sr-only">Telegram</span>
+                </a>
+              </li>
+              <li class="social__item">
+                <a class="social__link" href="https://www.whatsapp.com" target="_blank" rel="noopener noreferrer">
+                  <svg class="social__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path
+                      d="M12.1 2a9.8 9.8 0 00-8.4 14.5L2.2 22l5.7-1.5A9.8 9.8 0 1012.2 2zm4.6 13.9c-.2.6-1.1 1-1.7 1-1.5.1-3-.5-4.1-1.4a6.5 6.5 0 01-2.4-3.4c-.1-.6 0-1.2.4-1.7.2-.2.5-.5.8-.4l1.1.5c.2.1.4.5.3.8l-.2.6c-.1.2 0 .4.1.6.4.6.9 1.1 1.6 1.4.2.1.4 0 .5-.1l.6-.8c.1-.2.4-.3.6-.2l1.3.5c.3.1.6.3.7.6.1.2.1.5 0 .7z"
+                    />
+                  </svg>
+                  <span class="sr-only">WhatsApp</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section__media">
+          <a class="social__preview" href="/polymers">
+            <span class="sr-only">Interactive Plastic Identification</span>
+            <img
+              class="social__preview-image"
+              src="assets/ipi/ipi4.png"
+              alt="Interactive Plastic Identification preview"
+            />
+          </a>
+        </div>
+      </section>
 
-            </div>
+    </main>
+    <script>
+      (function () {
+        var previewImage = document.querySelector('.social__preview-image');
+        if (!previewImage) return;
 
-            <div class="social_block wow animate__animated animate__slideInUp">
-              <ul class="social_round">
-                <li><a href="https://t.me/nikolaysemenov"><i class="icon-send"></i></a></li>
-                <li><a href="https://ru.linkedin.com/in/nikolay-semenov-ab5b3957"><i class="icon-linkedin"></i></a></li>
-              <!-- </ul>
-            
-              <ul class="social_round"> -->
-                <li><a href="https://www.youtube.com/channel/UCMXMWV1WJLaMRaTcsEFLWVA"><i class="icon-youtube"></i></a></li>
-                <li><a href="https://www.flickr.com/photos/nikolaysemenov/"><i class="icon-instagram"></i></a></li>
-                <li><a href="https://x.com/Ksider"><i class="icon-twitter"></i> </a></li>
-                <li><a href="https://yandex.ru/q/profile/ksider/"><i class="icon-award"></i></a></li>
-              </ul>
-            </div>          
+        var candidates = [
+          'assets/ipi/ipi1.png',
+          'assets/ipi/ipi2.png',
+          'assets/ipi/ipi3.png',
+          'assets/ipi/ipi4.png'
+        ];
 
-            <div class="titel grid_text">
-              <div class="ttl wow animate__animated animate__fadeInRight">Polymer Scientist,<br>Engineer.</div>
-            </div>
+        var choice = candidates[Math.floor(Math.random() * candidates.length)];
+        previewImage.src = choice;
+      })();
+    </script>
 
-            
-        </div> 
-
-<div class="seconf_layer">&nbsp;
-
-  <div class="m_grid_text">
-  <div class="subt wow animate__animated animate__fadeInUp">
-    <span lang="en" alt="Polymer Scientist, Rheologist, and Materials Engineer">CSO, Head of R&D</span>
-  </div>
-
-  <div class="titel">
-    <div class="ttl wow animate__animated animate__fadeInUpBig">Polymer Scientist,<br>Engineer.</div>
-    <div class="social_block">
-      <ul class="social_round wow animate__animated animate__fadeInLeftBig">
-        <li><a href="https://t.me/nikolaysemenov"><i class="icon-send"></i></a></li>
-        <li><a href="https://ru.linkedin.com/in/nikolay-semenov-ab5b3957"><i class="icon-linkedin"></i></a></li>
-      </ul>
-    </div>
-  </div> 
-</div>  
-  
-</div>
-
-
-</div>
-
-<script>
-  new WOW().init();
-</script>
-
-
-<!-- Yandex.Metrika counter -->   
+    <!-- Yandex.Metrika counter -->   
 <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(16681432, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/16681432" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
 <!-- /Yandex.Metrika counter -->
-</body>
-
+  </body>
 </html>

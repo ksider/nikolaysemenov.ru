@@ -198,6 +198,7 @@ body {
   margin: 0;
   font-size: clamp(2.25rem, 3.3vw, 3.3rem);
   line-height: 1;
+  font-weight: 400;
 }
 
 .education__details {

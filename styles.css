@@ -225,6 +225,9 @@ body {
   grid-column: 2 / span 4;
 }
 
+.section--lead .section__media {
+  grid-column: 7 / span 4;
+}
 
 .section--director {
   align-items: center;

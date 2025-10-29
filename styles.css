@@ -261,7 +261,7 @@ body {
   padding-bottom: 4em;
 }
 .section--social .section__text {
-  grid-column: 1 / span 6;
+  grid-column: 2 / span 6;
 }
 
 .social {

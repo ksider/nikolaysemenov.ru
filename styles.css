@@ -473,13 +473,17 @@ body {
     bottom: clamp(1.5rem, 6vw, 2.75rem);
   }
 
-  .section--director .section__media,
+
   .section--director .section__text,
   .section--senior .section__text,
   .section--education .section__media,
-  .section--education .section__text {
+  .section--education .section__text,
+  .section--lead .section__media {
     grid-column: 2 / 6;
   }
+.section--director .section__media {
+  grid-column: 1 / span 6;
+}
 
   .placeholder--portrait {
     min-height: clamp(460px, 90vw, 680px);

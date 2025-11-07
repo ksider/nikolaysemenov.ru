@@ -5,8 +5,8 @@ Static single-page profile with polymer R&D projects, hosted at `nikolaysemenov.
 
 ## Live Examples
 
-- [QR landing (`/qr`)](qr/index.html) — lightweight promo with dynamic code snippets.  
-- [Interactive Plastic Identification (`/polymers`)](polymers/index.html) — visual tool that showcases material expertise.
+- [QR landing (`/qr`)](https://nikolaysemenov.ru/qr) — lightweight promo with dynamic code snippets.  
+- [Interactive Plastic Identification (`/polymers`)](https://nikolaysemenov.ru/polymers/) — visual tool that showcases material expertise.
 
 ## CV
 

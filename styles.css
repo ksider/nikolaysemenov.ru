@@ -241,12 +241,12 @@ body {
 }
 
 .section--senior .section__text {
-  grid-column: 2 / span 5;
+  grid-column: 3 / span 5;
 }
 
-.section--senior .section__media {
+/* .section--senior .section__media {
   grid-column: 7 / span 6;
-}
+} */
 
 .section--education {
   align-items: center;
@@ -263,6 +263,12 @@ body {
 }
 .section--social .section__text {
   grid-column: 2 / span 6;
+}
+
+.rhe-preview__image {
+  width: 100%;
+  object-fit: contain;
+  margin: -15% 0;
 }
 
 .social {

@@ -220,31 +220,32 @@ body {
 .section--hero .section__media {
   grid-column: 6 / -1;
 }
-
-.section--lead .section__text {
-  grid-column: 2 / span 4;
-}
-
-.section--lead .section__media {
-  grid-column: 7 / span 4;
-}
-
-.section--director {
+.section--lead {
   align-items: center;
 }
+.section--lead .section__text {
+  grid-column: 4 / span 4;
+}
+.section--lead .section__media {
+  grid-column: 9 / span 3;
+}
+
 .section--director {
   align-items: center;
 }
 .section--director .section__media {
   grid-column: 1 / span 5;
 }
-
 .section--director .section__text {
-  grid-column: 7 / span 4;
+  grid-column: 6 / span 5;
 }
 
 .section--senior .section__text {
-  grid-column: 4 / span 4;
+  grid-column: 2 / span 5;
+}
+
+.section--senior .section__media {
+  grid-column: 7 / span 6;
 }
 
 .section--education {
@@ -473,12 +474,18 @@ body {
     bottom: clamp(1.5rem, 6vw, 2.75rem);
   }
 
+  .section--social .section__text {
+    grid-column: 1 / -1;
+  }
+
 
   .section--director .section__text,
   .section--senior .section__text,
   .section--education .section__media,
   .section--education .section__text,
-  .section--lead .section__media {
+  .section--lead .section__media, 
+  .section--senior .section__media,
+  .section--senior .section__text {
     grid-column: 2 / 6;
   }
 .section--director .section__media {
@@ -549,6 +556,22 @@ body {
     z-index: 4;
   }
 
+  .section--social .section__text {
+    grid-column: 1 / -1;
+  }
+
+  .section--social .social {
+    margin-inline: auto;
+    text-align: center;
+    align-items: center;
+  }
+
+  .section--social .social__email,
+  .section--social .social__list {
+    justify-content: center;
+    text-align: center;
+  }
+
   .section--social .section__media {
     justify-content: flex-start;
   }
@@ -562,12 +585,14 @@ body {
     grid-column: 2 / 6;
   }
 
-  .section--lead .section__media {
+  .section--lead .section__media, 
+  .section--senior .section__media {
     grid-column: 1 / 7;
     grid-row: 1;
   }
 
-  .section--lead .section__text {
+  .section--lead .section__text,
+  .section--senior .section__text {
     grid-row: 2;
   }
 }

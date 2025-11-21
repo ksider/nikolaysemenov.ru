@@ -31,6 +31,35 @@ This repository hosts a fully client-side map that helps lab technicians and stu
 - Use the language switcher to toggle between Russian and English nomenclature.
 - Click `Simplified flowchart` in the control panel to fall back to the linear `classic.html` experience.
 
+## Configuring Media Blocks
+Each question node in `flow` can define a `media` object to render an image, inline `<video>`, or embedded player. Supported keys:
+
+```js
+media: {
+  type: 'youtube' | 'video' | 'image' | 'embed',
+  videoId: 'SC4myzTlfDg',      // for YouTube shorthand
+  src: 'media/demo.mp4',       // direct link for video/image/embed types
+  sources: [                   // optional array for multiple <video> sources
+    { src: 'demo.webm', type: 'video/webm' },
+    { src: 'demo.mp4', type: 'video/mp4' }
+  ],
+  poster: 'media/demo.jpg',
+  controls: false,
+  caption: { ru: '...', en: '...' },
+  title:   { ru: '...', en: '...' },
+  alt:     { ru: '...', en: '...' }, // used for images
+  orientation: 'portrait' | 'landscape' | 'square',
+  aspectRatio: '9/16' | 0.75,  // overrides orientation when provided
+  params: {                    // query parameters appended to YouTube/embed URL
+    modestbranding: 1,
+    rel: 0,
+    showinfo: 0
+  }
+}
+```
+
+`params.showinfo = 0` keeps the YouTube player from showing extra overlays, while `modestbranding = 1` removes most of the default logo elements. When `media` is omitted the card renders without the illustration column, so you can gradually populate steps with photos or vertical videos.
+
 ## Adding Another Language
 1. Update the `supportedLanguages` array near the top of the script in `index.html` to include your new ISO language code (for example, `'de'`).
 2. Add a matching language button inside the `.lang-switcher` markup so users can pick the new locale; set `data-lang="de"` and the visible label.

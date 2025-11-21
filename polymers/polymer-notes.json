@@ -1,0 +1,482 @@
+{
+  "pe": {
+    "ru": {
+      "title": "Полиэтилен — термопласт",
+      "body": [
+        "Полимер этилена, один из самых массовых пластиков, устойчив к большинству химикатов.",
+        "Плотность невысокая, мягкость зависит от степени кристалличности (LDPE/HDPE)."
+      ],
+      "source": "https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%BB%D0%B8%D1%8D%D1%82%D0%B8%D0%BB%D0%B5%D0%BD",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Polyethylene",
+      "body": [
+        "Polymer of ethylene widely used for films, bottles and pipes.",
+        "Chemically resistant, density and stiffness vary between LDPE and HDPE grades."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Polyethylene",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "pp": {
+    "ru": {
+      "title": "Полипропилен",
+      "body": [
+        "Термопласт из пропилена, сочетает низкую плотность и высокую жесткость.",
+        "Хорошо переносит автоклавирование, часто используется в упаковке и трубах."
+      ],
+      "source": "https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%BB%D0%B8%D0%BF%D1%80%D0%BE%D0%BF%D0%B8%D0%BB%D0%B5%D0%BD",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Polypropylene",
+      "body": [
+        "Lightweight thermoplastic with good fatigue resistance and low moisture uptake.",
+        "Common in packaging, fibers, automotive interiors and reusable containers."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Polypropylene",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "tpx": {
+    "ru": {
+      "title": "Полиметилпентен (TPX)",
+      "body": [
+        "Прозрачный полиолефин с очень низкой плотностью и высокой температурной стойкостью.",
+        "Используется для лабораторной посуды, медицинских и микроволновых изделий."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Polymethylpentene",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Polymethylpentene (TPX)",
+      "body": [
+        "Transparent polyolefin noted for low density and clarity.",
+        "Applications include labware, cookware components and medical devices."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Polymethylpentene",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "ctfe": {
+    "ru": {
+      "title": "Полихлортрифторэтилен (PCTFE)",
+      "body": [
+        "Фторполимер с высокой газонепроницаемостью и химической стойкостью.",
+        "Сохраняет размеры при криогенных температурах, применяется в аэрокосмосе и химии."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Polychlorotrifluoroethylene",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Polychlorotrifluoroethylene (PCTFE)",
+      "body": [
+        "Chlorofluoropolymer with excellent barrier to gases and moisture.",
+        "Used for seals, valves and cryogenic components thanks to dimensional stability."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Polychlorotrifluoroethylene",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "fluoro_polymers": {
+    "ru": {
+      "title": "Фторполимеры (PTFE, FEP и др.)",
+      "body": [
+        "Группа инертных материалов с очень низким коэффициентом трения и высокой термостойкостью.",
+        "Применяются как антипригарные покрытия, изоляция проводов и химостойкие детали."
+      ],
+      "source": "https://ru.wikipedia.org/wiki/%D0%A4%D1%82%D0%BE%D1%80%D0%BE%D0%BF%D0%BB%D0%B0%D1%81%D1%82",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Fluoropolymers (PTFE, FEP, etc.)",
+      "body": [
+        "Highly inert polymers with very low friction and broad thermal stability.",
+        "Used for non-stick coatings, wire insulation and chemical-resistant components."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Fluoropolymer",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "ps": {
+    "ru": {
+      "title": "Полистирол",
+      "body": [
+        "Аморфный прозрачный термопласт из стирола, доступен в твердой и вспененной форме.",
+        "Широко применяется в одноразовой посуде, упаковке и корпусах бытовой электроники."
+      ],
+      "source": "https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%BB%D0%B8%D1%81%D1%82%D0%B8%D1%80%D0%BE%D0%BB",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Polystyrene",
+      "body": [
+        "Aromatic thermoplastic that can be clear and rigid or expanded as foam.",
+        "Common in disposable foodware, packaging peanuts and appliance housings."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Polystyrene",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "hips_san": {
+    "ru": {
+      "title": "Ударопрочный полистирол / SAN",
+      "body": [
+        "HIPS модифицирован каучуком для ударной вязкости; SAN придает химстойкость и прозрачность.",
+        "Используются в корпусах приборов, сантехнике, декоративных панелях."
+      ],
+      "source": "https://en.wikipedia.org/wiki/High-impact_polystyrene",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "HIPS / SAN",
+      "body": [
+        "High-impact polystyrene is rubber-toughened for impact strength; SAN offers clarity and chemical resistance.",
+        "Typical uses include housings, appliance parts and sanitary ware."
+      ],
+      "source": "https://en.wikipedia.org/wiki/High-impact_polystyrene",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "abs": {
+    "ru": {
+      "title": "АБС-пластик",
+      "body": [
+        "Сополимер акрилонитрила, бутадиена и стирола с хорошей ударной вязкостью.",
+        "Применяется в бытовой технике, автомобильных деталях, 3D-печати и LEGO."
+      ],
+      "source": "https://ru.wikipedia.org/wiki/ABS-%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Acrylonitrile butadiene styrene (ABS)",
+      "body": [
+        "Tough, glossy engineering plastic combining rigidity and impact strength.",
+        "Used in appliance housings, automotive trim and fused filament fabrication."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Acrylonitrile_butadiene_styrene",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "pmma": {
+    "ru": {
+      "title": "Акрил (ПММА)",
+      "body": [
+        "Прозрачный термопласт, известный как органическое стекло.",
+        "Высокая оптическая прозрачность, устойчивость к УФ выше, чем у поликарбоната."
+      ],
+      "source": "https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%BB%D0%B8%D0%BC%D0%B5%D1%82%D0%B8%D0%BB%D0%BC%D0%B5%D1%82%D0%B0%D0%BA%D1%80%D0%B8%D0%BB%D0%B0%D1%82",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Polymethyl methacrylate (PMMA)",
+      "body": [
+        "Transparent thermoplastic marketed as acrylic glass or Plexiglas.",
+        "Offers good weathering and optical clarity for glazing, lenses and displays."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Poly(methyl_methacrylate)",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "pom": {
+    "ru": {
+      "title": "Полиоксиметилен (ацеталь)",
+      "body": [
+        "Кристаллический инженерный пластик с высокой жесткостью и износостойкостью.",
+        "Используется в прецизионных шестернях, подшипниках, крепеже."
+      ],
+      "source": "https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%BB%D0%B8%D0%BE%D0%BA%D1%81%D0%B8%D0%BC%D0%B5%D1%82%D0%B8%D0%BB%D0%B5%D0%BD",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Polyoxymethylene (POM, acetal)",
+      "body": [
+        "High-stiffness engineering thermoplastic with low friction and good fatigue resistance.",
+        "Common in gears, bearings, fasteners and fuel system parts."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Polyoxymethylene",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "cellulosics": {
+    "ru": {
+      "title": "Целлулоидные пластики",
+      "body": [
+        "Ранние пластики на основе нитратов и ацетатов целлюлозы.",
+        "Использовались для кинопленки, гребней и игрушек; горючесть ограничила применение."
+      ],
+      "source": "https://ru.wikipedia.org/wiki/%D0%A6%D0%B5%D0%BB%D0%BB%D1%83%D0%BB%D0%BE%D0%B8%D0%B4",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Celluloid plastics",
+      "body": [
+        "Historically important plastics derived from cellulose nitrate or acetate.",
+        "Found in film stock, combs and toys; flammability led to modern replacements."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Celluloid",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "pet": {
+    "ru": {
+      "title": "ПЭТ (полиэтилентерефталат)",
+      "body": [
+        "Термопластичный полиэстер, широко используемый для бутылок и волокон.",
+        "Хорошая газонепроницаемость и механическая прочность при невысокой массе."
+      ],
+      "source": "https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%BB%D0%B8%D1%8D%D1%82%D0%B8%D0%BB%D0%B5%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%84%D1%82%D0%B0%D0%BB%D0%B0%D1%82",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Polyethylene terephthalate (PET)",
+      "body": [
+        "Widely used thermoplastic polyester for beverage bottles and textile fibers.",
+        "Combines good strength, clarity (in CPET/OPET forms) and gas barrier properties."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Polyethylene_terephthalate",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "nylon": {
+    "ru": {
+      "title": "Полиамид (нейлон)",
+      "body": [
+        "Семейство конденсационных полимеров с высокой прочностью и устойчивостью к истиранию.",
+        "Используется в текстиле, инженерных деталях, ремнях и канатах."
+      ],
+      "source": "https://ru.wikipedia.org/wiki/%D0%9D%D0%B5%D0%B9%D0%BB%D0%BE%D0%BD",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Polyamide (nylon)",
+      "body": [
+        "Family of condensation polymers with good strength and abrasion resistance.",
+        "Applications span fibers, gears, bearings and under-the-hood automotive parts."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Nylon",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "tpu": {
+    "ru": {
+      "title": "Термопластичный полиуретан (TPU)",
+      "body": [
+        "Эластичный полиуретан, сочетающий износостойкость и эластичность резины.",
+        "Используется в обуви, шлангах, чехлах и напольных покрытиях."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Thermoplastic_polyurethane",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Thermoplastic polyurethane (TPU)",
+      "body": [
+        "Elastomeric TPU offers rubber-like flexibility with high abrasion resistance.",
+        "Used in seals, hoses, shoe soles, phone cases and flexible films."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Thermoplastic_polyurethane",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "polysulphone": {
+    "ru": {
+      "title": "Полисульфон",
+      "body": [
+        "Высокотемпературный аморфный термопласт с хорошей гидролитической стабильностью.",
+        "Применяется в фильтрах, медизделиях и деталях, стерилизуемых паром."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Polysulfone",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Polysulfone (PSU)",
+      "body": [
+        "High-temperature amorphous thermoplastic with strong hydrolytic stability.",
+        "Used in medical devices, filtration membranes and steam-sterilizable parts."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Polysulfone",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "polycarbonate": {
+    "ru": {
+      "title": "Поликарбонат",
+      "body": [
+        "Прозрачный ударопрочный термопласт на основе бисфенола A.",
+        "Используется для защитных экранов, дисков, остекления и элементов освещения."
+      ],
+      "source": "https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%BB%D0%B8%D0%BA%D0%B0%D1%80%D0%B1%D0%BE%D0%BD%D0%B0%D1%82",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Polycarbonate",
+      "body": [
+        "Tough, transparent thermoplastic made from bisphenol A.",
+        "Common in safety glazing, optical discs, eyewear lenses and lighting covers."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Polycarbonate",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "ppe": {
+    "ru": {
+      "title": "Полипропиленоксид (PPE/PPO)",
+      "body": [
+        "Инженерный термопласт с высокой теплостойкостью и низким влагопоглощением.",
+        "Часто используется в смесях (например Noryl) для электроники и автокомпонентов."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Polyphenylene_oxide",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Polyphenylene ether/oxide (PPE/PPO)",
+      "body": [
+        "High-heat engineering plastic with low moisture uptake and good dimensional stability.",
+        "Commercial blends (e.g., Noryl) serve electrical housings and automotive parts."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Polyphenylene_oxide",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "pvc": {
+    "ru": {
+      "title": "Поливинилхлорид (ПВХ)",
+      "body": [
+        "Виниловый полимер, который может быть жестким или пластифицированным.",
+        "Широко используется в профилях, трубах, кабельной изоляции и напольных покрытиях."
+      ],
+      "source": "https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%BB%D0%B8%D0%B2%D0%B8%D0%BD%D0%B8%D0%BB%D1%85%D0%BB%D0%BE%D1%80%D0%B8%D0%B4",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Polyvinyl chloride (PVC)",
+      "body": [
+        "Versatile vinyl polymer produced as rigid or plasticized material.",
+        "Used in pipes, window profiles, cable insulation and flooring."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Polyvinyl_chloride",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "melamine": {
+    "ru": {
+      "title": "Меламиноформальдегидная смола",
+      "body": [
+        "Термореактивный полимер на основе меламина и формальдегида с высокой твердостью.",
+        "Применяется в ламинированных покрытиях, посуде и огнестойких изделиях."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Melamine_resin",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Melamine formaldehyde resin",
+      "body": [
+        "Hard thermoset made from melamine and formaldehyde with good heat resistance.",
+        "Used in laminates (Formica), dishware and flame-retardant applications."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Melamine_resin",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "phenol_formaldehyde": {
+    "ru": {
+      "title": "Фенолоформальдегидная смола (бакелит)",
+      "body": [
+        "Первый массовый синтетический термореактивный пластик, высокая тепло- и электростойкость.",
+        "Используется в электроизоляции, рукоятках инструментов, тормозных колодках (в виде реактопластов)."
+      ],
+      "source": "https://ru.wikipedia.org/wiki/%D0%91%D0%B0%D0%BA%D0%B5%D0%BB%D0%B8%D1%82",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Phenol formaldehyde resin (Bakelite)",
+      "body": [
+        "Early synthetic thermoset noted for heat resistance and electrical insulation.",
+        "Used in circuit boards, appliance handles and friction materials."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Phenol_formaldehyde_resin",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "urea_formaldehyde": {
+    "ru": {
+      "title": "Мочевиноформальдегидная смола",
+      "body": [
+        "Термореактивная смола с низкой стоимостью, часто применяется как клей.",
+        "Используется в ДСП/МДФ, шлифовальных материалах и электрической арматуре."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Urea-formaldehyde",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Urea-formaldehyde resin",
+      "body": [
+        "Cost-effective thermoset widely used as an adhesive and binder.",
+        "Common in particleboard/MDF, abrasives and electrical fittings."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Urea-formaldehyde",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "unsaturated_polyester": {
+    "ru": {
+      "title": "Ненасыщенные полиэфирные смолы",
+      "body": [
+        "Термореактивные смолы, отверждаемые стиролом, образуют прочные композиты с стекловолокном.",
+        "Основные применения — судостроение, листовой пластик, сантехника и автокомпозиты."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Unsaturated_polyester_resin",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Unsaturated polyester resin",
+      "body": [
+        "Thermosetting resins cured with styrene, forming strong fiberglass composites.",
+        "Used in boats, sheet molding compound, bathtubs and automotive panels."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Unsaturated_polyester_resin",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "silicone": {
+    "ru": {
+      "title": "Силиконовые эластомеры",
+      "body": [
+        "Полимеры на основе силоксанов с высокой термостабильностью и биосовместимостью.",
+        "Применяются в медицинских имплантах, герметиках, формах и кухонных изделиях."
+      ],
+      "source": "https://ru.wikipedia.org/wiki/%D0%A1%D0%B8%D0%BB%D0%B8%D0%BA%D0%BE%D0%BD%D1%8B",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Silicone elastomers",
+      "body": [
+        "Siloxane-based polymers with wide service temperature range and biocompatibility.",
+        "Used for implants, sealants, baking molds and electrical insulation."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Silicone",
+      "sourceLabel": "Wikipedia"
+    }
+  },
+  "epoxy": {
+    "ru": {
+      "title": "Эпоксидные смолы",
+      "body": [
+        "Термореактивные олигомеры, отверждаемые отвердителями для получения прочных клеев и композитов.",
+        "Обладают хорошей адгезией и химстойкостью, широко применяются в электронике и композитах."
+      ],
+      "source": "https://ru.wikipedia.org/wiki/%D0%AD%D0%BF%D0%BE%D0%BA%D1%81%D0%B8%D0%B4%D0%BD%D0%B0%D1%8F_%D1%8D%D0%BC%D0%B0%D0%BB%D1%8C",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Epoxy resin",
+      "body": [
+        "Thermosetting polymers cured with hardeners to form strong adhesives and composites.",
+        "Offer good adhesion, chemical and electrical resistance for coatings and laminates."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Epoxy",
+      "sourceLabel": "Wikipedia"
+    }
+  }
+}

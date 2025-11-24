@@ -59,17 +59,6 @@ window.flowData = {
           ru: 'Этот шаг разделяет полиолефины (обычно легче воды) и остальные термопласты.',
           en: 'This separates lighter-than-water polyolefins from other thermoplastics.'
         },
-        media: {
-          type: 'youtube',
-          videoId: 'ePyAYGDwtjY',
-          controls: false,
-          orientation: 'portrait',
-          params: {
-            modestbranding: 1,
-            rel: 0,
-            showinfo: 0
-          }
-        },
         options: [
           {
             label: {

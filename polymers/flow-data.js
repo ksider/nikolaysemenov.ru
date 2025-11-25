@@ -66,6 +66,19 @@ window.flowData = {
       ru: 'Этот шаг грубо разделяет материалы по плотности. Плавающие образцы чаще всего низкоплотные полиолефины или вспенённые материалы. Наполнители (мел, стекло и т.п.) и пена легко меняют поведение, поэтому это не точный тест на тип полимера.',
       en: 'This step crudely separates materials by density. Floating samples are often low-density polyolefins or foams. Fillers (chalk, glass, etc.) and foaming strongly affect behaviour, so this is not an exact polymer ID test.'
     },
+        media: {
+      type: 'youtube',
+      videoId: 'ePyAYGDwtjY',
+      controls: false,
+      orientation: 'portrait',
+      // caption:   { ru: 'серый минеральный остаток', en: 'grey mineral residue' },
+      
+      params: {
+        modestbranding: 1,
+        rel: 0,
+        showinfo: 0
+      }
+    },
     options: [
       {
         label: {

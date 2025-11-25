@@ -1093,6 +1093,17 @@ window.flowData = {
       ru: 'Эта ветка охватывает не только классические термореактивы, но и сильно сшитые TPE, а также очень огнестойкие термопласты. Результат всегда «наиболее вероятный сценарий», а не единственный возможный вариант.',
       en: 'This branch covers not only classical thermosets, but also highly crosslinked TPEs and very flame-retarded thermoplastics. The result is always “most likely scenario”, not the only possible option.'
     },
+    media: {
+      type: 'youtube',
+      videoId: 'BhDma1-4iVc',
+      controls: false,
+      orientation: 'portrait',
+      params: {
+        modestbranding: 1,
+        rel: 0,
+        showinfo: 0
+      }
+    },
     options: [
       {
         label: {
@@ -1278,6 +1289,19 @@ window.flowData = {
     description: {
       ru: 'UP, силиконы и эпоксидные композиты сильно зависят от типа наполнителей и армирования. Визуальная картина — только ориентир.',
       en: 'UP, silicones and epoxy composites strongly depend on fillers and reinforcement. Visual appearance is only a guide.'
+    },
+    media: {
+      type: 'youtube',
+      videoId: 'SYEvo5HGHps',
+      controls: false,
+      orientation: 'portrait',
+      caption:   { ru: 'серый минеральный остаток', en: 'grey mineral residue' },
+      
+      params: {
+        modestbranding: 1,
+        rel: 0,
+        showinfo: 0
+      }
     },
     options: [
       {

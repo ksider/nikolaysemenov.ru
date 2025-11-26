@@ -66,7 +66,7 @@ window.flowData = {
       ru: 'Этот шаг грубо разделяет материалы по плотности. Плавающие образцы чаще всего низкоплотные полиолефины или вспенённые материалы. Наполнители (мел, стекло и т.п.) и пена легко меняют поведение, поэтому это не точный тест на тип полимера.',
       en: 'This step crudely separates materials by density. Floating samples are often low-density polyolefins or foams. Fillers (chalk, glass, etc.) and foaming strongly affect behaviour, so this is not an exact polymer ID test.'
     },
-        media: {
+    media: {
       type: 'youtube',
       videoId: 'ePyAYGDwtjY',
       controls: false,
@@ -402,6 +402,19 @@ window.flowData = {
       ru: 'FR-марки многих полимеров могут переключаться между режимами «горит» и «самозатухает» в зависимости от толщины и ориентации образца. Ветка даёт вероятное направление, а не окончательный вердикт.',
       en: 'FR grades of many polymers may switch between “burns” and “self-extinguishes” depending on thickness and orientation. This branch gives a likely direction, not a final verdict.'
     },
+    media: {
+      type: 'youtube',
+      videoId: 'Vuk_gGJxj4s',
+      controls: false,
+      orientation: 'portrait',
+      // caption:   { ru: 'серый минеральный остаток', en: 'grey mineral residue' },
+      
+      params: {
+        modestbranding: 1,
+        rel: 0,
+        showinfo: 0
+      }
+    },
     options: [
       {
         label: {
@@ -688,42 +701,6 @@ window.flowData = {
     ]
   },
 
-  pmma: {
-    type: 'result',
-    title: {
-      ru: 'Акрил (PMMA)',
-      en: 'Acrylic (PMMA)'
-    },
-    description: {
-      ru: 'Прозрачный термопласт с чистым пламенем и малым дымом. Вспенённые или сильно пигментированные модификации могут выглядеть иначе.',
-      en: 'Transparent thermoplastic with clean flame and low smoke. Foamed or heavily pigmented grades may look different.'
-    },
-    materials: [
-      {
-        name: {
-          ru: 'PMMA',
-          en: 'PMMA'
-        },
-        flame: {
-          ru: 'Ярко-жёлтое пламя',
-          en: 'Bright yellow flame'
-        },
-        odour: {
-          ru: 'Метилированные спирты',
-          en: 'Methylated spirit-like'
-        },
-        speed: {
-          ru: 'Быстро',
-          en: 'Fast'
-        },
-        other: {
-          ru: 'Горит ровно, дым слабый',
-          en: 'Burns smoothly, low smoke'
-        }
-      }
-    ]
-  },
-
   pur: {
     type: 'result',
     title: {
@@ -755,6 +732,42 @@ window.flowData = {
         other: {
           ru: 'Слабый чёрный дым, капли почти не образуются',
           en: 'Slight black smoke, hardly any drips'
+        }
+      }
+    ]
+  },
+
+  pmma: {
+    type: 'result',
+    title: {
+      ru: 'Акрил (PMMA)',
+      en: 'Acrylic (PMMA)'
+    },
+    description: {
+      ru: 'Прозрачный термопласт с чистым пламенем и малым дымом. Вспенённые или сильно пигментированные модификации могут выглядеть иначе.',
+      en: 'Transparent thermoplastic with clean flame and low smoke. Foamed or heavily pigmented grades may look different.'
+    },
+    materials: [
+      {
+        name: {
+          ru: 'PMMA',
+          en: 'PMMA'
+        },
+        flame: {
+          ru: 'Ярко-жёлтое пламя',
+          en: 'Bright yellow flame'
+        },
+        odour: {
+          ru: 'Метилированные спирты',
+          en: 'Methylated spirit-like'
+        },
+        speed: {
+          ru: 'Быстро',
+          en: 'Fast'
+        },
+        other: {
+          ru: 'Горит ровно, дым слабый',
+          en: 'Burns smoothly, low smoke'
         }
       }
     ]

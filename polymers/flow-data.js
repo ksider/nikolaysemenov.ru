@@ -490,10 +490,31 @@ window.flowData = {
       },
       {
         label: {
+          ru: 'Почти без дыма, спиртовой запах',
+          en: 'Almost no smoke, alcohol-like smell'
+        },
+        next: 'pmma'
+      },
+      {
+        label: {
+          ru: 'Резкий запах формальдегида',
+          en: 'Sharp formaldehyde smell'
+        },
+        next: 'pom'
+      },
+      {
+        label: {
           ru: 'Характерный запах ABS / «LEGO»',
           en: 'Typical ABS / “LEGO” smell'
         },
         next: 'abs'
+      },
+      {
+        label: {
+          ru: 'Запах плавящейся ткани/резины, голубоватые края пламени',
+          en: 'Melting textile/rubber smell, bluish flame edges'
+        },
+        next: 'pet'
       }
     ]
   },
@@ -659,24 +680,10 @@ window.flowData = {
     options: [
       {
         label: {
-          ru: 'Почти без дыма, спиртовой запах',
-          en: 'Almost no smoke, alcohol-like smell'
+          ru: 'Сладковатый химический/резиновый запах, лёгкий чёрный дым',
+          en: 'Sweet chemical/rubbery smell, slight black smoke'
         },
-        next: 'pmma'
-      },
-      {
-        label: {
-          ru: 'Резкий запах формальдегида',
-          en: 'Sharp formaldehyde smell'
-        },
-        next: 'pom'
-      },
-      {
-        label: {
-          ru: 'Чёрный дым, запах плавящейся ткани/резины',
-          en: 'Black smoke, melting textile/rubber smell'
-        },
-        next: 'pet'
+        next: 'pur'
       }
     ]
   },
@@ -712,6 +719,42 @@ window.flowData = {
         other: {
           ru: 'Горит ровно, дым слабый',
           en: 'Burns smoothly, low smoke'
+        }
+      }
+    ]
+  },
+
+  pur: {
+    type: 'result',
+    title: {
+      ru: 'Полиуретан (TPUR)',
+      en: 'Polyurethane (TPUR)'
+    },
+    description: {
+      ru: 'Термопластичный полиуретан без антипиренов может продолжать горение, даёт лёгкий чёрный дым и почти не образует капель.',
+      en: 'Non-FR thermoplastic polyurethane can keep burning, gives slight black smoke and forms little to no drips.'
+    },
+    materials: [
+      {
+        name: {
+          ru: 'TPUR',
+          en: 'TPUR'
+        },
+        flame: {
+          ru: 'Жёлтое пламя',
+          en: 'Yellow flame'
+        },
+        odour: {
+          ru: 'Сладковатый химический, резиновый',
+          en: 'Sweet chemical, rubbery'
+        },
+        speed: {
+          ru: 'Быстро',
+          en: 'Fast'
+        },
+        other: {
+          ru: 'Слабый чёрный дым, капли почти не образуются',
+          en: 'Slight black smoke, hardly any drips'
         }
       }
     ]

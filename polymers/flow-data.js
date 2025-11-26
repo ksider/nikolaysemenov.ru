@@ -447,6 +447,19 @@ window.flowData = {
       ru: 'Наличие горячих капель характерно для многих термопластов. Пены и сильно наполненные материалы могут выглядеть иначе.',
       en: 'Hot dripping melt is typical for many thermoplastics. Foamed and heavily filled materials may look different.'
     },
+    media: {
+      type: 'youtube',
+      videoId: '4pur9SIv9oY',
+      controls: false,
+      orientation: 'portrait',
+       caption:   { ru: 'Капли расплава', en: 'Melt droplets' },
+      
+      params: {
+        modestbranding: 1,
+        rel: 0,
+        showinfo: 0
+      }
+    },
     options: [
       {
         label: {

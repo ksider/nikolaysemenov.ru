@@ -528,20 +528,6 @@ window.flowData = {
       },
       {
         label: {
-          ru: 'Почти без дыма, спиртовой запах',
-          en: 'Almost no smoke, alcohol-like smell'
-        },
-        next: 'pmma'
-      },
-      {
-        label: {
-          ru: 'Резкий запах формальдегида',
-          en: 'Sharp formaldehyde smell'
-        },
-        next: 'pom'
-      },
-      {
-        label: {
           ru: 'Характерный запах ABS / «LEGO»',
           en: 'Typical ABS / “LEGO” smell'
         },
@@ -722,6 +708,13 @@ window.flowData = {
           en: 'Sweet chemical/rubbery smell, slight black smoke'
         },
         next: 'pur'
+      },
+      {
+        label: {
+          ru: 'Запах обугленной бумаги/целлюлозы, пепел, без капель',
+          en: 'Burnt paper/cellulose smell, ash, no drips'
+        },
+        next: 'cellulose_film'
       }
     ]
   },
@@ -757,6 +750,42 @@ window.flowData = {
         other: {
           ru: 'Слабый чёрный дым, капли почти не образуются',
           en: 'Slight black smoke, hardly any drips'
+        }
+      }
+    ]
+  },
+
+  cellulose_film: {
+    type: 'result',
+    title: {
+      ru: 'Целлюлоза / целлофан',
+      en: 'Cellulose / cellophane'
+    },
+    description: {
+      ru: 'Целлюлозные плёнки (целлофан) быстро горят жёлтым пламенем, без капель, оставляя серый пепел. Нитраты и ацетаты целлюлозы могут давать искры.',
+      en: 'Cellulose films (cellophane) burn quickly with yellow flame, no drips, leaving grey ash. Cellulose nitrates/acetates may show some sparking.'
+    },
+    materials: [
+      {
+        name: {
+          ru: 'Целлофан / целлюлозная плёнка',
+          en: 'Cellophane / cellulose film'
+        },
+        flame: {
+          ru: 'Жёлтое пламя, без капель',
+          en: 'Yellow flame, no drips'
+        },
+        odour: {
+          ru: 'Обугленная бумага, слабый уксусный тон',
+          en: 'Charred paper, slight vinegar tone'
+        },
+        speed: {
+          ru: 'Быстро',
+          en: 'Fast'
+        },
+        other: {
+          ru: 'Серый пепел, искры возможны',
+          en: 'Grey ash, possible sparks'
         }
       }
     ]

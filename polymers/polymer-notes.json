@@ -219,6 +219,26 @@
       "sourceLabel": "Wikipedia"
     }
   },
+  "cellulose_film": {
+    "ru": {
+      "title": "Целлюлоза / целлофан",
+      "body": [
+        "Регенерированная целлюлоза для плёнок и упаковки, часто без пластификаторов.",
+        "Горит быстро жёлтым пламенем без капель, оставляет серый пепел; может слегка пахнуть уксусом."
+      ],
+      "source": "https://ru.wikipedia.org/wiki/%D0%A6%D0%B5%D0%BB%D0%BB%D0%BE%D1%84%D0%B0%D0%BD",
+      "sourceLabel": "Википедия"
+    },
+    "en": {
+      "title": "Cellulose / cellophane",
+      "body": [
+        "Regenerated cellulose films used for packaging and membranes.",
+        "Burn quickly with yellow flame and no drips, leaving grey ash; may have slight vinegar/paper smell."
+      ],
+      "source": "https://en.wikipedia.org/wiki/Cellophane",
+      "sourceLabel": "Wikipedia"
+    }
+  },
   "pet": {
     "ru": {
       "title": "ПЭТ (полиэтилентерефталат)",

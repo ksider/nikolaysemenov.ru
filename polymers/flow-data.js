@@ -298,6 +298,18 @@ window.flowData = {
       ru: 'Типичное поведение фторополимеров, но так могут вести себя и отдельные сильно огнестойкие композиты. Это ветка «наиболее вероятного варианта», а не жёсткая классификация.',
       en: 'Typical for fluoropolymers, but some highly flame-retarded compounds may behave similarly. This branch suggests the most likely family rather than a hard classification.'
     },
+    media: {
+      type: 'youtube',
+      videoId: 'eqF7OvQpUmY',
+      controls: false,
+      orientation: 'portrait',
+      caption:   { ru: 'Фторопласт', en: 'PTFE' },
+      params: {
+        modestbranding: 1,
+        rel: 0,
+        showinfo: 0
+      }
+    },
     options: [
       {
         label: {

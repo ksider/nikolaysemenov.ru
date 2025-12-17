@@ -47,6 +47,8 @@
   let stripes = [];
   const stripeColors = d3.schemeTableau10 || ['#2563eb', '#16a34a', '#f59e0b', '#ef4444', '#8b5cf6', '#0ea5e9'];
   let stripeIdSeq = 0;
+  let baselineSeries = null;
+  let baselineMap = new Map();
 
   function t(key, arg) {
     const dict = translations[currentLang] || translations.en || {};
@@ -95,20 +97,33 @@
     if (yMax !== undefined) yMaxInput.value = yMax === null ? '' : String(yMax);
   }
 
-  function getYExtent(data) {
-    if (!data || !data.length) return [0, 1];
-    return d3.extent(data, (d) => d.y);
+  function computeAdjustedExtent(dataset) {
+    if (!dataset || !dataset.length) return null;
+    let min = Infinity;
+    let max = -Infinity;
+    dataset.forEach((d) => {
+      if (typeof d.x !== 'number' || typeof d.y !== 'number') return;
+      if (d.x > defaultXRange.max || d.x < defaultXRange.min) return;
+      const base = baselineSeries ? baselineMap.get(d.x) : undefined;
+      const offset = offsets.get(d.file) || 0;
+      const y = (typeof base === 'number' ? d.y - base : d.y) + offset;
+      if (!Number.isFinite(y)) return;
+      if (y < min) min = y;
+      if (y > max) max = y;
+    });
+    if (!Number.isFinite(min) || !Number.isFinite(max)) return null;
+    return [min, max];
   }
 
   function applyZoom(factor, centerX, centerY) {
     if (!lastData || !lastData.length) return;
     const currentXMax = Number(xMaxInput.value) || defaultXRange.max;
     const currentXMin = Number(xMinInput.value) || defaultXRange.min;
-    const yExtent = getYExtent(lastData);
-    const currentYMin = yMinInput.value === '' ? yExtent[0] : Number(yMinInput.value);
-    const currentYMax = yMaxInput.value === '' ? yExtent[1] : Number(yMaxInput.value);
-    const baseYMin = defaultYRange ? defaultYRange[0] : yExtent[0];
-    const baseYMax = defaultYRange ? defaultYRange[1] : yExtent[1];
+    const autoExtent = computeAdjustedExtent(lastData) || [0, 1];
+    const currentYMin = yMinInput.value === '' ? autoExtent[0] : Number(yMinInput.value);
+    const currentYMax = yMaxInput.value === '' ? autoExtent[1] : Number(yMaxInput.value);
+    const baseYMin = defaultYRange ? defaultYRange[0] : autoExtent[0];
+    const baseYMax = defaultYRange ? defaultYRange[1] : autoExtent[1];
     const safeFactor = Math.min(Math.max(factor, 0.5), 1.8); // limit per tick
     const zoomRange = (min, max, center, f) => {
       const minOff = min - center;
@@ -187,9 +202,15 @@
   sampleInput.addEventListener('input', generateName);
   generateName();
 
-  function renderChartFromData(data) {
+  function renderChartFromData(data, options = {}) {
+    const { skipLegend = false } = options;
     if (!window.d3) return;
-    const filtered = data.filter((d) => typeof d.x === 'number' && typeof d.y === 'number' && d.x <= defaultXRange.max && d.x >= defaultXRange.min);
+    const filteredRaw = data.filter((d) => typeof d.x === 'number' && typeof d.y === 'number' && d.x <= defaultXRange.max && d.x >= defaultXRange.min);
+    const filtered = filteredRaw.map((d) => {
+      const base = baselineSeries ? baselineMap.get(d.x) : undefined;
+      const adjustedY = typeof base === 'number' ? d.y - base : d.y;
+      return { ...d, y: adjustedY };
+    });
     if (!filtered.length) {
       chartEl.innerHTML = '<p>No data in 4000–500.</p>';
       chartLegend.innerHTML = '';
@@ -295,35 +316,70 @@
       seriesData.set(file, sorted);
     }
 
-    chartLegend.innerHTML = '';
-    for (const file of allSeries) {
-      const item = document.createElement('div');
-      item.className = 'legend-item';
-      if (visibleSeries.get(file) === false) item.classList.add('inactive');
-      const swatch = document.createElement('div');
-      swatch.className = 'legend-swatch';
-      swatch.style.background = color(file);
-      const label = document.createElement('span');
-      label.textContent = file;
-      const offsetInput = document.createElement('input');
-      offsetInput.type = 'number';
-      offsetInput.step = '0.1';
-      offsetInput.value = offsets.get(file) || 0;
-      offsetInput.className = 'legend-offset';
-      offsetInput.addEventListener('click', (e) => e.stopPropagation());
-      offsetInput.addEventListener('input', () => {
-        offsets.set(file, Number(offsetInput.value) || 0);
-        renderChartFromData(lastData);
-      });
-      item.appendChild(swatch);
-      item.appendChild(label);
-      item.appendChild(offsetInput);
-      item.addEventListener('click', () => {
-        const current = visibleSeries.get(file);
-        visibleSeries.set(file, current === false ? true : false);
-        renderChartFromData(lastData);
-      });
-      chartLegend.appendChild(item);
+    if (!skipLegend) {
+      chartLegend.innerHTML = '';
+      for (const file of allSeries) {
+        const item = document.createElement('div');
+        item.className = 'legend-item';
+        if (baselineSeries === file) item.classList.add('baseline');
+        if (visibleSeries.get(file) === false) item.classList.add('inactive');
+        const swatch = document.createElement('div');
+        swatch.className = 'legend-swatch';
+        swatch.style.background = color(file);
+        const label = document.createElement('span');
+        label.textContent = file;
+        const baselineBtn = document.createElement('button');
+        baselineBtn.type = 'button';
+        baselineBtn.className = 'legend-base-btn';
+        baselineBtn.textContent = 'Base';
+        baselineBtn.title = 'Use as baseline';
+        if (baselineSeries === file) baselineBtn.classList.add('active');
+        baselineBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (baselineSeries === file) {
+            baselineSeries = null;
+            baselineMap = new Map();
+            defaultYRange = computeAdjustedExtent(lastData) || defaultYRange;
+            yMinInput.value = '';
+            yMaxInput.value = '';
+          } else {
+            baselineSeries = file;
+            const map = new Map();
+            if (lastParsedRows && lastParsedRows.length) {
+              lastParsedRows.forEach((row) => {
+                if (typeof row.wavenumber === 'number' && typeof row[file] === 'number') {
+                  map.set(row.wavenumber, row[file]);
+                }
+              });
+            }
+            baselineMap = map;
+            defaultYRange = computeAdjustedExtent(lastData) || defaultYRange;
+            yMinInput.value = '';
+            yMaxInput.value = '';
+          }
+          renderChartFromData(lastData);
+        });
+        const offsetInput = document.createElement('input');
+        offsetInput.type = 'number';
+        offsetInput.step = '0.1';
+        offsetInput.value = offsets.get(file) || 0;
+        offsetInput.className = 'legend-offset';
+        offsetInput.addEventListener('click', (e) => e.stopPropagation());
+        offsetInput.addEventListener('input', () => {
+          offsets.set(file, Number(offsetInput.value) || 0);
+          renderChartFromData(lastData, { skipLegend: true });
+        });
+        item.appendChild(swatch);
+        item.appendChild(label);
+        item.appendChild(baselineBtn);
+        item.appendChild(offsetInput);
+        item.addEventListener('click', () => {
+          const current = visibleSeries.get(file);
+          visibleSeries.set(file, current === false ? true : false);
+          renderChartFromData(lastData);
+        });
+        chartLegend.appendChild(item);
+      }
     }
 
     const marker = g.append('g').style('display', 'none');
@@ -445,15 +501,19 @@
       }
     });
 
-    svg.on('wheel', (event) => {
-      event.preventDefault();
-      const delta = event.deltaY;
-      const factor = Math.exp(delta * 0.0008);
-      const [px, py] = d3.pointer(event, g.node());
-      const xVal = x.invert(px);
-      const yVal = y.invert(py);
-      applyZoom(factor, xVal, yVal);
-    });
+    svg.on(
+      'wheel',
+      (event) => {
+        event.preventDefault();
+        const delta = event.deltaY;
+        const factor = Math.exp(delta * 0.0008);
+        const [px, py] = d3.pointer(event, g.node());
+        const xVal = x.invert(px);
+        const yVal = y.invert(py);
+        applyZoom(factor, xVal, yVal);
+      },
+      { passive: false }
+    );
 
     markerUpdater = (direction) => {
       if (!markerActive || markerX === null) return;
@@ -490,11 +550,29 @@
       const colorSwatch = document.createElement('div');
       colorSwatch.className = 'peaks-color';
       colorSwatch.style.background = stripe.color;
-      const val = document.createElement('div');
-      val.className = 'peaks-value';
-      val.textContent = `${stripe.x.toFixed(2)} cm⁻¹`;
-      const nameCell = document.createElement('div');
-      nameCell.textContent = stripe.label || '—';
+      const val = document.createElement('input');
+      val.type = 'number';
+      val.step = '0.01';
+      val.className = 'peaks-input';
+      val.value = stripe.x.toFixed(2);
+      val.addEventListener('change', () => {
+        const num = Number(val.value);
+        if (!Number.isFinite(num)) return;
+        stripe.x = num;
+        renderChartFromData(lastData, { skipLegend: true });
+        renderStripesTable();
+      });
+
+      const nameCell = document.createElement('input');
+      nameCell.type = 'text';
+      nameCell.className = 'peaks-input';
+      nameCell.value = stripe.label || '';
+      nameCell.placeholder = t('colLabel');
+      nameCell.addEventListener('input', () => {
+        stripe.label = nameCell.value;
+        renderChartFromData(lastData, { skipLegend: true });
+      });
+
       const tipCell = document.createElement('div');
       tipCell.className = 'peaks-tip';
       tipCell.textContent = stripe.tip || t('tipPlaceholder');
@@ -580,10 +658,18 @@
     });
     renderChartFromData(lastData);
   });
-  xMinInput.addEventListener('input', () => lastData && renderChartFromData(lastData));
-  xMaxInput.addEventListener('input', () => lastData && renderChartFromData(lastData));
-  yMinInput.addEventListener('input', () => lastData && renderChartFromData(lastData));
-  yMaxInput.addEventListener('input', () => lastData && renderChartFromData(lastData));
+  const applyRangeChanges = () => {
+    if (!lastData) return;
+    renderChartFromData(lastData);
+  };
+  [xMinInput, xMaxInput, yMinInput, yMaxInput].forEach((el) => {
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        applyRangeChanges();
+      }
+    });
+  });
 
   saveCsvBtn.addEventListener('click', async () => {
     if (!lastParsedRows.length || !lastColumns.length) return;
@@ -686,8 +772,10 @@
         return;
       }
       lastData = series;
-      defaultYRange = d3.extent(series, (d) => d.y);
+      defaultYRange = computeAdjustedExtent(series) || d3.extent(series, (d) => d.y);
       stripes = [];
+      baselineSeries = null;
+      baselineMap = new Map();
       offsets = new Map();
       cols.forEach((col) => offsets.set(col, 0));
       if (!visibleSeries.size) {

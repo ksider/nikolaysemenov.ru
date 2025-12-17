@@ -63,6 +63,7 @@ p { margin: 0; }
   padding: 8px 12px;
   position: static;
   border: 1px solid var(--outline);
+  flex-wrap: wrap;
 }
 
 .brand {
@@ -155,6 +156,8 @@ p { margin: 0; }
   align-items: stretch;
   gap: 0;
   flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
 }
 .chain-input {
   height: 44px;
@@ -162,6 +165,7 @@ p { margin: 0; }
   margin-left: -1px;
   flex: 1 1 auto;
   border: 1px solid var(--outline);
+  min-width: 120px;
 }
 .chain-input--left {
   border-radius: 10px 0 0 10px;
@@ -173,7 +177,9 @@ p { margin: 0; }
   display: flex;
   align-items: center;
   gap: 6px;
-  flex: 1 1 auto;
+  flex: 1 1 520px;
+  min-width: 280px;
+  flex-wrap: wrap;
 }
 
 .peaks-card { margin-top: 6px; }
@@ -223,6 +229,13 @@ p { margin: 0; }
 }
 .peaks-value { font-weight: 700; }
 .peaks-tip { color: var(--muted); font-size: 13px; }
+.peaks-input {
+  width: 100%;
+  border: 1px solid var(--outline);
+  border-radius: 8px;
+  padding: 6px 8px;
+  font-size: 13px;
+}
 .peaks-remove {
   border: none;
   background: transparent;
@@ -353,14 +366,15 @@ svg {
 }
 
 .legend {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 8px;
+  width: 100%;
 }
 
 .legend-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   padding: 8px 10px;
   border: 1px solid var(--outline);
@@ -368,10 +382,13 @@ svg {
   cursor: pointer;
   background: #fff;
   transition: transform 0.1s ease, border-color 0.2s ease, background 0.2s ease;
+  flex-wrap: wrap;
 }
 .legend-item:hover { transform: translateY(-1px); border-color: var(--primary); }
 .legend-item.inactive { opacity: 0.55; background: #f2f4f7; }
-.legend-swatch { width: 14px; height: 14px; border-radius: 4px; }
+.legend-item.baseline { box-shadow: 0 0 0 2px rgba(37,99,235,0.2); }
+.legend-swatch { width: 14px; height: 14px; border-radius: 4px; margin-top: 2px; }
+.legend-item span { word-break: break-word; }
 .legend-offset {
   width: 88px;
   border-radius: 8px;
@@ -380,6 +397,21 @@ svg {
   background: #f9fbfe;
   color: var(--text);
 }
+.legend-base-btn {
+  border: 1px solid var(--outline);
+  background: #f6f8fb;
+  color: var(--text);
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.legend-base-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.legend-base-btn:hover { border-color: var(--primary); color: var(--primary); }
 
 .controls {
   display: none;

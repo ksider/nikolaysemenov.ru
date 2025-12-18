@@ -20,6 +20,8 @@
   const yMinInput = document.getElementById('yMin');
   const yMaxInput = document.getElementById('yMax');
   const saveCsvBtn = document.getElementById('saveCsv');
+  const copyPngBtn = document.getElementById('copyPng');
+  const copySvgBtn = document.getElementById('copySvg');
   const chartRow = document.getElementById('chartRow');
   const chartLegend = document.getElementById('chartLegend');
   const i18nTargets = document.querySelectorAll('[data-i18n]');
@@ -28,6 +30,11 @@
   const peaksBody = document.getElementById('peaksBody');
   const peaksEmpty = document.getElementById('peaksEmpty');
   const copyStripesBtn = document.getElementById('copyStripes');
+  const exportSessionBtn = document.getElementById('exportSession');
+  const importSessionBtn = document.getElementById('importSession');
+  const importSessionInput = document.getElementById('importSessionInput');
+  const selectFilesBtn = document.getElementById('selectFiles');
+  const stripeSetBtns = document.querySelectorAll('.stripe-set-btn');
   const peakDb = Array.isArray(window.FTIR_BASE) ? window.FTIR_BASE : [];
 
   const browserLang = ((navigator.language || 'en').slice(0, 2) || 'en').toLowerCase();
@@ -44,11 +51,19 @@
   let markerStep = 1;
   let merging = false;
   let defaultYRange = null;
-  let stripes = [];
+  let stripeSets = {
+    candidates: [],
+    confirmed: [],
+  };
+  let activeStripeSet = 'candidates';
   const stripeColors = d3.schemeTableau10 || ['#2563eb', '#16a34a', '#f59e0b', '#ef4444', '#8b5cf6', '#0ea5e9'];
   let stripeIdSeq = 0;
   let baselineSeries = null;
   let baselineMap = new Map();
+  let lastFilesRaw = [];
+  let customNames = new Map();
+
+  const sanitizeName = (name) => (name || '').replace(/[^a-zA-Z0-9_-]+/g, '_') || 'col';
 
   function t(key, arg) {
     const dict = translations[currentLang] || translations.en || {};
@@ -63,7 +78,9 @@
       const key = el.getAttribute('data-i18n');
       if (key) el.textContent = t(key);
     });
-    sampleInput.placeholder = currentLang === 'ru' ? 'например, A1' : currentLang === 'sr' ? 'npr. A1' : 'e.g. A1';
+    if (sampleInput) {
+      sampleInput.placeholder = currentLang === 'ru' ? 'например, A1' : currentLang === 'sr' ? 'npr. A1' : 'e.g. A1';
+    }
     yMinInput.placeholder = t('yAuto') || 'auto';
     yMaxInput.placeholder = t('yAuto') || 'auto';
     langLinks.forEach((link) => {
@@ -76,6 +93,11 @@
     currentLang = supportedLangs.includes(lang) ? lang : 'en';
     applyTranslations();
   }
+  if (!stripeSets[activeStripeSet]) stripeSets[activeStripeSet] = [];
+  stripeSetBtns.forEach((btn) => {
+    btn.addEventListener('click', () => setActiveStripeSet(btn.dataset.set));
+  });
+  setActiveStripeSet(activeStripeSet);
 
   langLinks.forEach((link) => {
     link.addEventListener('click', (e) => {
@@ -113,6 +135,20 @@
     });
     if (!Number.isFinite(min) || !Number.isFinite(max)) return null;
     return [min, max];
+  }
+
+  function parseInfraredText(text) {
+    const rows = [];
+    const lines = text.split(/\r?\n/);
+    for (const raw of lines) {
+      const line = raw.trim();
+      if (!line) continue;
+      const parts = line.split(/\s+/);
+      if (parts.length >= 2 && !Number.isNaN(Number(parts[0])) && !Number.isNaN(Number(parts[1]))) {
+        rows.push([Number(parts[0]), Number(parts[1])]);
+      }
+    }
+    return rows;
   }
 
   function applyZoom(factor, centerX, centerY) {
@@ -186,7 +222,7 @@
     const now = new Date();
     const pad = (n) => String(n).padStart(2, '0');
     const date = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}`;
-    const sample = (sampleInput.value || '').trim();
+    const sample = sampleInput ? (sampleInput.value || '').trim() : '';
     const base = `ftir_${date}_${count || 0}files${sample ? `_${sample}` : ''}`;
     const withExt = base.toLowerCase().endsWith('.csv') ? base : `${base}.csv`;
     fileNameInput.value = withExt;
@@ -196,15 +232,20 @@
     generateName();
     const files = Array.from(fileInput.files || []);
     if (files.length) {
-      handleMerge();
+      if (lastData && lastFilesRaw.length) {
+        appendFiles(files);
+      } else {
+        handleMerge();
+      }
     }
   });
-  sampleInput.addEventListener('input', generateName);
+  if (sampleInput) sampleInput.addEventListener('input', generateName);
   generateName();
 
   function renderChartFromData(data, options = {}) {
     const { skipLegend = false } = options;
     if (!window.d3) return;
+    if (!data || !data.length) return;
     const filteredRaw = data.filter((d) => typeof d.x === 'number' && typeof d.y === 'number' && d.x <= defaultXRange.max && d.x >= defaultXRange.min);
     const filtered = filteredRaw.map((d) => {
       const base = baselineSeries ? baselineMap.get(d.x) : undefined;
@@ -274,15 +315,18 @@
     });
 
     g.append('g').attr('transform', `translate(0,${innerH})`).call(d3.axisBottom(x));
-    g.append('g').call(d3.axisLeft(y));
+    g.append('g').call(d3.axisLeft(y).tickFormat(() => ''));
+    g.append('rect').attr('x', 0).attr('y', 0).attr('width', innerW).attr('height', innerH).attr('fill', 'none').attr('stroke', '#cbd5e1').attr('stroke-width', 1.2);
 
     const color = d3.scaleOrdinal(d3.schemeTableau10).domain(allSeries);
     const allPoints = [];
 
     // draw user stripes + labels
-    if (stripes.length) {
+    const activeStripes = currentStripes();
+    if (activeStripes.length) {
       const stripesLayer = g.append('g').attr('class', 'user-stripes');
-      stripes.forEach((stripe) => {
+      const isCandidates = activeStripeSet === 'candidates';
+      activeStripes.forEach((stripe) => {
         const sx = x(stripe.x);
         stripesLayer
           .append('line')
@@ -291,12 +335,14 @@
           .attr('y1', 0)
           .attr('y2', innerH)
           .attr('stroke', stripe.color || '#111')
-          .attr('stroke-width', 2)
-          .attr('stroke-dasharray', '4,2');
+          .attr('stroke-width', isCandidates ? 1.4 : 2.2)
+          .attr('stroke-dasharray', isCandidates ? '6,4' : '4,2')
+          .attr('opacity', isCandidates ? 0.7 : 1);
         stripesLayer
           .append('text')
-          .attr('x', sx + 4)
-          .attr('y', 12)
+          .attr('x', sx)
+          .attr('y', -8)
+          .attr('text-anchor', 'middle')
           .attr('fill', '#111827')
           .attr('font-size', 12)
           .attr('font-weight', '700')
@@ -326,12 +372,19 @@
         const swatch = document.createElement('div');
         swatch.className = 'legend-swatch';
         swatch.style.background = color(file);
-        const label = document.createElement('span');
-        label.textContent = file;
+        const labelInput = document.createElement('input');
+        labelInput.className = 'legend-name-input';
+        labelInput.value = customNames.get(file) || file;
+        labelInput.title = file;
+        labelInput.addEventListener('click', (e) => e.stopPropagation());
+        labelInput.addEventListener('input', () => {
+          customNames.set(file, labelInput.value);
+          renderChartFromData(lastData, { skipLegend: true });
+        });
         const baselineBtn = document.createElement('button');
         baselineBtn.type = 'button';
         baselineBtn.className = 'legend-base-btn';
-        baselineBtn.textContent = 'Base';
+        baselineBtn.innerHTML = '<span class="material-symbols-outlined">vital_signs</span>';
         baselineBtn.title = 'Use as baseline';
         if (baselineSeries === file) baselineBtn.classList.add('active');
         baselineBtn.addEventListener('click', (e) => {
@@ -369,10 +422,20 @@
           offsets.set(file, Number(offsetInput.value) || 0);
           renderChartFromData(lastData, { skipLegend: true });
         });
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'legend-remove-btn';
+        removeBtn.textContent = '×';
+        removeBtn.title = 'Remove series';
+        removeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          removeSeries(file);
+        });
         item.appendChild(swatch);
-        item.appendChild(label);
+        item.appendChild(labelInput);
         item.appendChild(baselineBtn);
         item.appendChild(offsetInput);
+        item.appendChild(removeBtn);
         item.addEventListener('click', () => {
           const current = visibleSeries.get(file);
           visibleSeries.set(file, current === false ? true : false);
@@ -536,9 +599,111 @@
     return peakDb.filter((p) => xVal >= p.start && xVal <= p.end);
   }
 
+  function processFiles(payloadFiles, opts = {}) {
+    const downloadName = opts.fileName || fileNameInput.value.trim() || 'merged.csv';
+    const columns = payloadFiles.map((f) => sanitizeName(f.name));
+    const table = new Map();
+    let totalRows = 0;
+    payloadFiles.forEach((file, idx) => {
+      const col = columns[idx];
+      const rows = parseInfraredText(file.content);
+      totalRows += rows.length;
+      for (const [x, y] of rows) {
+        const key = String(x);
+        if (!table.has(key)) table.set(key, { x: Number(x), vals: new Map() });
+        table.get(key).vals.set(col, y);
+      }
+    });
+
+    const header = ['wavenumber', ...columns];
+    const sorted = Array.from(table.values()).sort((a, b) => b.x - a.x);
+    const lines = [header.join(',')];
+    for (const row of sorted) {
+      lines.push([row.x, ...columns.map((c) => (row.vals.has(c) ? row.vals.get(c) : ''))].join(','));
+    }
+
+    const csvText = lines.join('\n');
+
+    const parsed = d3.csvParse(csvText, d3.autoType);
+    const cols = parsed.columns.map((c) => c.trim()).filter((c) => c && c !== 'wavenumber');
+    if (!cols.length) {
+      setStatus(t('statusNoDataCols'), true);
+      return;
+    }
+    lastParsedRows = parsed;
+    lastColumns = cols;
+    const series = [];
+    for (const col of cols) {
+      for (const row of parsed) {
+        if (typeof row[col] === 'number' && typeof row.wavenumber === 'number') {
+          series.push({ file: col, x: row.wavenumber, y: row[col] });
+        }
+      }
+    }
+    if (!series.length) {
+      setStatus(t('statusNoNumeric'), true);
+      return;
+    }
+    lastData = series;
+    defaultYRange = computeAdjustedExtent(series) || d3.extent(series, (d) => d.y);
+    stripeSets = opts.stripeSets || stripeSets;
+    if (!stripeSets[activeStripeSet]) stripeSets[activeStripeSet] = [];
+    baselineSeries = opts.baselineSeries || null;
+    baselineMap = new Map();
+    if (baselineSeries && lastParsedRows && lastParsedRows.length) {
+      lastParsedRows.forEach((row) => {
+        if (typeof row.wavenumber === 'number' && typeof row[baselineSeries] === 'number') {
+          baselineMap.set(row.wavenumber, row[baselineSeries]);
+        }
+      });
+    }
+    offsets = new Map();
+    cols.forEach((col) => offsets.set(col, (opts.offsets && opts.offsets[col]) || 0));
+    customNames = new Map(Object.entries(opts.customNames || {}));
+    if (opts.visibleSeries) {
+      Object.entries(opts.visibleSeries).forEach(([k, v]) => visibleSeries.set(k, v));
+    }
+    cols.forEach((col) => {
+      if (!visibleSeries.has(col)) visibleSeries.set(col, true);
+    });
+    fileNameInput.value = downloadName;
+    if (sampleInput && opts.sampleIndex !== undefined) sampleInput.value = opts.sampleIndex;
+    if (opts.xRange) {
+      xMaxInput.value = opts.xRange.max ?? xMaxInput.value;
+      xMinInput.value = opts.xRange.min ?? xMinInput.value;
+    }
+    if (opts.yRange) {
+      yMinInput.value = opts.yRange.min ?? '';
+      yMaxInput.value = opts.yRange.max ?? '';
+    }
+    downloadLinkEl.textContent = '';
+    setStatus(t('statusReadyToSave'));
+    setControlsEnabled(true);
+    renderChartFromData(lastData);
+    renderStripesTable();
+  }
+
+  function currentStripes() {
+    return stripeSets[activeStripeSet] || [];
+  }
+
+  function setActiveStripeSet(setId) {
+    if (!setId) return;
+    if (!stripeSets[setId]) {
+      stripeSets[setId] = [];
+    }
+    activeStripeSet = setId;
+    stripeSetBtns.forEach((btn) => {
+      btn.classList.toggle('active', btn.dataset.set === setId);
+    });
+    renderChartFromData(lastData);
+    renderStripesTable();
+  }
+
   function renderStripesTable() {
     if (!peaksBody || !peaksEmpty) return;
     peaksBody.innerHTML = '';
+    const stripes = currentStripes();
     if (!stripes.length) {
       peaksEmpty.style.display = 'block';
       return;
@@ -576,16 +741,35 @@
       const tipCell = document.createElement('div');
       tipCell.className = 'peaks-tip';
       tipCell.textContent = stripe.tip || t('tipPlaceholder');
+      const moveWrap = document.createElement('div');
+      moveWrap.className = 'peaks-move';
+      ['candidates', 'confirmed'].forEach((setId) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'peaks-move-btn';
+        btn.textContent = setId === 'candidates' ? '→ Cand' : '→ Conf';
+        btn.disabled = setId === activeStripeSet;
+        if (btn.disabled) {
+          btn.style.display = 'none';
+        }
+        btn.addEventListener('click', () => {
+          stripeSets[activeStripeSet] = stripes.filter((s) => s.id !== stripe.id);
+          const target = stripeSets[setId] || [];
+          stripeSets[setId] = [...target, { ...stripe, color: stripeColors[target.length % stripeColors.length] }];
+          setActiveStripeSet(setId);
+        });
+        moveWrap.appendChild(btn);
+      });
       const removeBtn = document.createElement('button');
       removeBtn.className = 'peaks-remove';
       removeBtn.setAttribute('aria-label', 'remove stripe');
       removeBtn.textContent = '×';
       removeBtn.addEventListener('click', () => {
-        stripes = stripes.filter((s) => s.id !== stripe.id);
+        stripeSets[activeStripeSet] = stripes.filter((s) => s.id !== stripe.id);
         renderChartFromData(lastData);
         renderStripesTable();
       });
-      row.append(colorSwatch, val, nameCell, tipCell, removeBtn);
+      row.append(colorSwatch, val, nameCell, tipCell, moveWrap, removeBtn);
       peaksBody.appendChild(row);
     });
   }
@@ -594,6 +778,8 @@
     refreshBtn.disabled = !enabled;
     saveCsvBtn.disabled = !enabled;
     resetZoomBtn.disabled = !enabled;
+    copyPngBtn.disabled = !enabled;
+    copySvgBtn.disabled = !enabled;
     xMinInput.disabled = !enabled;
     xMaxInput.disabled = !enabled;
     yMinInput.disabled = !enabled;
@@ -625,19 +811,21 @@
             const cn = Number(xMinInput.value) || defaultXRange.min;
             return (cx + cn) / 2;
           })();
-    const color = stripeColors[stripes.length % stripeColors.length];
+    const current = currentStripes();
+    const color = stripeColors[current.length % stripeColors.length];
     stripeIdSeq += 1;
     const matches = tipsForX(xVal);
     const label = matches[0]?.class || matches[0]?.group || '';
     const tipText = matches
       .map((m) => [m.group, m.class, m.details].filter(Boolean).join(' — '))
       .join('; ');
-    stripes = [...stripes, { id: `stripe-${stripeIdSeq}`, x: xVal, color, label, tip: tipText }];
+    stripeSets[activeStripeSet] = [...current, { id: `stripe-${stripeIdSeq}`, x: xVal, color, label, tip: tipText }];
     renderChartFromData(lastData);
     renderStripesTable();
   });
 
   copyStripesBtn?.addEventListener('click', () => {
+    const stripes = currentStripes();
     if (!stripes.length) return;
     const header = ['wavenumber', 'label', 'tip'];
     const rows = stripes.map((s) => [s.x.toFixed(2), s.label || '', s.tip || '']);
@@ -647,6 +835,125 @@
         () => setStatus('Copied stripes.'),
         () => setStatus('Copy failed.', true)
       );
+    }
+  });
+
+  const copyCurrentSvg = () => {
+    const svg = chartEl.querySelector('svg');
+    if (!svg) {
+      setStatus('No chart to copy', true);
+      return null;
+    }
+    const serializer = new XMLSerializer();
+    const svgText = serializer.serializeToString(svg);
+    return { svgText, svg };
+  };
+
+  copySvgBtn?.addEventListener('click', () => {
+    const res = copyCurrentSvg();
+    if (!res) return;
+    const blob = new Blob([res.svgText], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'chart.svg';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  copyPngBtn?.addEventListener('click', () => {
+    const res = copyCurrentSvg();
+    if (!res) return;
+    const { svg, svgText } = res;
+    const viewBox = svg.getAttribute('viewBox')?.split(' ').map(Number);
+    const width = viewBox && viewBox[2] ? viewBox[2] : svg.clientWidth || 800;
+    const height = viewBox && viewBox[3] ? viewBox[3] : svg.clientHeight || 420;
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    const blob = new Blob([svgText], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+      canvas.toBlob((pngBlob) => {
+        if (!pngBlob) return;
+        const pngUrl = URL.createObjectURL(pngBlob);
+        const a = document.createElement('a');
+        a.href = pngUrl;
+        a.download = 'chart.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(pngUrl);
+      });
+    };
+    img.src = url;
+  });
+
+  exportSessionBtn?.addEventListener('click', () => {
+    if (!lastFilesRaw.length) {
+      setStatus('Nothing to export', true);
+      return;
+    }
+    const session = {
+      files: lastFilesRaw,
+      fileName: fileNameInput.value,
+      sampleIndex: sampleInput ? sampleInput.value : '',
+      offsets: Object.fromEntries(offsets),
+      stripeSets,
+      activeStripeSet,
+      visibleSeries: Object.fromEntries(visibleSeries),
+      baselineSeries,
+      xRange: { min: xMinInput.value, max: xMaxInput.value },
+      yRange: { min: yMinInput.value, max: yMaxInput.value },
+      customNames: Object.fromEntries(customNames),
+    };
+    const blob = new Blob([JSON.stringify(session, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'ftir_session.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  importSessionBtn?.addEventListener('click', () => importSessionInput?.click());
+  importSessionInput?.addEventListener('change', async () => {
+    const f = importSessionInput.files?.[0];
+    if (!f) return;
+    try {
+      const text = await f.text();
+      const session = JSON.parse(text);
+      if (!Array.isArray(session.files)) throw new Error('Invalid session');
+      if (sampleInput) sampleInput.value = session.sampleIndex || '';
+      fileNameInput.value = session.fileName || 'merged.csv';
+      lastFilesRaw = session.files.map((x) => ({ name: x.name, content: x.content }));
+      stripeSets = session.stripeSets || stripeSets;
+      activeStripeSet = session.activeStripeSet || activeStripeSet;
+      if (!stripeSets[activeStripeSet]) stripeSets[activeStripeSet] = [];
+      processFiles(lastFilesRaw, {
+        fileName: session.fileName,
+        sampleIndex: session.sampleIndex,
+        offsets: session.offsets,
+        visibleSeries: session.visibleSeries,
+        baselineSeries: session.baselineSeries,
+        xRange: session.xRange,
+        yRange: session.yRange,
+        customNames: session.customNames,
+        stripeSets: stripeSets,
+      });
+    } catch (err) {
+      console.error(err);
+      setStatus('Failed to import session', true);
+    } finally {
+      importSessionInput.value = '';
     }
   });
   resetZoomBtn.addEventListener('click', () => {
@@ -696,12 +1003,12 @@
   async function handleMerge() {
     if (merging) return;
     merging = true;
-    mergeBtn.disabled = true;
+    if (mergeBtn) mergeBtn.disabled = true;
     const files = Array.from(fileInput.files || []);
     if (!files.length) {
       setStatus(t('statusNoFiles'), true);
       merging = false;
-      mergeBtn.disabled = false;
+      if (mergeBtn) mergeBtn.disabled = false;
       return;
     }
     setStatus(t('statusReading'));
@@ -711,91 +1018,42 @@
         const content = await readFileText(f);
         payloadFiles.push({ name: f.name, content });
       }
+      lastFilesRaw = payloadFiles;
       const downloadName = fileNameInput.value.trim() || 'merged.csv';
-
-      const parseInfraredText = (text) => {
-        const rows = [];
-        const lines = text.split(/\r?\n/);
-        for (const raw of lines) {
-          const line = raw.trim();
-          if (!line) continue;
-          const parts = line.split(/\s+/);
-          if (parts.length >= 2 && !Number.isNaN(Number(parts[0])) && !Number.isNaN(Number(parts[1]))) {
-            rows.push([Number(parts[0]), Number(parts[1])]);
-          }
-        }
-        return rows;
-      };
-
-      const columns = payloadFiles.map((f) => f.name.replace(/[^a-zA-Z0-9_-]+/g, '_') || 'col');
-      const table = new Map();
-      let totalRows = 0;
-      payloadFiles.forEach((file, idx) => {
-        const col = columns[idx];
-        const rows = parseInfraredText(file.content);
-        totalRows += rows.length;
-        for (const [x, y] of rows) {
-          const key = String(x);
-          if (!table.has(key)) table.set(key, { x: Number(x), vals: new Map() });
-          table.get(key).vals.set(col, y);
-        }
-      });
-
-      const header = ['wavenumber', ...columns];
-      const sorted = Array.from(table.values()).sort((a, b) => b.x - a.x);
-      const lines = [header.join(',')];
-      for (const row of sorted) {
-        lines.push([row.x, ...columns.map((c) => (row.vals.has(c) ? row.vals.get(c) : ''))].join(','));
-      }
-
-      const csvText = lines.join('\n');
-      setStatus(`${t('statusSending')} ${payloadFiles.length} files, ${totalRows} points...`);
-
-      const parsed = d3.csvParse(csvText, d3.autoType);
-      const cols = parsed.columns.map((c) => c.trim()).filter((c) => c && c !== 'wavenumber');
-      if (!cols.length) {
-        setStatus(t('statusNoDataCols'), true);
-        return;
-      }
-      lastParsedRows = parsed;
-      lastColumns = cols;
-      const series = [];
-      for (const col of cols) {
-        for (const row of parsed) {
-          if (typeof row[col] === 'number' && typeof row.wavenumber === 'number') {
-            series.push({ file: col, x: row.wavenumber, y: row[col] });
-          }
-        }
-      }
-      if (!series.length) {
-        setStatus(t('statusNoNumeric'), true);
-        return;
-      }
-      lastData = series;
-      defaultYRange = computeAdjustedExtent(series) || d3.extent(series, (d) => d.y);
-      stripes = [];
-      baselineSeries = null;
-      baselineMap = new Map();
-      offsets = new Map();
-      cols.forEach((col) => offsets.set(col, 0));
-      if (!visibleSeries.size) {
-        cols.forEach((col) => visibleSeries.set(col, true));
-      }
-      downloadLinkEl.textContent = '';
-      setStatus(t('statusReadyToSave'));
-      setControlsEnabled(true);
-      renderChartFromData(lastData);
-      renderStripesTable();
+      setStatus(`${t('statusSending')} ${payloadFiles.length} files...`);
+      processFiles(payloadFiles, { fileName: downloadName });
     } catch (err) {
       console.error(err);
       setStatus(err.message, true);
     } finally {
-      mergeBtn.disabled = false;
+      if (mergeBtn) mergeBtn.disabled = false;
       merging = false;
     }
   }
 
-  mergeBtn.addEventListener('click', handleMerge);
+  async function appendFiles(fileList) {
+    const newFiles = [];
+    for (const f of fileList) {
+      const content = await readFileText(f);
+      newFiles.push({ name: f.name, content });
+    }
+    lastFilesRaw = [...(lastFilesRaw || []), ...newFiles];
+    processFiles(lastFilesRaw, {
+      fileName: fileNameInput.value,
+      sampleIndex: sampleInput ? sampleInput.value : '',
+      offsets: Object.fromEntries(offsets),
+      visibleSeries: Object.fromEntries(visibleSeries),
+      stripeSets,
+      activeStripeSet,
+      baselineSeries,
+      xRange: { min: xMinInput.value, max: xMaxInput.value },
+      yRange: { min: yMinInput.value, max: yMaxInput.value },
+      customNames: Object.fromEntries(customNames),
+    });
+  }
+
+  if (mergeBtn) mergeBtn.addEventListener('click', handleMerge);
+  selectFilesBtn?.addEventListener('click', () => fileInput.click());
 
   document.addEventListener('keydown', (event) => {
     if (!markerUpdater || !markerActive) return;
@@ -808,3 +1066,33 @@
     }
   });
 })();
+  function removeSeries(col) {
+    if (!col) return;
+    lastColumns = (lastColumns || []).filter((c) => c !== col);
+    lastParsedRows = (lastParsedRows || []).map((row) => {
+      const clone = { ...row };
+      delete clone[col];
+      return clone;
+    });
+    lastData = (lastData || []).filter((d) => d.file !== col);
+    offsets.delete(col);
+    visibleSeries.delete(col);
+    customNames.delete(col);
+    if (baselineSeries === col) {
+      baselineSeries = null;
+      baselineMap = new Map();
+    }
+    // remove one matching raw file by sanitized name
+    let removed = false;
+    lastFilesRaw = (lastFilesRaw || []).filter((f) => {
+      if (removed) return true;
+      if (sanitizeName(f.name) === col) {
+        removed = true;
+        return false;
+      }
+      return true;
+    });
+    defaultYRange = computeAdjustedExtent(lastData) || defaultYRange;
+    renderChartFromData(lastData);
+    renderStripesTable();
+  }

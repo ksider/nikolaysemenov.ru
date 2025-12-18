@@ -1,12 +1,12 @@
 # FTIR Merger roadmap (ideas)
 
 - **Export & sharing**
-  - Export/import session (uploaded spectra, stripes, baseline choice, offsets) as a JSON to restore a workspace.
-  - Copy chart as PNG/SVG with legend and stripes.
+  - [x] Export/import session (uploaded spectra, stripes, baseline choice, offsets) as a JSON to restore a workspace.
+  - [x] Copy chart as PNG/SVG with legend and stripes.
   - Inline “copy visible CSV” respecting visibility/baseline/offsets.
 
 - **Stripes & peak intelligence**
-  - Allow multiple stripe sets (e.g., “candidate peaks”, “confirmed peaks”) with toggles.
+  - [x] Allow multiple stripe sets (e.g., “candidate peaks”, “confirmed peaks”) with toggles.
   - Bulk add stripes from typed ranges (e.g., `1710-1730`) or paste from CSV.
   - Quick filters on the tips DB; highlight matches directly on chart.
   - Show nearest library match on hover/marker, not only on added stripes.

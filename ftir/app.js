@@ -2,6 +2,7 @@
   const config = window.APP_CONFIG || {};
   const translations = config.translations || {};
   const supportedLangs = config.supportedLangs || Object.keys(translations) || ['en'];
+  const footerLinks = config.footerLinks || {};
   const chartSettings = config.chart || {};
   const defaultXRange = chartSettings.defaultXRange || { min: 500, max: 4000 };
   const zones = chartSettings.zones || [];
@@ -22,6 +23,12 @@
   const saveCsvBtn = document.getElementById('saveCsv');
   const copyPngBtn = document.getElementById('copyPng');
   const copySvgBtn = document.getElementById('copySvg');
+  const showPointsInput = document.getElementById('showPoints');
+  const baselineSeriesSelect = document.getElementById('baselineSeries');
+  const baselineDegreeInput = document.getElementById('baselineDegree');
+  const baselinePreviewBtn = document.getElementById('baselinePreview');
+  const baselineApplyBtn = document.getElementById('baselineApply');
+  const baselineRevertBtn = document.getElementById('baselineRevert');
   const chartRow = document.getElementById('chartRow');
   const chartLegend = document.getElementById('chartLegend');
   const i18nTargets = document.querySelectorAll('[data-i18n]');
@@ -36,6 +43,8 @@
   const selectFilesBtn = document.getElementById('selectFiles');
   const stripeSetBtns = document.querySelectorAll('.stripe-set-btn');
   const peakDb = Array.isArray(window.FTIR_BASE) ? window.FTIR_BASE : [];
+  const footerSite = document.getElementById('footerSite');
+  const footerGithub = document.getElementById('footerGithub');
 
   const browserLang = ((navigator.language || 'en').slice(0, 2) || 'en').toLowerCase();
   let currentLang = supportedLangs.includes(browserLang) ? browserLang : 'en';
@@ -50,18 +59,25 @@
   let markerUpdater = null;
   let markerStep = 1;
   let merging = false;
-  let defaultYRange = null;
-  let stripeSets = {
-    candidates: [],
-    confirmed: [],
-  };
-  let activeStripeSet = 'candidates';
-  const stripeColors = d3.schemeTableau10 || ['#2563eb', '#16a34a', '#f59e0b', '#ef4444', '#8b5cf6', '#0ea5e9'];
-  let stripeIdSeq = 0;
-  let baselineSeries = null;
-  let baselineMap = new Map();
-  let lastFilesRaw = [];
-  let customNames = new Map();
+let defaultYRange = null;
+const BASELINE_DISABLED = true;
+let stripeSets = {
+  candidates: [],
+  confirmed: [],
+};
+let activeStripeSet = 'candidates';
+const stripeColors = d3.schemeTableau10 || ['#2563eb', '#16a34a', '#f59e0b', '#ef4444', '#8b5cf6', '#0ea5e9'];
+let stripeIdSeq = 0;
+let baselineSeries = null;
+let baselineMap = new Map();
+let baselineModel = null; // {series, method:'poly', degree, coeffs}
+let baselinePreviewModel = null;
+let lastFilesRaw = [];
+let customNames = new Map();
+let isPanning = false;
+let panStartDomain = null;
+let panMode = false;
+let showPoints = false;
 
   const sanitizeName = (name) => (name || '').replace(/[^a-zA-Z0-9_-]+/g, '_') || 'col';
 
@@ -93,6 +109,18 @@
     currentLang = supportedLangs.includes(lang) ? lang : 'en';
     applyTranslations();
   }
+  function applyFooterLinks() {
+    if (footerSite) {
+      const href = footerLinks.site || '#';
+      footerSite.href = href || '#';
+      footerSite.style.visibility = href ? 'visible' : 'hidden';
+    }
+    if (footerGithub) {
+      const href = footerLinks.github || '#';
+      footerGithub.href = href || '#';
+      footerGithub.style.visibility = href ? 'visible' : 'hidden';
+    }
+  }
   if (!stripeSets[activeStripeSet]) stripeSets[activeStripeSet] = [];
   stripeSetBtns.forEach((btn) => {
     btn.addEventListener('click', () => setActiveStripeSet(btn.dataset.set));
@@ -106,6 +134,7 @@
     });
   });
   applyTranslations();
+  applyFooterLinks();
 
   function setStatus(msg, isError = false) {
     statusEl.textContent = msg;
@@ -137,6 +166,95 @@
     return [min, max];
   }
 
+  function polyFit(xs, ys, degree) {
+    const n = degree + 1;
+    const sums = Array(2 * degree + 1).fill(0);
+    const t = Array(n).fill(0);
+    for (let i = 0; i < xs.length; i++) {
+      const x = xs[i];
+      const y = ys[i];
+      let pow = 1;
+      for (let k = 0; k <= 2 * degree; k++) {
+        sums[k] += pow;
+        pow *= x;
+      }
+      pow = 1;
+      for (let k = 0; k <= degree; k++) {
+        t[k] += y * pow;
+        pow *= x;
+      }
+    }
+    const A = Array.from({ length: n }, () => Array(n).fill(0));
+    const b = t.slice();
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        A[i][j] = sums[i + j];
+      }
+    }
+    // Gaussian elimination
+    for (let i = 0; i < n; i++) {
+      let maxRow = i;
+      for (let k = i + 1; k < n; k++) {
+        if (Math.abs(A[k][i]) > Math.abs(A[maxRow][i])) maxRow = k;
+      }
+      [A[i], A[maxRow]] = [A[maxRow], A[i]];
+      [b[i], b[maxRow]] = [b[maxRow], b[i]];
+      const pivot = A[i][i] || 1e-12;
+      for (let j = i; j < n; j++) A[i][j] /= pivot;
+      b[i] /= pivot;
+      for (let k = 0; k < n; k++) {
+        if (k === i) continue;
+        const factor = A[k][i];
+        for (let j = i; j < n; j++) A[k][j] -= factor * A[i][j];
+        b[k] -= factor * b[i];
+      }
+    }
+    return b; // coefficients
+  }
+
+  function polyEval(coeffs, x) {
+    let res = 0;
+    let pow = 1;
+    for (let i = 0; i < coeffs.length; i++) {
+      res += coeffs[i] * pow;
+      pow *= x;
+    }
+    return res;
+  }
+
+  function buildBaselinePoly(series, degree) {
+    if (!series || !lastParsedRows || !lastParsedRows.length) return null;
+    const points = [];
+    lastParsedRows.forEach((row) => {
+      if (typeof row.wavenumber === 'number' && typeof row[series] === 'number') {
+        points.push({ x: row.wavenumber, y: row[series] });
+      }
+    });
+    if (!points.length) return null;
+    const sampled = downsamplePoints(points, 1500);
+    const xs = sampled.map((p) => p.x);
+    const ys = sampled.map((p) => p.y);
+    const coeffs = polyFit(xs, ys, degree);
+    const map = new Map();
+    points.forEach((p) => {
+      map.set(p.x, polyEval(coeffs, p.x));
+    });
+    return { coeffs, map, degree, series };
+  }
+
+  function rebuildBaselineFromModel(model) {
+    if (!model || !model.series || !Array.isArray(model.coeffs)) return null;
+    if (!lastParsedRows || !lastParsedRows.length) return null;
+    const map = new Map();
+    lastParsedRows.forEach((row) => {
+      if (typeof row.wavenumber === 'number' && typeof row[model.series] === 'number') {
+        map.set(row.wavenumber, polyEval(model.coeffs, row.wavenumber));
+      }
+    });
+    if (!map.size) return null;
+    return { ...model, map };
+  }
+
   function parseInfraredText(text) {
     const rows = [];
     const lines = text.split(/\r?\n/);
@@ -149,6 +267,288 @@
       }
     }
     return rows;
+  }
+
+  const squeezeMap = {
+    '@': '0',
+    A: '1',
+    B: '2',
+    C: '3',
+    D: '4',
+    E: '5',
+    F: '6',
+    G: '7',
+    H: '8',
+    I: '9',
+    a: '-0',
+    b: '-1',
+    c: '-2',
+    d: '-3',
+    e: '-4',
+    f: '-5',
+    g: '-6',
+    h: '-7',
+    i: '-8',
+    j: '-9',
+  };
+  const diffMap = {
+    '%': 0,
+    J: 1,
+    K: 2,
+    L: 3,
+    M: 4,
+    N: 5,
+    O: 6,
+    P: 7,
+    Q: 8,
+    R: 9,
+    j: 0,
+    k: -1,
+    l: -2,
+    m: -3,
+    n: -4,
+    o: -5,
+    p: -6,
+    q: -7,
+    r: -8,
+    s: -9,
+  };
+  const dupMap = {
+    S: 1,
+    T: 2,
+    U: 3,
+    V: 4,
+    W: 5,
+    X: 6,
+    Y: 7,
+    Z: 8,
+    s: 1,
+    t: 2,
+    u: 3,
+    v: 4,
+    w: 5,
+    x: 6,
+    y: 7,
+    z: 8,
+  };
+
+  function unsqueezeToken(token) {
+    let out = '';
+    for (const ch of token) {
+      if (squeezeMap[ch] !== undefined) {
+        out += squeezeMap[ch];
+      } else if (ch === '%') {
+        out += '.';
+      } else {
+        out += ch;
+      }
+    }
+    const num = Number(out);
+    return Number.isFinite(num) ? num : null;
+  }
+
+  function parseJcamp(text) {
+    // prefer bundled converter if present
+    try {
+      const jc =
+        (typeof window !== 'undefined' && (window.jcampconverter || window.Jcampconverter || window.JcampConverter || window.Jcamp)) ||
+        (typeof JcampConverter !== 'undefined' ? JcampConverter : null);
+      if (jc && typeof jc.convert === 'function') {
+        const res = jc.convert(text, { keepRecords: true });
+        const spec =
+          res?.spectra?.[0] ||
+          res?.flatten?.[0]?.spectra?.[0] ||
+          res?.flatten?.[0]?.data?.[0] ||
+          res?.entries?.[0]?.spectra?.[0];
+        const xs = spec?.data?.x || spec?.x || [];
+        const ys = spec?.data?.y || spec?.y || [];
+        if (xs.length && ys.length && xs.length === ys.length) {
+          return xs.map((x, i) => [x, ys[i]]);
+        }
+      }
+    } catch (e) {
+      console.error('jcampconverter failed', e);
+    }
+
+    const rows = [];
+    const lines = text.split(/\r?\n/);
+    let inData = false;
+    let firstX = null;
+    let lastX = null;
+    let nPoints = null;
+    let deltaX = null;
+    let xFactor = 1;
+    let yFactor = 1;
+    let firstY = null;
+
+    const num = (s) => {
+      const v = Number(s);
+      return Number.isFinite(v) ? v : null;
+    };
+
+    try {
+      let lastY = null;
+      const tokenize = (line) => {
+        const clean = line.replace(/[;,]+/g, ' ').replace(/\s+/g, ' ').trim();
+        if (!clean) return [];
+        const tokens = [];
+        let current = '';
+        const push = () => {
+          if (current) tokens.push(current);
+          current = '';
+        };
+        for (let i = 0; i < clean.length; i++) {
+          const ch = clean[i];
+          if (ch === ' ') {
+            push();
+            continue;
+          }
+          const isSign = ch === '+' || ch === '-';
+          const isLetter = /[A-Za-z%@]/.test(ch);
+          if (isLetter || isSign) {
+            if (current) push();
+          }
+          current += ch;
+        }
+        push();
+        return tokens;
+      };
+
+      for (const raw of lines) {
+        const line = raw.trim();
+        if (!line) continue;
+        if (line.startsWith('##')) {
+          const header = line.toUpperCase();
+          const grab = (re) => {
+            const m = line.match(re);
+            return m ? num(m[1]) : null;
+          };
+          firstX = grab(/^##\s*FIRSTX\s*=\s*([+-]?[0-9.eE]+)/i) ?? firstX;
+          lastX = grab(/^##\s*LASTX\s*=\s*([+-]?[0-9.eE]+)/i) ?? lastX;
+          nPoints = grab(/^##\s*NPOINTS\s*=\s*([0-9]+)/i) ?? nPoints;
+          deltaX = grab(/^##\s*DELTAX\s*=\s*([+-]?[0-9.eE]+)/i) ?? deltaX;
+          xFactor = grab(/^##\s*XFACTOR\s*=\s*([+-]?[0-9.eE]+)/i) ?? xFactor;
+          yFactor = grab(/^##\s*YFACTOR\s*=\s*([+-]?[0-9.eE]+)/i) ?? yFactor;
+          firstY = grab(/^##\s*FIRSTY\s*=\s*([+-]?[0-9.eE]+)/i) ?? firstY;
+          if (/^##\s*(XYDATA|XYPOINTS|PEAK\s*TABLE)/i.test(header)) {
+            inData = true;
+            if (firstY !== null && lastY === null) lastY = firstY;
+          } else if (/^##\s*END/i.test(header)) {
+            inData = false;
+          } else {
+            inData = false;
+          }
+          continue;
+        }
+        if (!inData) continue;
+        const parts = tokenize(line);
+        if (parts.length < 2) continue;
+        const startX = num(parts[0]);
+        if (startX === null) continue;
+        let step = deltaX;
+        if (step === null && firstX !== null && lastX !== null && nPoints) {
+          step = (lastX - firstX) / Math.max(1, nPoints - 1);
+        }
+        if (step === null) step = 1;
+        let currentX = startX;
+        for (let i = 1; i < parts.length; i++) {
+          let tok = parts[i];
+          if (!tok) continue;
+          let dupCount = 0;
+          const tail = tok[tok.length - 1];
+          if (dupMap[tail] !== undefined && tok.length > 1) {
+            dupCount = dupMap[tail];
+            tok = tok.slice(0, -1);
+          }
+          const lead = tok[0];
+          let yVal = null;
+          if (dupMap[lead] !== undefined && tok.length === 1 && lastY !== null) {
+            dupCount = dupMap[lead];
+            yVal = lastY;
+          } else if (diffMap[lead] !== undefined && lastY !== null) {
+            const rest = tok.slice(1);
+            const diffVal = unsqueezeToken(rest || '0');
+            if (diffVal !== null) {
+              yVal = lastY + diffVal;
+            }
+          }
+          if (yVal === null) {
+            yVal = unsqueezeToken(tok);
+          }
+          if (yVal === null) continue;
+          lastY = yVal;
+          rows.push([currentX * xFactor, yVal * yFactor]);
+          currentX += step;
+          for (let k = 0; k < dupCount; k++) {
+            rows.push([currentX * xFactor, yVal * yFactor]);
+            currentX += step;
+          }
+        }
+      }
+      return rows;
+    } catch (err) {
+      console.error('JCAMP parse error', err);
+      return [];
+    }
+  }
+
+  function decodeBase64ToString(data) {
+    try {
+      const clean = (data || '').replace(/[^A-Za-z0-9+/=]/g, '');
+      if (!clean) return null;
+      const bin = atob(clean);
+      let out = '';
+      for (let i = 0; i < bin.length; i++) {
+        out += String.fromCharCode(bin.charCodeAt(i));
+      }
+      return out;
+    } catch (err) {
+      console.error('Base64 decode failed', err);
+      return null;
+    }
+  }
+
+  function parseSpectraContent(text, name = '') {
+    const autoScaleTransmittance = (rows) => {
+      if (!rows || !rows.length) return rows;
+      let min = Infinity;
+      let max = -Infinity;
+      for (const [, y] of rows) {
+        if (typeof y !== 'number') continue;
+        if (y < min) min = y;
+        if (y > max) max = y;
+      }
+      if (!Number.isFinite(min) || !Number.isFinite(max)) return rows;
+      // Heuristic: values look like 0..1 transmittance, lift to percent
+      if (max <= 2 && min >= -2) {
+        return rows.map(([x, y]) => [x, typeof y === 'number' ? y * 100 : y]);
+      }
+      return rows;
+    };
+
+    const lower = (name || '').toLowerCase();
+    const looksJcamp =
+      lower.endsWith('.jdx') ||
+      lower.endsWith('.dx') ||
+      lower.endsWith('.jsm') ||
+      lower.endsWith('.jcm') ||
+      /##\s*JCAMP/i.test(text) ||
+      /##\s*XYDATA/i.test(text);
+    if (looksJcamp) {
+      const parsed = parseJcamp(text);
+      if (parsed.length) return autoScaleTransmittance(parsed);
+      // Some .jcm are base64-packed JCAMP; try to decode
+      if (lower.endsWith('.jcm')) {
+        const decoded = decodeBase64ToString(text);
+        if (decoded) {
+          const parsedDecoded = parseJcamp(decoded);
+          if (parsedDecoded.length) return autoScaleTransmittance(parsedDecoded);
+          const fallback = parseInfraredText(decoded);
+          if (fallback.length) return autoScaleTransmittance(fallback);
+        }
+      }
+    }
+    return autoScaleTransmittance(parseInfraredText(text));
   }
 
   function applyZoom(factor, centerX, centerY) {
@@ -202,7 +602,19 @@
     const header = ['wavenumber', ...columns];
     const lines = [header.join(',')];
     rows.forEach((row) => {
-      lines.push([row.wavenumber, ...columns.map((c) => (row[c] ?? ''))].join(','));
+      const base = baselineSeries ? baselineMap.get(row.wavenumber) : undefined;
+      lines.push(
+        [
+          row.wavenumber,
+          ...columns.map((c) => {
+            let val = row[c];
+            if (typeof val === 'number' && typeof base === 'number') {
+              val = val - base;
+            }
+            return val ?? '';
+          }),
+        ].join(',')
+      );
     });
     return lines.join('\n');
   }
@@ -361,6 +773,39 @@
       allPoints.push(...sorted);
       seriesData.set(file, sorted);
     }
+    if (!BASELINE_DISABLED && baselineMap && baselineMap.size) {
+      const pts = Array.from(baselineMap.entries())
+        .map(([xv, yv]) => ({ x: Number(xv), y: Number(yv) }))
+        .filter((p) => Number.isFinite(p.x) && Number.isFinite(p.y))
+        .sort((a, b) => b.x - a.x);
+      if (pts.length) {
+        g.append('path')
+          .datum(pts)
+          .attr('fill', 'none')
+          .attr('stroke', '#16a34a')
+          .attr('stroke-width', 1.2)
+          .attr('stroke-dasharray', '6,3')
+          .attr('d', line);
+      }
+    }
+    if (!BASELINE_DISABLED && baselinePreviewModel && baselinePreviewModel.map && baselinePreviewModel.map.size) {
+      const pts = Array.from(baselinePreviewModel.map.entries())
+        .map(([xv, yv]) => ({ x: Number(xv), y: Number(yv) }))
+        .filter((p) => Number.isFinite(p.x) && Number.isFinite(p.y))
+        .sort((a, b) => b.x - a.x);
+      if (pts.length) {
+        g.append('path')
+          .datum(pts)
+          .attr('fill', 'none')
+          .attr('stroke', '#10b981')
+          .attr('stroke-width', 1)
+          .attr('stroke-dasharray', '3,3')
+          .attr('opacity', 0.9)
+          .attr('d', line);
+      }
+    }
+
+    // points disabled by request
 
     if (!skipLegend) {
       chartLegend.innerHTML = '';
@@ -380,37 +825,6 @@
         labelInput.addEventListener('input', () => {
           customNames.set(file, labelInput.value);
           renderChartFromData(lastData, { skipLegend: true });
-        });
-        const baselineBtn = document.createElement('button');
-        baselineBtn.type = 'button';
-        baselineBtn.className = 'legend-base-btn';
-        baselineBtn.innerHTML = '<span class="material-symbols-outlined">vital_signs</span>';
-        baselineBtn.title = 'Use as baseline';
-        if (baselineSeries === file) baselineBtn.classList.add('active');
-        baselineBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          if (baselineSeries === file) {
-            baselineSeries = null;
-            baselineMap = new Map();
-            defaultYRange = computeAdjustedExtent(lastData) || defaultYRange;
-            yMinInput.value = '';
-            yMaxInput.value = '';
-          } else {
-            baselineSeries = file;
-            const map = new Map();
-            if (lastParsedRows && lastParsedRows.length) {
-              lastParsedRows.forEach((row) => {
-                if (typeof row.wavenumber === 'number' && typeof row[file] === 'number') {
-                  map.set(row.wavenumber, row[file]);
-                }
-              });
-            }
-            baselineMap = map;
-            defaultYRange = computeAdjustedExtent(lastData) || defaultYRange;
-            yMinInput.value = '';
-            yMaxInput.value = '';
-          }
-          renderChartFromData(lastData);
         });
         const offsetInput = document.createElement('input');
         offsetInput.type = 'number';
@@ -433,7 +847,7 @@
         });
         item.appendChild(swatch);
         item.appendChild(labelInput);
-        item.appendChild(baselineBtn);
+        // baseline toggle hidden
         item.appendChild(offsetInput);
         item.appendChild(removeBtn);
         item.addEventListener('click', () => {
@@ -534,11 +948,32 @@
       updateZoneHighlight(xVal);
     };
 
+  const isPanEvent = (evt) => evt.button === 1 || evt.buttons === 4;
+
+    svg.on('contextmenu', (e) => e.preventDefault());
+
     svg.on('pointerdown', (event) => {
+      if (isPanEvent(event)) {
+        isPanning = true;
+        panStartDomain = x.invert(d3.pointer(event, g.node())[0]);
+        svg.style('cursor', 'grab');
+        return;
+      }
       handlePointer(event);
       isDragging = true;
     });
     svg.on('pointermove', (event) => {
+      if (isPanning) {
+        const [px] = d3.pointer(event, g.node());
+        const currentDomain = x.invert(px);
+        const delta = panStartDomain - currentDomain;
+        const newXMin = (Number(xMinInput.value) || defaultXRange.min) + delta;
+        const newXMax = (Number(xMaxInput.value) || defaultXRange.max) + delta;
+        xMinInput.value = newXMin;
+        xMaxInput.value = newXMax;
+        renderChartFromData(lastData, { skipLegend: true });
+        return;
+      }
       if (isDragging) {
         handlePointer(event);
       } else {
@@ -547,16 +982,22 @@
     });
     svg.on('pointerup pointerleave pointercancel', () => {
       isDragging = false;
+      if (isPanning) {
+        isPanning = false;
+        panStartDomain = null;
+      }
       svg.style('cursor', markerActive ? 'col-resize' : 'crosshair');
       clearZoneHighlight();
     });
 
     svg.on('click', (event) => {
       if (event.detail === 2) return; // let dblclick handle it
+      if (event.ctrlKey) return;
       handlePointer(event);
     });
 
     svg.on('dblclick', (event) => {
+      if (event.ctrlKey) return;
       event.preventDefault();
       handlePointer(event);
       if (addStripeBtn) {
@@ -604,9 +1045,18 @@
     const columns = payloadFiles.map((f) => sanitizeName(f.name));
     const table = new Map();
     let totalRows = 0;
+    const failedFiles = [];
     payloadFiles.forEach((file, idx) => {
       const col = columns[idx];
-      const rows = parseInfraredText(file.content);
+      const rows = parseSpectraContent(file.content, file.name);
+      if (!rows.length) {
+        if ((file.name || '').toLowerCase().endsWith('.jcm')) {
+          failedFiles.push(`${file.name || col} (packed JCM not supported yet)`);
+        } else {
+          failedFiles.push(file.name || col);
+        }
+        return;
+      }
       totalRows += rows.length;
       for (const [x, y] of rows) {
         const key = String(x);
@@ -627,7 +1077,8 @@
     const parsed = d3.csvParse(csvText, d3.autoType);
     const cols = parsed.columns.map((c) => c.trim()).filter((c) => c && c !== 'wavenumber');
     if (!cols.length) {
-      setStatus(t('statusNoDataCols'), true);
+      const msg = failedFiles.length ? `Failed to import: ${failedFiles.join(', ')}` : t('statusNoDataCols');
+      setStatus(msg, true);
       return;
     }
     lastParsedRows = parsed;
@@ -648,15 +1099,10 @@
     defaultYRange = computeAdjustedExtent(series) || d3.extent(series, (d) => d.y);
     stripeSets = opts.stripeSets || stripeSets;
     if (!stripeSets[activeStripeSet]) stripeSets[activeStripeSet] = [];
-    baselineSeries = opts.baselineSeries || null;
+    baselinePreviewModel = null;
+    baselineModel = null;
+    baselineSeries = null;
     baselineMap = new Map();
-    if (baselineSeries && lastParsedRows && lastParsedRows.length) {
-      lastParsedRows.forEach((row) => {
-        if (typeof row.wavenumber === 'number' && typeof row[baselineSeries] === 'number') {
-          baselineMap.set(row.wavenumber, row[baselineSeries]);
-        }
-      });
-    }
     offsets = new Map();
     cols.forEach((col) => offsets.set(col, (opts.offsets && opts.offsets[col]) || 0));
     customNames = new Map(Object.entries(opts.customNames || {}));
@@ -666,6 +1112,7 @@
     cols.forEach((col) => {
       if (!visibleSeries.has(col)) visibleSeries.set(col, true);
     });
+    updateBaselineSelectOptions(cols);
     fileNameInput.value = downloadName;
     if (sampleInput && opts.sampleIndex !== undefined) sampleInput.value = opts.sampleIndex;
     if (opts.xRange) {
@@ -677,14 +1124,82 @@
       yMaxInput.value = opts.yRange.max ?? '';
     }
     downloadLinkEl.textContent = '';
-    setStatus(t('statusReadyToSave'));
+    if (failedFiles.length) {
+      setStatus(`Imported with issues. Failed: ${failedFiles.join(', ')}`, true);
+    } else {
+      setStatus(t('statusReadyToSave'));
+    }
     setControlsEnabled(true);
     renderChartFromData(lastData);
     renderStripesTable();
   }
 
+  function downsamplePoints(arr, maxPoints = 1500) {
+    if (!Array.isArray(arr) || arr.length <= maxPoints) return arr || [];
+    const step = Math.ceil(arr.length / maxPoints);
+    const out = [];
+    for (let i = 0; i < arr.length; i += step) {
+      out.push(arr[i]);
+    }
+    return out;
+  }
+
   function currentStripes() {
     return stripeSets[activeStripeSet] || [];
+  }
+
+  function updateBaselineSelectOptions(cols = lastColumns || []) {
+    if (BASELINE_DISABLED) return;
+    if (!baselineSeriesSelect) return;
+    baselineSeriesSelect.innerHTML = '';
+    cols.forEach((col) => {
+      const opt = document.createElement('option');
+      opt.value = col;
+      opt.textContent = customNames.get(col) || col;
+      baselineSeriesSelect.appendChild(opt);
+    });
+    if (cols.length === 0) {
+      baselineSeriesSelect.disabled = true;
+      baselinePreviewBtn.disabled = true;
+      baselineApplyBtn.disabled = true;
+      baselineRevertBtn.disabled = true;
+      baselineDegreeInput.disabled = true;
+      return;
+    }
+    baselineSeriesSelect.disabled = false;
+    baselineDegreeInput.disabled = false;
+    const target = baselineSeries && cols.includes(baselineSeries) ? baselineSeries : cols[0];
+    baselineSeriesSelect.value = target;
+    baselinePreviewBtn.disabled = false;
+    baselineApplyBtn.disabled = false;
+    baselineRevertBtn.disabled = !baselineSeries && !baselinePreviewModel;
+  }
+
+  function applyBaselineModel(model) {
+    if (!model) return;
+    if (BASELINE_DISABLED) return;
+    baselineSeries = model.series;
+    baselineModel = { series: model.series, degree: model.degree, coeffs: model.coeffs.slice() };
+    baselineMap = model.map ? new Map(model.map) : new Map();
+    baselinePreviewModel = null;
+    defaultYRange = computeAdjustedExtent(lastData) || defaultYRange;
+    yMinInput.value = '';
+    yMaxInput.value = '';
+    updateBaselineSelectOptions();
+    renderChartFromData(lastData);
+  }
+
+  function clearBaseline() {
+    if (BASELINE_DISABLED) return;
+    baselineSeries = null;
+    baselineModel = null;
+    baselineMap = new Map();
+    baselinePreviewModel = null;
+    defaultYRange = computeAdjustedExtent(lastData) || defaultYRange;
+    yMinInput.value = '';
+    yMaxInput.value = '';
+    updateBaselineSelectOptions();
+    renderChartFromData(lastData);
   }
 
   function setActiveStripeSet(setId) {
@@ -780,10 +1295,16 @@
     resetZoomBtn.disabled = !enabled;
     copyPngBtn.disabled = !enabled;
     copySvgBtn.disabled = !enabled;
+    if (showPointsInput) showPointsInput.disabled = true;
     xMinInput.disabled = !enabled;
     xMaxInput.disabled = !enabled;
     yMinInput.disabled = !enabled;
     yMaxInput.disabled = !enabled;
+    if (baselineSeriesSelect) baselineSeriesSelect.disabled = true;
+    if (baselineDegreeInput) baselineDegreeInput.disabled = true;
+    if (baselinePreviewBtn) baselinePreviewBtn.disabled = true;
+    if (baselineApplyBtn) baselineApplyBtn.disabled = true;
+    if (baselineRevertBtn) baselineRevertBtn.disabled = true;
     chartRow.classList.toggle('is-hidden', !enabled);
     document.getElementById('chartControls').classList.toggle('active', enabled);
     if (enabled) {
@@ -802,6 +1323,25 @@
       renderChartFromData(lastData);
     }
   });
+
+  const getBaselineParams = () => {
+    if (BASELINE_DISABLED) return { series: null, degree: 2 };
+    const series = baselineSeriesSelect?.value;
+    let degree = parseInt(baselineDegreeInput?.value, 10);
+    if (!Number.isFinite(degree)) degree = 2;
+    degree = Math.min(Math.max(degree, 1), 8);
+    if (baselineDegreeInput) baselineDegreeInput.value = String(degree);
+    return { series, degree };
+  };
+
+  baselinePreviewBtn?.addEventListener('click', () => {});
+
+  baselineApplyBtn?.addEventListener('click', () => {});
+
+  baselineRevertBtn?.addEventListener('click', () => {});
+
+  baselineSeriesSelect?.addEventListener('change', () => {});
+
   addStripeBtn?.addEventListener('click', () => {
     const xVal =
       markerActive && markerX !== null
@@ -909,6 +1449,7 @@
       activeStripeSet,
       visibleSeries: Object.fromEntries(visibleSeries),
       baselineSeries,
+      baselineModel,
       xRange: { min: xMinInput.value, max: xMaxInput.value },
       yRange: { min: yMinInput.value, max: yMaxInput.value },
       customNames: Object.fromEntries(customNames),
@@ -944,6 +1485,7 @@
         offsets: session.offsets,
         visibleSeries: session.visibleSeries,
         baselineSeries: session.baselineSeries,
+        baselineModel: session.baselineModel,
         xRange: session.xRange,
         yRange: session.yRange,
         customNames: session.customNames,
@@ -977,6 +1519,7 @@
       }
     });
   });
+  // show points disabled
 
   saveCsvBtn.addEventListener('click', async () => {
     if (!lastParsedRows.length || !lastColumns.length) return;
@@ -1046,6 +1589,7 @@
       stripeSets,
       activeStripeSet,
       baselineSeries,
+      baselineModel,
       xRange: { min: xMinInput.value, max: xMaxInput.value },
       yRange: { min: yMinInput.value, max: yMaxInput.value },
       customNames: Object.fromEntries(customNames),
@@ -1065,7 +1609,6 @@
       markerUpdater(direction);
     }
   });
-})();
   function removeSeries(col) {
     if (!col) return;
     lastColumns = (lastColumns || []).filter((c) => c !== col);
@@ -1093,6 +1636,9 @@
       return true;
     });
     defaultYRange = computeAdjustedExtent(lastData) || defaultYRange;
+    updateBaselineSelectOptions();
     renderChartFromData(lastData);
     renderStripesTable();
   }
+})();
+  // pan mode button removed

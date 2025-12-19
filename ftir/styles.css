@@ -214,11 +214,23 @@ p { margin: 0; }
   justify-content: center;
   min-width: 44px;
 }
+.icon-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
 .icon-btn .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   font-size: 20px;
   line-height: 1;
 }
+.inline-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+.inline-toggle input { pointer-events: none; }
 .icon-btn.primary { border-color: var(--primary); }
 .icon-btn.success { background: var(--success); color: #fff; border-color: var(--success); }
 .icon-btn:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -326,6 +338,24 @@ p { margin: 0; }
   font-size: 16px;
 }
 .peaks-remove:hover { color: #991b1b; }
+
+.footer {
+  margin-top: 14px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--muted);
+}
+.footer .footer-links { display: flex; align-items: center; gap: 8px; }
+.footer a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+.footer a:hover { text-decoration: underline; }
+.footer .dot { color: var(--outline-strong); }
 
 /* chain-button now defined above; keep right variant for future */
 .chain-button--right { border-left: none; }
@@ -524,6 +554,14 @@ svg {
 }
 .inline-inputs span { color: var(--muted); }
 .control-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.baseline-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+#baselineSeries, #baselineDegree {
+  border: 1px solid var(--outline);
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+#baselineSeries { min-width: 140px; }
+.baseline-group { display: none; }
 .save-wrap { display: none; }
 
 .is-hidden { display: none !important; }

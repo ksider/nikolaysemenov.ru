@@ -953,9 +953,15 @@ let showPoints = false;
     svg.on('contextmenu', (e) => e.preventDefault());
 
     svg.on('pointerdown', (event) => {
+      const [px, py] = d3.pointer(event, g.node());
       if (isPanEvent(event)) {
         isPanning = true;
-        panStartDomain = x.invert(d3.pointer(event, g.node())[0]);
+        panStartDomain = {
+          x: x.invert(px),
+          y: y.invert(py),
+          yMin: yMinVal,
+          yMax: yMaxVal,
+        };
         svg.style('cursor', 'grab');
         return;
       }
@@ -963,14 +969,25 @@ let showPoints = false;
       isDragging = true;
     });
     svg.on('pointermove', (event) => {
+      const [px, py] = d3.pointer(event, g.node());
       if (isPanning) {
-        const [px] = d3.pointer(event, g.node());
-        const currentDomain = x.invert(px);
-        const delta = panStartDomain - currentDomain;
-        const newXMin = (Number(xMinInput.value) || defaultXRange.min) + delta;
-        const newXMax = (Number(xMaxInput.value) || defaultXRange.max) + delta;
+        const currentX = x.invert(px);
+        const currentY = y.invert(py);
+        const dx = panStartDomain.x - currentX;
+        const dy = panStartDomain.y - currentY;
+        const newXMin = (Number(xMinInput.value) || defaultXRange.min) + dx;
+        const newXMax = (Number(xMaxInput.value) || defaultXRange.max) + dx;
+        let newYMin = panStartDomain.yMin + dy;
+        let newYMax = panStartDomain.yMax + dy;
+        const baseRange = defaultYRange || yDomainAuto;
+        if (baseRange && baseRange.length === 2) {
+          newYMin = Math.max(newYMin, baseRange[0]);
+          newYMax = Math.min(newYMax, baseRange[1]);
+        }
         xMinInput.value = newXMin;
         xMaxInput.value = newXMax;
+        yMinInput.value = String(newYMin);
+        yMaxInput.value = String(newYMax);
         renderChartFromData(lastData, { skipLegend: true });
         return;
       }

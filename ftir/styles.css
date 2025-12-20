@@ -232,6 +232,7 @@ p { margin: 0; }
 }
 .inline-toggle input { pointer-events: none; }
 .icon-btn.primary { border-color: var(--primary); }
+.icon-btn.saveimg { background: var(--outline); color: #0f172a; border-color:#0f172a; }
 .icon-btn.success { background: var(--success); color: #fff; border-color: var(--success); }
 .icon-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 .name-group {

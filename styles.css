@@ -531,7 +531,8 @@ body {
   .section--education .section__text,
   .section--lead .section__media, 
   .section--senior .section__media,
-  .section--senior .section__text {
+  .section--senior .section__text,
+  .section--ai-apps .section__text {
     grid-column: 2 / 6;
   }
 .section--director .section__media {
@@ -593,8 +594,6 @@ body {
     height: clamp(6.5rem, 38vw, 8.75rem);;
     aspect-ratio: 1;
     left: inherit;
-    /* right: clamp(1.25rem, 0.5vw, 2.25rem); */
-    /* top: clamp(3.25rem, 19vw, 4.45rem); */
     right:0;
     top:7%;
     margin: 0;
@@ -629,6 +628,12 @@ body {
   /*.section--lead .section__media,*/
   .section--lead .section__text {
     grid-column: 2 / 6;
+  }
+
+
+  .section--ai-apps .section__text {
+    grid-column: 2 / 6;
+    margin-bottom: 2.5em;
   }
 
   .section--lead .section__media, 

@@ -2,7 +2,8 @@ window.APP_CONFIG = {
   supportedLangs: ['en', 'ru', 'sr'],
   footerLinks: {
     site: 'https://nikolaysemenov.ru',
-    github: 'https://github.com/ksider/FTIR-file-Merger',
+    github: 'https://github.com/ksider/nikolaysemenov.ru/tree/main/ftir',
+    coffee: 'https://coindrop.to/nikolaysemenov',
   },
   chart: {
     defaultXRange: { min: 500, max: 4000 },

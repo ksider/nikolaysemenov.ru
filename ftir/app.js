@@ -45,6 +45,7 @@
   const peakDb = Array.isArray(window.FTIR_BASE) ? window.FTIR_BASE : [];
   const footerSite = document.getElementById('footerSite');
   const footerGithub = document.getElementById('footerGithub');
+  const footerCoffee = document.getElementById('footerCoffee');
 
   const browserLang = ((navigator.language || 'en').slice(0, 2) || 'en').toLowerCase();
   let currentLang = supportedLangs.includes(browserLang) ? browserLang : 'en';
@@ -78,8 +79,20 @@ let isPanning = false;
 let panStartDomain = null;
 let panMode = false;
 let showPoints = false;
+let panRaf = null;
+let panQueued = null;
 
   const sanitizeName = (name) => (name || '').replace(/[^a-zA-Z0-9_-]+/g, '_') || 'col';
+  const makeUniqueColumnName = (existing, raw) => {
+    const base = sanitizeName(raw);
+    let name = base;
+    let n = 2;
+    while (existing.includes(name)) {
+      name = `${base}_${n++}`;
+    }
+    existing.push(name);
+    return name;
+  };
 
   function t(key, arg) {
     const dict = translations[currentLang] || translations.en || {};
@@ -119,6 +132,11 @@ let showPoints = false;
       const href = footerLinks.github || '#';
       footerGithub.href = href || '#';
       footerGithub.style.visibility = href ? 'visible' : 'hidden';
+    }
+    if (footerCoffee) {
+      const href = footerLinks.coffee || footerLinks.сoffee || '';
+      footerCoffee.href = href || '#';
+      footerCoffee.style.visibility = href ? 'visible' : 'hidden';
     }
   }
   if (!stripeSets[activeStripeSet]) stripeSets[activeStripeSet] = [];
@@ -267,6 +285,27 @@ let showPoints = false;
       }
     }
     return rows;
+  }
+
+  function parseCsvSpectra(text) {
+    try {
+      const parsed = d3.csvParse(text, d3.autoType);
+      if (!parsed.length || !parsed.columns || !parsed.columns.length) return null;
+      const columns = parsed.columns.map((c) => (c || '').trim()).filter(Boolean);
+      if (!columns.length) return null;
+      const xKey =
+        columns.find((c) => c.toLowerCase() === 'wavenumber') ||
+        columns.find((c) => ['wn', 'x', 'wave', 'wavenumbers'].includes(c.toLowerCase()));
+      if (!xKey) return null;
+      const dataCols = columns.filter((c) => c !== xKey);
+      if (!dataCols.length) return null;
+      const rows = parsed.filter((r) => Number.isFinite(r[xKey]));
+      if (!rows.length) return null;
+      return { type: 'csv', xKey, columns: dataCols, rows };
+    } catch (err) {
+      console.error('CSV parse error', err);
+      return null;
+    }
   }
 
   const squeezeMap = {
@@ -527,6 +566,8 @@ let showPoints = false;
     };
 
     const lower = (name || '').toLowerCase();
+    const csvParsed = parseCsvSpectra(text);
+    if (csvParsed) return csvParsed;
     const looksJcamp =
       lower.endsWith('.jdx') ||
       lower.endsWith('.dx') ||
@@ -699,8 +740,9 @@ let showPoints = false;
       .defined((d) => Number.isFinite(d.x) && Number.isFinite(d.y))
       .curve(d3.curveLinear);
 
-    const svg = d3.create('svg').attr('viewBox', `0 0 ${width} ${height}`);
-    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    const svg = d3.create('svg').attr('viewBox', `0 0 ${width} ${height}`).attr('tabindex', 0);
+    const baseTransform = `translate(${margin.left},${margin.top})`;
+    const g = svg.append('g').attr('transform', baseTransform);
 
     const zoneHintEl = document.getElementById('zoneHint');
     const zoneLayer = g.append('g').attr('class', 'zones');
@@ -959,6 +1001,8 @@ let showPoints = false;
         panStartDomain = {
           x: x.invert(px),
           y: y.invert(py),
+          xMin: Number(xMinInput.value) || defaultXRange.min,
+          xMax: Number(xMaxInput.value) || defaultXRange.max,
           yMin: yMinVal,
           yMax: yMaxVal,
         };
@@ -973,22 +1017,32 @@ let showPoints = false;
       if (isPanning) {
         const currentX = x.invert(px);
         const currentY = y.invert(py);
-        const dx = panStartDomain.x - currentX;
-        const dy = panStartDomain.y - currentY;
-        const newXMin = (Number(xMinInput.value) || defaultXRange.min) + dx;
-        const newXMax = (Number(xMaxInput.value) || defaultXRange.max) + dx;
-        let newYMin = panStartDomain.yMin + dy;
-        let newYMax = panStartDomain.yMax + dy;
+        const dx = currentX - panStartDomain.x;
+        const dy = currentY - panStartDomain.y;
+        const newXMin = panStartDomain.xMin - dx;
+        const newXMax = panStartDomain.xMax - dx;
+        let newYMin = panStartDomain.yMin - dy;
+        let newYMax = panStartDomain.yMax - dy;
         const baseRange = defaultYRange || yDomainAuto;
         if (baseRange && baseRange.length === 2) {
           newYMin = Math.max(newYMin, baseRange[0]);
           newYMax = Math.min(newYMax, baseRange[1]);
         }
-        xMinInput.value = newXMin;
-        xMaxInput.value = newXMax;
-        yMinInput.value = String(newYMin);
-        yMaxInput.value = String(newYMax);
-        renderChartFromData(lastData, { skipLegend: true });
+        panQueued = { newXMin, newXMax, newYMin, newYMax };
+        if (!panRaf) {
+          panRaf = requestAnimationFrame(() => {
+            if (panQueued) {
+              const { newXMin: qMinX, newXMax: qMaxX, newYMin: qMinY, newYMax: qMaxY } = panQueued;
+              xMinInput.value = qMinX;
+              xMaxInput.value = qMaxX;
+              yMinInput.value = String(qMinY);
+              yMaxInput.value = String(qMaxY);
+              renderChartFromData(lastData, { skipLegend: true });
+            }
+            panQueued = null;
+            panRaf = null;
+          });
+        }
         return;
       }
       if (isDragging) {
@@ -1002,6 +1056,14 @@ let showPoints = false;
       if (isPanning) {
         isPanning = false;
         panStartDomain = null;
+        if (lastData) {
+          renderChartFromData(lastData, { skipLegend: true });
+        }
+        if (panRaf) {
+          cancelAnimationFrame(panRaf);
+          panRaf = null;
+          panQueued = null;
+        }
       }
       svg.style('cursor', markerActive ? 'col-resize' : 'crosshair');
       clearZoneHighlight();
@@ -1035,6 +1097,48 @@ let showPoints = false;
       },
       { passive: false }
     );
+    const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
+    const handleKeyPan = (event) => {
+      if (!lastData) return;
+      const key = event.key;
+      if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(key)) return;
+      event.preventDefault();
+      const baseXMin = defaultXRange.min;
+      const baseXMax = defaultXRange.max;
+      const xSpan = Math.abs((Number(xMaxInput.value) || baseXMax) - (Number(xMinInput.value) || baseXMin)) || Math.abs(baseXMax - baseXMin);
+      const ySpanDefault = defaultYRange ? Math.abs(defaultYRange[1] - defaultYRange[0]) : Math.abs(yDomainAuto[1] - yDomainAuto[0]);
+      const ySpanCurrent = Math.abs((yMaxInput.value === '' ? yDomainAuto[1] : Number(yMaxInput.value)) - (yMinInput.value === '' ? yDomainAuto[0] : Number(yMinInput.value))) || ySpanDefault || 1;
+      const stepX = xSpan * 0.05;
+      const stepY = ySpanCurrent * 0.05;
+      let currXMin = Number(xMinInput.value) || baseXMin;
+      let currXMax = Number(xMaxInput.value) || baseXMax;
+      let currYMin = yMinInput.value === '' ? yDomainAuto[0] : Number(yMinInput.value);
+      let currYMax = yMaxInput.value === '' ? yDomainAuto[1] : Number(yMaxInput.value);
+      const baseYMin = defaultYRange ? defaultYRange[0] : yDomainAuto[0];
+      const baseYMax = defaultYRange ? defaultYRange[1] : yDomainAuto[1];
+      if (key === 'ArrowLeft') {
+        currXMin = clamp(currXMin + stepX, baseXMin, baseXMax - stepX);
+        currXMax = clamp(currXMax + stepX, baseXMin + stepX, baseXMax);
+      }
+      if (key === 'ArrowRight') {
+        currXMin = clamp(currXMin - stepX, baseXMin, baseXMax - stepX);
+        currXMax = clamp(currXMax - stepX, baseXMin + stepX, baseXMax);
+      }
+      if (key === 'ArrowUp') {
+        currYMin = clamp(currYMin + stepY, baseYMin, baseYMax - stepY);
+        currYMax = clamp(currYMax + stepY, baseYMin + stepY, baseYMax);
+      }
+      if (key === 'ArrowDown') {
+        currYMin = clamp(currYMin - stepY, baseYMin, baseYMax - stepY);
+        currYMax = clamp(currYMax - stepY, baseYMin + stepY, baseYMax);
+      }
+      xMinInput.value = currXMin;
+      xMaxInput.value = currXMax;
+      yMinInput.value = String(currYMin);
+      yMaxInput.value = String(currYMax);
+      renderChartFromData(lastData, { skipLegend: true });
+    };
+    svg.on('keydown', handleKeyPan);
 
     markerUpdater = (direction) => {
       if (!markerActive || markerX === null) return;
@@ -1059,24 +1163,45 @@ let showPoints = false;
 
   function processFiles(payloadFiles, opts = {}) {
     const downloadName = opts.fileName || fileNameInput.value.trim() || 'merged.csv';
-    const columns = payloadFiles.map((f) => sanitizeName(f.name));
+    const columns = [];
     const table = new Map();
     let totalRows = 0;
     const failedFiles = [];
-    payloadFiles.forEach((file, idx) => {
-      const col = columns[idx];
-      const rows = parseSpectraContent(file.content, file.name);
+    payloadFiles.forEach((file) => {
+      const parsed = parseSpectraContent(file.content, file.name);
+      if (parsed && parsed.type === 'csv') {
+        const { xKey, columns: csvCols, rows } = parsed;
+        csvCols.forEach((csvCol) => {
+          const colName = makeUniqueColumnName(columns, csvCol);
+          let added = 0;
+          rows.forEach((row) => {
+            const x = row[xKey];
+            const y = row[csvCol];
+            if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+            const key = String(x);
+            if (!table.has(key)) table.set(key, { x: Number(x), vals: new Map() });
+            table.get(key).vals.set(colName, y);
+            added++;
+          });
+          totalRows += added;
+          if (!added) failedFiles.push(`${file.name || colName} (${csvCol})`);
+        });
+        return;
+      }
+      const rows = Array.isArray(parsed) ? parsed : [];
       if (!rows.length) {
         if ((file.name || '').toLowerCase().endsWith('.jcm')) {
-          failedFiles.push(`${file.name || col} (packed JCM not supported yet)`);
+          failedFiles.push(`${file.name || 'file'} (packed JCM not supported yet)`);
         } else {
-          failedFiles.push(file.name || col);
+          failedFiles.push(file.name || 'file');
         }
         return;
       }
+      const col = makeUniqueColumnName(columns, file.name);
       totalRows += rows.length;
       for (const [x, y] of rows) {
         const key = String(x);
+        if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
         if (!table.has(key)) table.set(key, { x: Number(x), vals: new Map() });
         table.get(key).vals.set(col, y);
       }
@@ -1626,6 +1751,34 @@ let showPoints = false;
       markerUpdater(direction);
     }
   });
+  function resetWorkspace() {
+    merging = false;
+    lastColumns = [];
+    lastParsedRows = [];
+    lastData = null;
+    lastFilesRaw = [];
+    visibleSeries = new Map();
+    offsets = new Map();
+    baselineModel = null;
+    baselinePreviewModel = null;
+    baselineSeries = null;
+    baselineMap = new Map();
+    stripeSets = { candidates: [], confirmed: [] };
+    activeStripeSet = 'candidates';
+    stripeIdSeq = 0;
+    fileInput.value = ''; // allow re-importing the same file
+    if (mergeBtn) mergeBtn.disabled = false;
+    setControlsEnabled(false);
+    chartLegend.innerHTML = '';
+    chartEl.innerHTML = '<p>No data loaded.</p>';
+    chartRow.classList.add('is-hidden');
+    if (peaksBody) peaksBody.innerHTML = '';
+    if (peaksEmpty) peaksEmpty.style.display = 'block';
+    downloadLinkEl.textContent = '';
+    setStatus(t('statusNoFiles') || 'No data loaded');
+    generateName();
+  }
+
   function removeSeries(col) {
     if (!col) return;
     lastColumns = (lastColumns || []).filter((c) => c !== col);
@@ -1652,6 +1805,11 @@ let showPoints = false;
       }
       return true;
     });
+    const hasData = lastColumns.length > 0 && lastData && lastData.length > 0;
+    if (!hasData) {
+      resetWorkspace();
+      return;
+    }
     defaultYRange = computeAdjustedExtent(lastData) || defaultYRange;
     updateBaselineSelectOptions();
     renderChartFromData(lastData);

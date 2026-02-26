@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polymer Processing Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0e10;
+    --bg2: #111318;
+    --bg3: #181a21;
+    --border: rgba(255,255,255,0.07);
+    --amber: #e8943a;
+    --amber-dim: rgba(232,148,58,0.15);
+    --amber-glow: rgba(232,148,58,0.06);
+    --text: #d8dae0;
+    --text-dim: #7a7f8e;
+    --text-bright: #eceef2;
+    --mono: 'JetBrains Mono', monospace;
+    --serif: 'DM Serif Display', serif;
+    --sans: 'Instrument Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.028;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    height: 64px;
+    background: rgba(13,14,16,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-logo-mark {
+    width: 32px; height: 32px;
+    position: relative;
+  }
+
+  .nav-logo-mark svg { width: 100%; height: 100%; }
+
+  .nav-logo-text {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-bright);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text-bright); }
+
+  .nav-cta {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--amber) !important;
+    border: 1px solid rgba(232,148,58,0.4);
+    padding: 6px 16px;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s !important;
+  }
+
+  .nav-cta:hover {
+    background: var(--amber-dim) !important;
+    border-color: var(--amber) !important;
+    color: var(--amber) !important;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 100px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(232,148,58,0.04) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 50%, rgba(232,148,58,0.025) 0%, transparent 60%);
+  }
+
+  /* Grid lines */
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 80%);
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--amber);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    padding: 6px 14px;
+    border: 1px solid rgba(232,148,58,0.25);
+    border-radius: 2px;
+    background: var(--amber-glow);
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--amber);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(48px, 8vw, 88px);
+    font-weight: 400;
+    color: var(--text-bright);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--amber);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 580px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: #0d0e10;
+    background: var(--amber);
+    padding: 13px 28px;
+    border-radius: 2px;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 13px 28px;
+    border-radius: 2px;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.2); color: var(--text-bright); }
+
+  /* HERO STATS */
+  .hero-stats {
+    display: flex; align-items: center; justify-content: center; gap: 0;
+    margin-top: 72px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg2);
+  }
+
+  .stat {
+    flex: 1;
+    padding: 24px 32px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--amber);
+    letter-spacing: -0.02em;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── SECTION SHARED ── */
+  section {
+    padding: 100px 40px;
+  }
+
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--amber);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 400;
+    color: var(--text-bright);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+
+  .section-desc {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  /* ── FEATURES ── */
+  .features { background: var(--bg); }
+
+  .features-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .features-header .section-desc {
+    margin: 0 auto;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .feat-card {
+    background: var(--bg2);
+    padding: 36px 32px;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .feat-card:hover { background: var(--bg3); }
+
+  .feat-icon {
+    width: 40px; height: 40px;
+    margin-bottom: 20px;
+    color: var(--amber);
+  }
+
+  .feat-title {
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-bright);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .feat-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .feat-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--amber);
+    background: var(--amber-glow);
+    border: 1px solid rgba(232,148,58,0.2);
+    padding: 3px 8px;
+    border-radius: 2px;
+    margin-top: 16px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ── WORKFLOW ── */
+  .workflow { background: var(--bg2); }
+
+  .workflow-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    left: 20px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--border) 10%, var(--border) 90%, transparent);
+  }
+
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 0;
+    cursor: default;
+    transition: opacity 0.2s;
+  }
+
+  .step:hover .step-num { background: var(--amber); color: #0d0e10; }
+
+  .step-num {
+    width: 40px; height: 40px;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-dim);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    position: relative; z-index: 1;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .step-content {}
+
+  .step-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-bright);
+    margin-bottom: 4px;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .workflow-visual {
+    position: relative;
+  }
+
+  .book-panel {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .book-panel-cover {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #0c0d10;
+  }
+
+  .book-panel-meta {
+    padding: 16px 18px;
+    border-top: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(232,148,58,0.06), rgba(232,148,58,0.01));
+  }
+
+  .book-panel-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .book-panel-link {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--amber);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(232,148,58,0.4);
+  }
+
+  .book-panel-link:hover {
+    color: #f0a859;
+    border-bottom-color: rgba(240,168,89,0.75);
+  }
+
+  .video-section { background: var(--bg2); }
+
+  .video-shell {
+    margin-top: 34px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .video-shell-head {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg3);
+  }
+
+  .video-shell-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .video-wrap {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: #0a0b0d;
+  }
+
+  .video-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .terminal {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .terminal-bar {
+    background: var(--bg3);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .terminal-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+
+  .terminal-dot:nth-child(1) { background: #ff5f57; }
+  .terminal-dot:nth-child(2) { background: #febc2e; }
+  .terminal-dot:nth-child(3) { background: #28c840; }
+
+  .terminal-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-left: auto;
+  }
+
+  .terminal-body {
+    padding: 24px;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .t-comment { color: #4a5060; }
+  .t-cmd { color: var(--amber); }
+  .t-arg { color: #7eb8d4; }
+  .t-output { color: #6dab6d; }
+  .t-dim { color: #4a5060; }
+
+  /* ── PROCESS TYPES ── */
+  .processes { background: var(--bg); }
+
+  .processes-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 48px;
+  }
+
+  .process-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .proc-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+
+  .proc-card:hover {
+    border-color: rgba(232,148,58,0.3);
+    transform: translateY(-2px);
+  }
+
+  .proc-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--amber), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .proc-card:hover::before { opacity: 1; }
+
+  .proc-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+  }
+
+  .proc-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--text-bright);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .proc-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .proc-steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .proc-steps li {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .proc-steps li::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--amber);
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  /* ── STACK ── */
+  .stack-section { background: var(--bg2); }
+
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 48px;
+  }
+
+  .stack-item {
+    background: var(--bg2);
+    padding: 28px 20px;
+    text-align: center;
+    transition: background 0.2s;
+  }
+
+  .stack-item:hover { background: var(--bg3); }
+
+  .stack-name {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-bright);
+    margin-bottom: 4px;
+  }
+
+  .stack-role {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── INSTALL ── */
+  .install-section { background: var(--bg); }
+
+  .install-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .code-block {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .code-block-header {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .code-block-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .code-block-copy {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--amber);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: none;
+    border: none;
+    padding: 0;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .code-block-copy:hover { opacity: 1; }
+
+  .code-block pre {
+    padding: 20px;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.8;
+    overflow-x: auto;
+  }
+
+  .c-cmd { color: var(--amber); }
+  .c-comment { color: #3a3f50; }
+  .c-string { color: #7eb8d4; }
+  .c-success { color: #6dab6d; }
+
+  /* ── ROLES ── */
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 48px;
+  }
+
+  .role-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .role-icon {
+    width: 32px; height: 32px;
+    margin: 0 auto 12px;
+    color: var(--amber);
+    opacity: 0.8;
+  }
+
+  .role-name {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-bright);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+
+  .role-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 48px 40px;
+  }
+
+  .footer-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .footer-copy span { color: var(--amber); }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-links a {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--text-bright); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 40px;
+  }
+
+  /* ── SCROLL ANIMATION ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    section { padding: 64px 20px; }
+    .hero { padding: 100px 20px 48px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .workflow-inner { grid-template-columns: 1fr; gap: 40px; }
+    .process-cards { grid-template-columns: 1fr; }
+    .stack-grid { grid-template-columns: repeat(3, 1fr); }
+    .install-inner { grid-template-columns: 1fr; gap: 40px; }
+    .roles-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-stats { flex-direction: column; }
+    .stat { border-right: none; border-bottom: 1px solid var(--border); }
+    .stat:last-child { border-bottom: none; }
+    .processes-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="28" height="28" rx="2" stroke="rgba(232,148,58,0.4)" stroke-width="1"/>
+        <path d="M8 22 L16 8 L24 22" stroke="#e8943a" stroke-width="1.5" fill="none"/>
+        <circle cx="16" cy="8" r="2" fill="#e8943a"/>
+        <circle cx="8" cy="22" r="2" fill="rgba(232,148,58,0.5)"/>
+        <circle cx="24" cy="22" r="2" fill="rgba(232,148,58,0.5)"/>
+        <line x1="2" y1="22" x2="30" y2="22" stroke="rgba(232,148,58,0.2)" stroke-width="1"/>
+      </svg>
+    </div>
+    <span class="nav-logo-text">PP_Planner</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#workflow">Workflow</a></li>
+    <li><a href="#processes">Processes</a></li>
+    <li><a href="#scientific-molding">Scientific Molding</a></li>
+    <li><a href="#install">Install</a></li>
+    <li><a href="https://github.com/ksider/Polymer-Processing-Planner" target="_blank" class="nav-cta">GitHub →</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Polymer Process Development Platform</div>
+    <h1 class="hero-title">Polymer<br><em>Processing</em><br>Planner</h1>
+    <p class="hero-sub">A local, offline research planner for polymer processing experiments. DOE, qualification, analysis — structured and rigorous.</p>
+    <div class="hero-actions">
+      <a href="https://github.com/ksider/Polymer-Processing-Planner" target="_blank" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        View on GitHub
+      </a>
+      <a href="#workflow" class="btn-secondary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="10 8 16 12 10 16"/></svg>
+        See how it works
+      </a>
+    </div>
+    <div class="hero-stats reveal">
+      <div class="stat">
+        <span class="stat-num">6</span>
+        <span class="stat-label">Qualification Steps</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Process Types</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">DOE</span>
+        <span class="stat-label">Statistical Design</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">MIT</span>
+        <span class="stat-label">Open Source</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="features-header reveal">
+      <span class="section-label">Core Capabilities</span>
+      <h2 class="section-title">Everything you need for<br>systematic polymer research</h2>
+      <p class="section-desc">Built for process-specific qualification and DOE workflows — from initial rheology checks to optimized process windows.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card reveal">
+        <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+        <div class="feat-title">Scientific Molding Qualification</div>
+        <div class="feat-desc">Injection uses the structured 6-step Scientific Molding protocol. Compounding and coating use independent process-specific qualification packs.</div>
+        <span class="feat-tag">Injection-first · Process-specific packs</span>
+      </div>
+      <div class="feat-card reveal reveal-delay-1">
+        <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        <div class="feat-title">Design of Experiments (DOE)</div>
+        <div class="feat-desc">Configure factors and levels, auto-generate run lists, enter results, and get instant statistical analysis with heatmaps and 3D response surfaces.</div>
+        <span class="feat-tag">Full Factorial · Screening</span>
+      </div>
+      <div class="feat-card reveal reveal-delay-2">
+        <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        <div class="feat-title">Report Generator</div>
+        <div class="feat-desc">Create editable, structured reports per experiment with embedded charts. Multiple reports per experiment, with digital signature workflow.</div>
+        <span class="feat-tag">Tiptap Editor · Charts</span>
+      </div>
+      <div class="feat-card reveal reveal-delay-1">
+        <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        <div class="feat-title">Kanban Task Manager</div>
+        <div class="feat-desc">Track experiment tasks across Init / In Progress / Done / Failed columns. Link tasks to qualification steps, DOEs, and reports with due dates.</div>
+        <span class="feat-tag">iCal · Google Calendar</span>
+      </div>
+      <div class="feat-card reveal reveal-delay-2">
+        <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        <div class="feat-title">Role-Based Access Control</div>
+        <div class="feat-desc">Five roles — admin, manager, engineer, operator, viewer — with granular access to processes, experiments, and entity assignment.</div>
+        <span class="feat-tag">Passport.js · bcryptjs</span>
+      </div>
+      <div class="feat-card reveal reveal-delay-3">
+        <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+        <div class="feat-title">Lab Journal & Notes</div>
+        <div class="feat-desc">Rich note-taking with entity linking — attached to experiments, qualification steps, DOE studies, runs, or reports. Full journal feed with search and filtering.</div>
+        <span class="feat-tag">Daily Mode · Soft Delete</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOW -->
+<section class="workflow" id="workflow">
+  <div class="container">
+    <div class="workflow-inner">
+      <div>
+        <span class="section-label reveal">Core Workflow</span>
+        <h2 class="section-title reveal">From process setup<br>to optimized <em style="font-style:italic; color: var(--amber)">parameters</em></h2>
+        <p class="section-desc reveal" style="margin-bottom: 40px;">A clear, linear path through process qualification and DOE — every step documented and traceable.</p>
+
+        <div class="steps">
+          <div class="step reveal">
+            <div class="step-num">01</div>
+            <div class="step-content">
+              <div class="step-title">Create a Process & Experiment</div>
+              <div class="step-desc">Set up your polymer process (injection, compounding, coating) and create an experiment with machine assignment and recipes.</div>
+            </div>
+          </div>
+          <div class="step reveal reveal-delay-1">
+            <div class="step-num">02</div>
+            <div class="step-content">
+              <div class="step-title">Run 6-Step Qualification</div>
+              <div class="step-desc">Execute the process qualification pack — each step has its own setup, run list, and data entry screen.</div>
+            </div>
+          </div>
+          <div class="step reveal reveal-delay-2">
+            <div class="step-num">03</div>
+            <div class="step-content">
+              <div class="step-title">Design & Run DOE Studies</div>
+              <div class="step-desc">Configure factors and responses, generate run lists automatically, enter data from the machine, and analyze statistically.</div>
+            </div>
+          </div>
+          <div class="step reveal reveal-delay-3">
+            <div class="step-num">04</div>
+            <div class="step-content">
+              <div class="step-title">Review Analysis & Charts</div>
+              <div class="step-desc">Explore interactive ECharts — main effects, interaction plots, heatmaps, and 3D response surfaces where applicable.</div>
+            </div>
+          </div>
+          <div class="step reveal reveal-delay-4">
+            <div class="step-num">05</div>
+            <div class="step-content">
+              <div class="step-title">Generate & Sign Reports</div>
+              <div class="step-desc">Build structured reports with embedded charts, edit them with a rich text editor, and collect digital signatures from the team.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="workflow-visual reveal reveal-delay-2">
+        <div class="terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dot"></div>
+            <div class="terminal-dot"></div>
+            <div class="terminal-dot"></div>
+            <span class="terminal-title">PP_Planner — bash</span>
+          </div>
+          <div class="terminal-body">
+<span class="t-comment"># Install & launch</span>
+<span class="t-cmd">$ npm</span> <span class="t-arg">install</span>
+<span class="t-output">added 284 packages in 4.2s</span>
+
+<span class="t-cmd">$ npm</span> <span class="t-arg">run dev</span>
+<span class="t-output">▸ Express server listening on :3000</span>
+<span class="t-output">▸ SQLite connected: im_doe.sqlite</span>
+<span class="t-output">▸ Migrations applied: OK</span>
+
+<span class="t-dim"># Open in browser</span>
+<span class="t-cmd">$ open</span> <span class="t-arg">http://localhost:3000</span>
+
+<span class="t-output">✓ Admin account seeded</span>
+<span class="t-output">✓ Default processes created</span>
+<span class="t-output">✓ Ready for experiments</span>
+          </div>
+        </div>
+
+        <!-- mini data viz -->
+        <div style="margin-top: 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 20px;">
+          <div style="font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px;">Viscosity Curve — Rheology Step</div>
+          <svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg" style="width: 100%; display: block;">
+            <defs>
+              <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#e8943a" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#e8943a" stop-opacity="0.05"/>
+              </linearGradient>
+            </defs>
+            <!-- axes -->
+            <line x1="30" y1="10" x2="30" y2="85" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <line x1="30" y1="85" x2="290" y2="85" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <!-- grid -->
+            <line x1="30" y1="30" x2="290" y2="30" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="3,3"/>
+            <line x1="30" y1="55" x2="290" y2="55" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="3,3"/>
+            <!-- curve fill -->
+            <path d="M40 20 C80 22 110 35 150 50 C190 62 230 70 280 75 L280 85 L40 85 Z" fill="url(#grad)"/>
+            <!-- curve line -->
+            <path d="M40 20 C80 22 110 35 150 50 C190 62 230 70 280 75" fill="none" stroke="#e8943a" stroke-width="2"/>
+            <!-- data points -->
+            <circle cx="40" cy="20" r="3" fill="#e8943a"/>
+            <circle cx="90" cy="26" r="3" fill="#e8943a"/>
+            <circle cx="140" cy="44" r="3" fill="#e8943a"/>
+            <circle cx="190" cy="58" r="3" fill="#e8943a"/>
+            <circle cx="240" cy="68" r="3" fill="#e8943a"/>
+            <circle cx="280" cy="75" r="3" fill="#e8943a"/>
+            <!-- labels -->
+            <text x="30" y="95" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a5060" text-anchor="middle">0</text>
+            <text x="155" y="95" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a5060" text-anchor="middle">Shear Rate →</text>
+            <text x="20" y="12" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a5060" text-anchor="middle">η</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="video-section">
+  <div class="container">
+    <div style="text-align: center;">
+      <span class="section-label reveal">Demo</span>
+      <h2 class="section-title reveal">Core Workflow Walkthrough</h2>
+      <p class="section-desc reveal" style="margin: 0 auto;">Short video overview of the platform flow: process setup, qualification, DOE, and reporting.</p>
+    </div>
+    <div class="video-shell reveal">
+      <div class="video-shell-head">
+        <span class="video-shell-title">YouTube Demo</span>
+        <a href="https://youtu.be/0Hs7cjxP4B0" target="_blank" class="book-panel-link">Open on YouTube</a>
+      </div>
+      <div class="video-wrap">
+        <iframe
+          src="https://www.youtube.com/embed/0Hs7cjxP4B0"
+          title="Polymer Processing Planner Demo"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSES -->
+<section class="processes" id="processes">
+  <div class="container">
+    <div class="processes-header">
+      <div>
+        <span class="section-label reveal">Process Library</span>
+        <h2 class="section-title reveal">Three polymer processes,<br>one unified platform</h2>
+      </div>
+      <p class="section-desc reveal" style="max-width: 300px; text-align: right;">Each process type has its own tailored qualification pack and DOE defaults.</p>
+    </div>
+    <div class="process-cards">
+      <div class="proc-card reveal">
+        <div class="proc-num">PROCESS TYPE 01</div>
+        <h3 class="proc-title">Injection Molding</h3>
+        <p class="proc-desc">Scientific Molding methodology. The full 6-step protocol developed by Suhas Kulkarni for robust, repeatable injection molding processes.</p>
+        <ul class="proc-steps">
+          <li>Rheology / Viscosity Curve</li>
+          <li>Cavity Balance</li>
+          <li>Pressure Drop Study</li>
+          <li>Cosmetic Process Window</li>
+          <li>Gate Seal Study</li>
+          <li>Cooling Time Optimization</li>
+        </ul>
+      </div>
+      <div class="proc-card reveal reveal-delay-1">
+        <div class="proc-num">PROCESS TYPE 02</div>
+        <h3 class="proc-title">Twin-Screw Extrusion</h3>
+        <p class="proc-desc">Compounding qualification adapted for twin-screw extruders. Maps the energy window, thermal history, and mixing quality.</p>
+        <ul class="proc-steps">
+          <li>RTD / Residence Time Stability</li>
+          <li>SME Map / Energy Window</li>
+          <li>Melt Temperature / Thermal History</li>
+          <li>Feeding / Side-Feeder Qualification</li>
+          <li>Degassing / Moisture Control</li>
+          <li>Dispersion / Mixing Quality Check</li>
+        </ul>
+      </div>
+      <div class="proc-card reveal reveal-delay-2">
+        <div class="proc-num">PROCESS TYPE 03</div>
+        <h3 class="proc-title">Coating Processes</h3>
+        <p class="proc-desc">For water, solvent, and extrusion coatings. Qualifies the rheology window through to barrier and functional performance checks.</p>
+        <ul class="proc-steps">
+          <li>Rheology Window</li>
+          <li>Wetting / Surface Energy Check</li>
+          <li>Coat Weight Calibration</li>
+          <li>Drying / Curing Window</li>
+          <li>Adhesion Qualification</li>
+          <li>Barrier / Functional Check</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCIENTIFIC MOLDING -->
+<section class="workflow" id="scientific-molding">
+  <div class="container">
+    <div class="workflow-inner">
+      <div>
+        <span class="section-label reveal">Methodology Reference</span>
+        <h2 class="section-title reveal">Scientific Molding for<br>injection processes</h2>
+        <p class="section-desc reveal" style="margin-bottom: 28px;">Injection qualification in the platform follows the Scientific Molding approach. It is implemented as a dedicated 6-step workflow with process-specific screens and run tracking.</p>
+        <ul class="proc-steps reveal">
+          <li>Rheology / Viscosity Curve</li>
+          <li>Cavity Balance</li>
+          <li>Pressure Drop Study</li>
+          <li>Cosmetic Process Window</li>
+          <li>Gate Seal Study</li>
+          <li>Cooling Time Optimization</li>
+        </ul>
+      </div>
+      <div class="workflow-visual reveal reveal-delay-2">
+        <div class="book-panel">
+          <img
+            src="./718DedCwJoL._SY466_.jpg"
+            alt="Robust Process Development and Scientific Molding — book cover"
+            class="book-panel-cover"
+          />
+          <div class="book-panel-meta">
+            <div class="book-panel-title">Recommended Book</div>
+            <a href="https://a.co/d/aDv52KL" target="_blank" class="book-panel-link">Robust Process Development and Scientific Molding</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section class="stack-section">
+  <div class="container">
+    <div style="text-align: center;">
+      <span class="section-label reveal">Technology Stack</span>
+      <h2 class="section-title reveal">Local-first, zero dependencies<br>on external services</h2>
+      <p class="section-desc reveal" style="margin: 0 auto 0;">All data stays on your machine. SQLite database, Node.js runtime, no cloud, no subscriptions.</p>
+    </div>
+    <div class="stack-grid reveal">
+      <div class="stack-item">
+        <div class="stack-name">Node.js</div>
+        <div class="stack-role">Runtime</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-name">Express</div>
+        <div class="stack-role">Server</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-name">SQLite</div>
+        <div class="stack-role">Database</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-name">ECharts</div>
+        <div class="stack-role">Visualization</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-name">jStat</div>
+        <div class="stack-role">Statistics</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-name">TypeScript</div>
+        <div class="stack-role">Language</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-name">EJS</div>
+        <div class="stack-role">Templates</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-name">Tiptap</div>
+        <div class="stack-role">Reports</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-name">Passport.js</div>
+        <div class="stack-role">Auth</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-name">PureCSS</div>
+        <div class="stack-role">UI</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section class="install-section" id="install">
+  <div class="container">
+    <div class="install-inner">
+      <div>
+        <span class="section-label reveal">Quick Start</span>
+        <h2 class="section-title reveal">Up and running<br>in 3 commands</h2>
+        <p class="section-desc reveal">Clone the repository, install dependencies, and start planning your polymer processing experiments. No cloud account, no configuration required.</p>
+
+        <div style="margin-top: 32px;" class="reveal">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px;">Prerequisites</div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <span style="font-family: var(--mono); font-size: 12px; background: var(--bg2); border: 1px solid var(--border); padding: 6px 12px; border-radius: 2px; color: var(--text);">Node.js 20.x+</span>
+            <span style="font-family: var(--mono); font-size: 12px; background: var(--bg2); border: 1px solid var(--border); padding: 6px 12px; border-radius: 2px; color: var(--text);">npm</span>
+            <span style="font-family: var(--mono); font-size: 12px; background: var(--bg2); border: 1px solid var(--border); padding: 6px 12px; border-radius: 2px; color: var(--text);">Git</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="code-block" style="margin-bottom: 16px;">
+          <div class="code-block-header">
+            <span class="code-block-title">Terminal</span>
+            <button class="code-block-copy" onclick="copyCode(this, 'code1')">Copy</button>
+          </div>
+          <pre id="code1"><span class="c-comment"># Clone the repository</span>
+<span class="c-cmd">git clone</span> https://github.com/ksider/Polymer-Processing-Planner
+<span class="c-cmd">cd</span> Polymer-Processing-Planner
+
+<span class="c-comment"># Install dependencies</span>
+<span class="c-cmd">npm install</span>
+
+<span class="c-comment"># Start development server</span>
+<span class="c-cmd">npm run dev</span></pre>
+        </div>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-title">.env</span>
+            <button class="code-block-copy" onclick="copyCode(this, 'code2')">Copy</button>
+          </div>
+          <pre id="code2"><span class="c-comment"># Required environment variables</span>
+SESSION_SECRET=<span class="c-string">your-secret-here</span>
+ADMIN_EMAIL=<span class="c-string">admin@example.com</span>
+ADMIN_TEMP_PASSWORD=<span class="c-string">change-me-on-first-login</span></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROLES -->
+<section style="background: var(--bg2);">
+  <div class="container">
+    <div style="text-align: center; margin-bottom: 48px;">
+      <span class="section-label reveal">Access Control</span>
+      <h2 class="section-title reveal">Five roles for<br>lab hierarchy</h2>
+    </div>
+    <div class="roles-grid">
+      <div class="role-card reveal">
+        <svg class="role-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/><polyline points="12 3 12 5"/><line x1="16.24" y1="7.76" x2="17.66" y2="6.34"/></svg>
+        <div class="role-name">Admin</div>
+        <div class="role-desc">Full access to all processes, experiments, users, and settings</div>
+      </div>
+      <div class="role-card reveal reveal-delay-1">
+        <svg class="role-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <div class="role-name">Manager</div>
+        <div class="role-desc">Sees all experiments and processes across the organization</div>
+      </div>
+      <div class="role-card reveal reveal-delay-2">
+        <svg class="role-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        <div class="role-name">Engineer</div>
+        <div class="role-desc">Executes experiment workflows and manages assigned entities in accessible processes</div>
+      </div>
+      <div class="role-card reveal reveal-delay-3">
+        <svg class="role-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+        <div class="role-name">Operator</div>
+        <div class="role-desc">Access to assigned entities within experiments and runs</div>
+      </div>
+      <div class="role-card reveal reveal-delay-4">
+        <svg class="role-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <div class="role-name">Viewer</div>
+        <div class="role-desc">Read-only access to assigned processes and experiments</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="background: var(--bg); text-align: center; padding: 100px 40px;">
+  <div class="container">
+    <div class="reveal" style="max-width: 600px; margin: 0 auto;">
+      <span class="section-label" style="display: block; text-align: center; margin-bottom: 20px;">Open Source · MIT License</span>
+      <h2 class="section-title" style="margin-bottom: 20px;">Start your first<br>experiment today</h2>
+      <p class="section-desc" style="margin: 0 auto 40px; text-align: center; max-width: 440px;">Polymer Processing Planner is free, open source, and runs entirely on your local machine. No accounts, no subscriptions, no data leaving your lab.</p>
+      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+        <a href="https://github.com/ksider/Polymer-Processing-Planner" target="_blank" class="btn-primary">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          Clone on GitHub
+        </a>
+        <a href="https://github.com/ksider/Polymer-Processing-Planner/blob/main/README.md" target="_blank" class="btn-secondary">Read the docs</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">
+      Polymer Processing Planner — <span>MIT License</span> · Built for lab engineers
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/ksider/Polymer-Processing-Planner" target="_blank">GitHub</a>
+      <a href="https://github.com/ksider/Polymer-Processing-Planner/blob/main/README.md" target="_blank">Docs</a>
+      <a href="https://github.com/ksider/Polymer-Processing-Planner/blob/main/LICENSE" target="_blank">License</a>
+      <a href="https://youtu.be/0Hs7cjxP4B0" target="_blank">Demo</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Copy code
+  function copyCode(btn, id) {
+    const el = document.getElementById(id);
+    const text = el.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+  }
+
+  // Hero counter animation
+  function animateNum(el, target, suffix='') {
+    const start = Date.now();
+    const duration = 1200;
+    const update = () => {
+      const elapsed = Date.now() - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      if (typeof target === 'number') {
+        el.textContent = Math.round(target * ease) + suffix;
+      }
+      if (progress < 1) requestAnimationFrame(update);
+      else el.textContent = typeof target === 'number' ? target + suffix : target;
+    };
+    requestAnimationFrame(update);
+  }
+</script>
+
+</body>
+</html>

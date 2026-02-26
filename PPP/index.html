@@ -1093,30 +1093,41 @@
       </div>
 
       <div class="workflow-visual reveal reveal-delay-2">
-        <div class="terminal">
-          <div class="terminal-bar">
-            <div class="terminal-dot"></div>
-            <div class="terminal-dot"></div>
-            <div class="terminal-dot"></div>
-            <span class="terminal-title">PP_Planner — bash</span>
-          </div>
-          <div class="terminal-body">
-            <div class="terminal-line t-comment"># Install & launch</div>
-            <div class="terminal-line"><span class="t-cmd">$ npm</span> <span class="t-arg">install</span></div>
-            <div class="terminal-line t-output">added 284 packages in 4.2s</div>
+        <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 20px;">
+          <div style="font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px;">Process Window — Qualification</div>
+          <svg viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg" style="width: 100%; display: block;">
+            <defs>
+              <linearGradient id="windowGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#e8943a" stop-opacity="0.28"/>
+                <stop offset="100%" stop-color="#e8943a" stop-opacity="0.06"/>
+              </linearGradient>
+            </defs>
+            <rect x="34" y="14" width="250" height="128" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <line x1="34" y1="46" x2="284" y2="46" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3,3"/>
+            <line x1="34" y1="78" x2="284" y2="78" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3,3"/>
+            <line x1="34" y1="110" x2="284" y2="110" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3,3"/>
+            <line x1="96" y1="14" x2="96" y2="142" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3,3"/>
+            <line x1="158" y1="14" x2="158" y2="142" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3,3"/>
+            <line x1="220" y1="14" x2="220" y2="142" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3,3"/>
 
-            <div class="terminal-line terminal-gap"><span class="t-cmd">$ npm</span> <span class="t-arg">run dev</span></div>
-            <div class="terminal-line t-output">▸ Express server listening on :3000</div>
-            <div class="terminal-line t-output">▸ SQLite connected: im_doe.sqlite</div>
-            <div class="terminal-line t-output">▸ Migrations applied: OK</div>
+            <rect x="94" y="44" width="126" height="68" fill="url(#windowGrad)" stroke="#e8943a" stroke-width="1.8" rx="3"/>
+            <text x="157" y="82" font-family="JetBrains Mono, monospace" font-size="8" fill="#f0b464" text-anchor="middle">Stable Process Window</text>
+            <text x="157" y="94" font-family="JetBrains Mono, monospace" font-size="7" fill="#9aa0ae" text-anchor="middle">CpK &gt; 1.33 | No flash/short shot</text>
 
-            <div class="terminal-line terminal-gap t-dim"># Open in browser</div>
-            <div class="terminal-line"><span class="t-cmd">$ open</span> <span class="t-arg">http://localhost:3000</span></div>
+            <circle cx="78" cy="126" r="3.2" fill="#d46b6b"/>
+            <circle cx="88" cy="118" r="3.2" fill="#d46b6b"/>
+            <circle cx="236" cy="34" r="3.2" fill="#d46b6b"/>
+            <circle cx="244" cy="40" r="3.2" fill="#d46b6b"/>
+            <circle cx="120" cy="72" r="3.2" fill="#74c180"/>
+            <circle cx="148" cy="66" r="3.2" fill="#74c180"/>
+            <circle cx="178" cy="84" r="3.2" fill="#74c180"/>
+            <circle cx="202" cy="102" r="3.2" fill="#74c180"/>
 
-            <div class="terminal-line terminal-gap t-output">✓ Admin account seeded</div>
-            <div class="terminal-line t-output">✓ Default processes created</div>
-            <div class="terminal-line t-output">✓ Ready for experiments</div>
-          </div>
+            <text x="160" y="164" font-family="JetBrains Mono, monospace" font-size="8" fill="#4a5060" text-anchor="middle">Melt Temperature →</text>
+            <text x="10" y="80" font-family="JetBrains Mono, monospace" font-size="8" fill="#4a5060" transform="rotate(-90 10 80)">Pack / Hold Pressure →</text>
+            <text x="236" y="25" font-family="JetBrains Mono, monospace" font-size="7" fill="#d46b6b">Defect zone</text>
+            <text x="56" y="136" font-family="JetBrains Mono, monospace" font-size="7" fill="#d46b6b">Under-pack</text>
+          </svg>
         </div>
 
         <!-- mini data viz -->

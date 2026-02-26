@@ -570,7 +570,20 @@
     padding: 24px;
     font-family: var(--mono);
     font-size: 13px;
-    line-height: 1.8;
+    line-height: 1.65;
+    white-space: normal;
+  }
+
+  .terminal-line {
+    display: block;
+  }
+
+  .terminal-line + .terminal-line {
+    margin-top: 4px;
+  }
+
+  .terminal-gap {
+    margin-top: 10px;
   }
 
   .t-comment { color: #4a5060; }
@@ -1088,21 +1101,21 @@
             <span class="terminal-title">PP_Planner — bash</span>
           </div>
           <div class="terminal-body">
-<span class="t-comment"># Install & launch</span>
-<span class="t-cmd">$ npm</span> <span class="t-arg">install</span>
-<span class="t-output">added 284 packages in 4.2s</span>
+            <div class="terminal-line t-comment"># Install & launch</div>
+            <div class="terminal-line"><span class="t-cmd">$ npm</span> <span class="t-arg">install</span></div>
+            <div class="terminal-line t-output">added 284 packages in 4.2s</div>
 
-<span class="t-cmd">$ npm</span> <span class="t-arg">run dev</span>
-<span class="t-output">▸ Express server listening on :3000</span>
-<span class="t-output">▸ SQLite connected: im_doe.sqlite</span>
-<span class="t-output">▸ Migrations applied: OK</span>
+            <div class="terminal-line terminal-gap"><span class="t-cmd">$ npm</span> <span class="t-arg">run dev</span></div>
+            <div class="terminal-line t-output">▸ Express server listening on :3000</div>
+            <div class="terminal-line t-output">▸ SQLite connected: im_doe.sqlite</div>
+            <div class="terminal-line t-output">▸ Migrations applied: OK</div>
 
-<span class="t-dim"># Open in browser</span>
-<span class="t-cmd">$ open</span> <span class="t-arg">http://localhost:3000</span>
+            <div class="terminal-line terminal-gap t-dim"># Open in browser</div>
+            <div class="terminal-line"><span class="t-cmd">$ open</span> <span class="t-arg">http://localhost:3000</span></div>
 
-<span class="t-output">✓ Admin account seeded</span>
-<span class="t-output">✓ Default processes created</span>
-<span class="t-output">✓ Ready for experiments</span>
+            <div class="terminal-line terminal-gap t-output">✓ Admin account seeded</div>
+            <div class="terminal-line t-output">✓ Default processes created</div>
+            <div class="terminal-line t-output">✓ Ready for experiments</div>
           </div>
         </div>
 
@@ -1122,17 +1135,17 @@
             <!-- grid -->
             <line x1="30" y1="30" x2="290" y2="30" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="3,3"/>
             <line x1="30" y1="55" x2="290" y2="55" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="3,3"/>
-            <!-- curve fill -->
-            <path d="M40 20 C80 22 110 35 150 50 C190 62 230 70 280 75 L280 85 L40 85 Z" fill="url(#grad)"/>
-            <!-- curve line -->
-            <path d="M40 20 C80 22 110 35 150 50 C190 62 230 70 280 75" fill="none" stroke="#e8943a" stroke-width="2"/>
+            <!-- shear-thinning curve fill -->
+            <path d="M40 18 C70 20 90 24 120 36 C150 47 190 56 230 62 C250 65 265 67 280 69 L280 85 L40 85 Z" fill="url(#grad)"/>
+            <!-- shear-thinning curve line -->
+            <path d="M40 18 C70 20 90 24 120 36 C150 47 190 56 230 62 C250 65 265 67 280 69" fill="none" stroke="#e8943a" stroke-width="2"/>
             <!-- data points -->
-            <circle cx="40" cy="20" r="3" fill="#e8943a"/>
-            <circle cx="90" cy="26" r="3" fill="#e8943a"/>
-            <circle cx="140" cy="44" r="3" fill="#e8943a"/>
-            <circle cx="190" cy="58" r="3" fill="#e8943a"/>
-            <circle cx="240" cy="68" r="3" fill="#e8943a"/>
-            <circle cx="280" cy="75" r="3" fill="#e8943a"/>
+            <circle cx="40" cy="18" r="3" fill="#e8943a"/>
+            <circle cx="85" cy="23" r="3" fill="#e8943a"/>
+            <circle cx="130" cy="40" r="3" fill="#e8943a"/>
+            <circle cx="180" cy="54" r="3" fill="#e8943a"/>
+            <circle cx="230" cy="62" r="3" fill="#e8943a"/>
+            <circle cx="280" cy="69" r="3" fill="#e8943a"/>
             <!-- labels -->
             <text x="30" y="95" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a5060" text-anchor="middle">0</text>
             <text x="155" y="95" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a5060" text-anchor="middle">Shear Rate →</text>
@@ -1177,9 +1190,9 @@
     <div class="processes-header">
       <div>
         <span class="section-label reveal">Process Library</span>
-        <h2 class="section-title reveal">Three polymer processes,<br>one unified platform</h2>
+        <h2 class="section-title reveal">Three polymer processes now,<br>one unified platform for many more</h2>
       </div>
-      <p class="section-desc reveal" style="max-width: 300px; text-align: right;">Each process type has its own tailored qualification pack and DOE defaults.</p>
+      <p class="section-desc reveal" style="max-width: 300px; text-align: right;">Each process type has its own tailored qualification pack and DOE defaults. New process templates can be added as the library grows.</p>
     </div>
     <div class="process-cards">
       <div class="proc-card reveal">

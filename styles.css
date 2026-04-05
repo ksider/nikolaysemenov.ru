@@ -429,6 +429,8 @@ body {
   overflow: hidden;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.45);
   transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+
+  display: none;
 }
 
 .social__preview::after {

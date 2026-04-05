@@ -234,6 +234,24 @@ body {
   grid-column: 9 / span 3;
 }
 
+.section--seed {
+  align-items: center;
+  margin-bottom: 4em;
+}
+.section--seed .section__text {
+  grid-column: 5 / span 4;
+}
+.section--seed .section__text .logo_seed{
+  font-family: 'Noto Sans', 'PT Sans', sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.8em;
+}
+.section--seed .seed-preview__image{
+  width: 46%;
+  object-fit: contain;
+  margin: -36% 0;
+}
+
 .section--director {
   align-items: center;
 }

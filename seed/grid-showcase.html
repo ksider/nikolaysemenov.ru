@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grid Showcase</title>
+    <link rel="stylesheet" href="./src/scss/style.css" />
+  </head>
+  <body class="page page-grid-showcase">
+    <main class="main-content">
+      <section class="grid-showcase section section--grid-showcase" aria-labelledby="grid-showcase-title">
+  <div class="container">
+    <div class="grid-showcase__intro stack stack--md">
+      <p class="grid-showcase__eyebrow">Layout grid reference</p>
+      <h2 class="grid-showcase__title" id="grid-showcase-title">Grid classes and alignment modes</h2>
+      <p class="grid-showcase__lead">
+        Demo page for column spans, start positions, container alignment, and per-item alignment.
+      </p>
+    </div>
+
+    <div class="grid-showcase__stack">
+      <article class="grid-showcase__panel stack stack--md">
+        <div class="grid-showcase__panel-head stack stack--sm">
+          <h3 class="grid-showcase__panel-title">Column spans</h3>
+          <p class="grid-showcase__panel-copy">Every <code>col-*</code> class from 1 to 12.</p>
+        </div>
+
+        <div class="grid-showcase__chips">
+          <span class="grid-showcase__chip">col-1</span>
+          <span class="grid-showcase__chip">col-2</span>
+          <span class="grid-showcase__chip">col-3</span>
+          <span class="grid-showcase__chip">col-4</span>
+          <span class="grid-showcase__chip">col-5</span>
+          <span class="grid-showcase__chip">col-6</span>
+          <span class="grid-showcase__chip">col-7</span>
+          <span class="grid-showcase__chip">col-8</span>
+          <span class="grid-showcase__chip">col-9</span>
+          <span class="grid-showcase__chip">col-10</span>
+          <span class="grid-showcase__chip">col-11</span>
+          <span class="grid-showcase__chip">col-12</span>
+        </div>
+
+        <div class="grid-showcase__rows">
+          <div class="layout-grid">
+            <div class="layout-grid__item col-1">
+              <div class="grid-showcase__sample">col-1</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-2">
+              <div class="grid-showcase__sample">col-2</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-3">
+              <div class="grid-showcase__sample">col-3</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-4">
+              <div class="grid-showcase__sample">col-4</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-5">
+              <div class="grid-showcase__sample">col-5</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-6">
+              <div class="grid-showcase__sample">col-6</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-7">
+              <div class="grid-showcase__sample">col-7</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-8">
+              <div class="grid-showcase__sample">col-8</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-9">
+              <div class="grid-showcase__sample">col-9</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-10">
+              <div class="grid-showcase__sample">col-10</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-11">
+              <div class="grid-showcase__sample">col-11</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-12">
+              <div class="grid-showcase__sample">col-12</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="grid-showcase__panel stack stack--md">
+        <div class="grid-showcase__panel-head stack stack--sm">
+          <h3 class="grid-showcase__panel-title">Start positions</h3>
+          <p class="grid-showcase__panel-copy">Every <code>start-*</code> class with a fixed <code>col-3</code> item.</p>
+        </div>
+
+        <div class="grid-showcase__chips">
+          <span class="grid-showcase__chip">start-1</span>
+          <span class="grid-showcase__chip">start-2</span>
+          <span class="grid-showcase__chip">start-3</span>
+          <span class="grid-showcase__chip">start-4</span>
+          <span class="grid-showcase__chip">start-5</span>
+          <span class="grid-showcase__chip">start-6</span>
+          <span class="grid-showcase__chip">start-7</span>
+          <span class="grid-showcase__chip">start-8</span>
+          <span class="grid-showcase__chip">start-9</span>
+        </div>
+
+        <div class="grid-showcase__rows">
+          <div class="layout-grid">
+            <div class="layout-grid__item col-3 start-1">
+              <div class="grid-showcase__sample">start-1</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-3 start-2">
+              <div class="grid-showcase__sample">start-2</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-3 start-3">
+              <div class="grid-showcase__sample">start-3</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-3 start-4">
+              <div class="grid-showcase__sample">start-4</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-3 start-5">
+              <div class="grid-showcase__sample">start-5</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-3 start-6">
+              <div class="grid-showcase__sample">start-6</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-3 start-7">
+              <div class="grid-showcase__sample">start-7</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-3 start-8">
+              <div class="grid-showcase__sample">start-8</div>
+            </div>
+          </div>
+          <div class="layout-grid">
+            <div class="layout-grid__item col-3 start-9">
+              <div class="grid-showcase__sample">start-9</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="grid-showcase__panel stack stack--md">
+        <div class="grid-showcase__panel-head stack stack--sm">
+          <h3 class="grid-showcase__panel-title">Container alignment</h3>
+          <p class="grid-showcase__panel-copy">Classes for the whole grid container.</p>
+        </div>
+
+        <div class="grid-showcase__demo stack stack--md">
+          <div class="grid-showcase__demo-label">items-center</div>
+          <div class="layout-grid items-center grid-showcase__alignment-grid">
+            <div class="layout-grid__item col-4">
+              <div class="grid-showcase__sample grid-showcase__sample--tall">short item</div>
+            </div>
+            <div class="layout-grid__item col-4">
+              <div class="grid-showcase__sample grid-showcase__sample--xl">tall item</div>
+            </div>
+            <div class="layout-grid__item col-4">
+              <div class="grid-showcase__sample grid-showcase__sample--mid">short item</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-showcase__demo stack stack--md">
+          <div class="grid-showcase__demo-label">justify-items-center</div>
+          <div class="layout-grid justify-items-center grid-showcase__alignment-grid">
+            <div class="layout-grid__item col-4">
+              <div class="grid-showcase__sample grid-showcase__sample--compact">col-4 area</div>
+            </div>
+            <div class="layout-grid__item col-4">
+              <div class="grid-showcase__sample grid-showcase__sample--compact">col-4 area</div>
+            </div>
+            <div class="layout-grid__item col-4">
+              <div class="grid-showcase__sample grid-showcase__sample--compact">col-4 area</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-showcase__demo stack stack--md">
+          <div class="grid-showcase__demo-label">place-items-center</div>
+          <div class="layout-grid place-items-center grid-showcase__alignment-grid">
+            <div class="layout-grid__item col-4">
+              <div class="grid-showcase__sample grid-showcase__sample--compact grid-showcase__sample--tall">
+                compact item
+              </div>
+            </div>
+            <div class="layout-grid__item col-4">
+              <div class="grid-showcase__sample grid-showcase__sample--compact">compact item</div>
+            </div>
+            <div class="layout-grid__item col-4">
+              <div class="grid-showcase__sample grid-showcase__sample--compact grid-showcase__sample--mid">
+                compact item
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-showcase__demo stack stack--md">
+          <div class="grid-showcase__demo-label">content-center + justify-content-center</div>
+          <div class="grid-showcase__frame">
+            <div class="layout-grid content-center justify-content-center grid-showcase__compact-grid">
+              <div class="layout-grid__item col-1">
+                <div class="grid-showcase__sample">1</div>
+              </div>
+              <div class="layout-grid__item col-1">
+                <div class="grid-showcase__sample">2</div>
+              </div>
+              <div class="layout-grid__item col-1">
+                <div class="grid-showcase__sample">3</div>
+              </div>
+              <div class="layout-grid__item col-1">
+                <div class="grid-showcase__sample">4</div>
+              </div>
+              <div class="layout-grid__item col-1">
+                <div class="grid-showcase__sample">5</div>
+              </div>
+              <div class="layout-grid__item col-1">
+                <div class="grid-showcase__sample">6</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-showcase__chips">
+          <span class="grid-showcase__chip">items-start</span>
+          <span class="grid-showcase__chip">items-center</span>
+          <span class="grid-showcase__chip">items-end</span>
+          <span class="grid-showcase__chip">items-stretch</span>
+          <span class="grid-showcase__chip">justify-items-start</span>
+          <span class="grid-showcase__chip">justify-items-center</span>
+          <span class="grid-showcase__chip">justify-items-end</span>
+          <span class="grid-showcase__chip">justify-items-stretch</span>
+          <span class="grid-showcase__chip">place-items-start</span>
+          <span class="grid-showcase__chip">place-items-center</span>
+          <span class="grid-showcase__chip">place-items-end</span>
+          <span class="grid-showcase__chip">place-items-stretch</span>
+          <span class="grid-showcase__chip">content-start</span>
+          <span class="grid-showcase__chip">content-center</span>
+          <span class="grid-showcase__chip">content-end</span>
+          <span class="grid-showcase__chip">content-stretch</span>
+          <span class="grid-showcase__chip">justify-content-start</span>
+          <span class="grid-showcase__chip">justify-content-center</span>
+          <span class="grid-showcase__chip">justify-content-end</span>
+          <span class="grid-showcase__chip">justify-content-stretch</span>
+        </div>
+      </article>
+
+      <article class="grid-showcase__panel stack stack--md">
+        <div class="grid-showcase__panel-head stack stack--sm">
+          <h3 class="grid-showcase__panel-title">Item alignment</h3>
+          <p class="grid-showcase__panel-copy">Classes for a single grid item inside the row.</p>
+        </div>
+
+        <div class="grid-showcase__demo stack stack--md">
+          <div class="grid-showcase__demo-label">self-start / self-center / self-end</div>
+          <div class="layout-grid grid-showcase__alignment-grid">
+            <div class="layout-grid__item col-4 self-start">
+              <div class="grid-showcase__sample grid-showcase__sample--compact">self-start</div>
+            </div>
+            <div class="layout-grid__item col-4 self-center">
+              <div class="grid-showcase__sample grid-showcase__sample--compact">self-center</div>
+            </div>
+            <div class="layout-grid__item col-4 self-end">
+              <div class="grid-showcase__sample grid-showcase__sample--compact">self-end</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-showcase__demo stack stack--md">
+          <div class="grid-showcase__demo-label">justify-self-start / center / end</div>
+          <div class="layout-grid grid-showcase__alignment-grid">
+            <div class="layout-grid__item col-4 justify-self-start">
+              <div class="grid-showcase__sample grid-showcase__sample--compact">justify-self-start</div>
+            </div>
+            <div class="layout-grid__item col-4 justify-self-center">
+              <div class="grid-showcase__sample grid-showcase__sample--compact">justify-self-center</div>
+            </div>
+            <div class="layout-grid__item col-4 justify-self-end">
+              <div class="grid-showcase__sample grid-showcase__sample--compact">justify-self-end</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-showcase__demo stack stack--md">
+          <div class="grid-showcase__demo-label">place-self-center</div>
+          <div class="layout-grid grid-showcase__alignment-grid">
+            <div class="layout-grid__item col-4">
+              <div class="grid-showcase__sample grid-showcase__sample--tall">default</div>
+            </div>
+            <div class="layout-grid__item col-4 place-self-center">
+              <div class="grid-showcase__sample grid-showcase__sample--compact">place-self-center</div>
+            </div>
+            <div class="layout-grid__item col-4">
+              <div class="grid-showcase__sample grid-showcase__sample--xl">default</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-showcase__chips">
+          <span class="grid-showcase__chip">self-start</span>
+          <span class="grid-showcase__chip">self-center</span>
+          <span class="grid-showcase__chip">self-end</span>
+          <span class="grid-showcase__chip">self-stretch</span>
+          <span class="grid-showcase__chip">justify-self-start</span>
+          <span class="grid-showcase__chip">justify-self-center</span>
+          <span class="grid-showcase__chip">justify-self-end</span>
+          <span class="grid-showcase__chip">justify-self-stretch</span>
+          <span class="grid-showcase__chip">place-self-start</span>
+          <span class="grid-showcase__chip">place-self-center</span>
+          <span class="grid-showcase__chip">place-self-end</span>
+          <span class="grid-showcase__chip">place-self-stretch</span>
+        </div>
+      </article>
+
+      <article class="grid-showcase__panel stack stack--md">
+        <div class="grid-showcase__panel-head stack stack--sm">
+          <h3 class="grid-showcase__panel-title">Responsive class naming</h3>
+          <p class="grid-showcase__panel-copy">Tablet and mobile follow the same pattern.</p>
+        </div>
+
+        <div class="grid-showcase__chips">
+          <span class="grid-showcase__chip">col-tablet-1 ... col-tablet-12</span>
+          <span class="grid-showcase__chip">start-tablet-1 ... start-tablet-9</span>
+          <span class="grid-showcase__chip">col-mobile-1 ... col-mobile-12</span>
+          <span class="grid-showcase__chip">start-mobile-1 ... start-mobile-9</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+    </main>
+
+    <script src="./assets/js/main.js"></script>
+  </body>
+</html>
+

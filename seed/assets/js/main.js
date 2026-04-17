@@ -2083,6 +2083,16 @@ function initWhoWeBridgeParallax() {
   let ticking = false;
   let isActive = false;
 
+  function readPxVariable(name) {
+    const value = parseFloat(getComputedStyle(scene).getPropertyValue(name));
+    return Number.isFinite(value) ? value : 0;
+  }
+
+  function getStartOffset() {
+    const factor = parseFloat(getComputedStyle(scene).getPropertyValue('--bridge-parallax-factor')) || 0;
+    return bridge.offsetWidth * factor;
+  }
+
   function syncBridge() {
     ticking = false;
 
@@ -2092,22 +2102,24 @@ function initWhoWeBridgeParallax() {
 
     const rect = scene.getBoundingClientRect();
     const viewportHeight = window.innerHeight;
-    const start = viewportHeight * 0.92;
-    const end = viewportHeight * 0.22;
-    const distance = start - end;
-    const progress = Math.min(Math.max((start - rect.top) / distance, 0), 1);
-
-    const factor = parseFloat(getComputedStyle(scene).getPropertyValue('--bridge-parallax-factor')) || 0;
-    const startValue = bridge.offsetWidth * factor;
-    const y = -startValue + startValue * progress;
+    const bridgeHeight = bridge.offsetHeight;
+    const sceneHeight = scene.offsetHeight;
+    const baseBottom = parseFloat(getComputedStyle(bridge).bottom) || 0;
+    const viewportGap = readPxVariable('--bridge-viewport-gap');
+    const startOffset = getStartOffset();
+    const finalTop = rect.top + sceneHeight - baseBottom - bridgeHeight;
+    const targetTop = viewportHeight - viewportGap - bridgeHeight;
+    const targetY = targetTop - finalTop;
+    const y = Math.min(0, Math.max(-startOffset, targetY));
 
     scene.style.setProperty('--bridge-parallax-y', `${y}px`);
 
     console.debug('[who-we bridge] sync', {
       isActive,
-      progress: Number(progress.toFixed(3)),
-      factor,
-      startValue: Number(startValue.toFixed(2)),
+      viewportGap,
+      startOffset: Number(startOffset.toFixed(2)),
+      finalTop: Number(finalTop.toFixed(2)),
+      targetTop: Number(targetTop.toFixed(2)),
       y: Number(y.toFixed(2)),
       sceneTop: Number(rect.top.toFixed(2))
     });
@@ -2137,9 +2149,7 @@ function initWhoWeBridgeParallax() {
       });
 
       if (!isActive && entry.boundingClientRect.top > window.innerHeight) {
-        const factor = parseFloat(getComputedStyle(scene).getPropertyValue('--bridge-parallax-factor')) || 0;
-        const startValue = bridge.offsetWidth * factor;
-        scene.style.setProperty('--bridge-parallax-y', `${-startValue}px`);
+        scene.style.setProperty('--bridge-parallax-y', `${-getStartOffset()}px`);
       }
 
       if (!isActive && entry.boundingClientRect.bottom < 0) {

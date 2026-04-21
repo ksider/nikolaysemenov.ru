@@ -1,0 +1,166 @@
+{
+  "tests": [
+    {
+      "id": "test_1",
+      "title": "LC General Practice 1",
+      "file": "test_1.json",
+      "timer": {
+        "listening_minutes": 35,
+        "reading_minutes": 50,
+        "writing_minutes": 45
+      },
+      "sections": [
+        {
+          "id": "listening",
+          "title": "Listening",
+          "partsCount": 4
+        },
+        {
+          "id": "reading",
+          "title": "Reading",
+          "partsCount": 5
+        },
+        {
+          "id": "writing",
+          "title": "Writing",
+          "partsCount": 2
+        }
+      ]
+    },
+    {
+      "id": "test_2",
+      "title": "LC General Practice 2",
+      "file": "test_2.json",
+      "timer": {
+        "listening_minutes": 35,
+        "reading_minutes": 50,
+        "writing_minutes": 45
+      },
+      "sections": [
+        {
+          "id": "listening",
+          "title": "Listening",
+          "partsCount": 4
+        },
+        {
+          "id": "reading",
+          "title": "Reading",
+          "partsCount": 5
+        },
+        {
+          "id": "writing",
+          "title": "Writing",
+          "partsCount": 2
+        }
+      ]
+    },
+    {
+      "id": "test_3",
+      "title": "LC General Practice 3",
+      "file": "test_3.json",
+      "timer": {
+        "listening_minutes": 35,
+        "reading_minutes": 50,
+        "writing_minutes": 45
+      },
+      "sections": [
+        {
+          "id": "listening",
+          "title": "Listening",
+          "partsCount": 4
+        },
+        {
+          "id": "reading",
+          "title": "Reading",
+          "partsCount": 5
+        },
+        {
+          "id": "writing",
+          "title": "Writing",
+          "partsCount": 2
+        }
+      ]
+    },
+    {
+      "id": "test_4",
+      "title": "LC Academic 1",
+      "file": "test_4.json",
+      "timer": {
+        "listening_minutes": 42,
+        "reading_minutes": 50,
+        "writing_minutes": 50
+      },
+      "sections": [
+        {
+          "id": "listening",
+          "title": "Listening",
+          "partsCount": 4
+        },
+        {
+          "id": "reading",
+          "title": "Reading",
+          "partsCount": 5
+        },
+        {
+          "id": "writing",
+          "title": "Writing",
+          "partsCount": 2
+        }
+      ]
+    },
+    {
+      "id": "test_5",
+      "title": "LC Academic 2",
+      "file": "test_5.json",
+      "timer": {
+        "listening_minutes": 42,
+        "reading_minutes": 50,
+        "writing_minutes": 50
+      },
+      "sections": [
+        {
+          "id": "listening",
+          "title": "Listening",
+          "partsCount": 4
+        },
+        {
+          "id": "reading",
+          "title": "Reading",
+          "partsCount": 5
+        },
+        {
+          "id": "writing",
+          "title": "Writing",
+          "partsCount": 2
+        }
+      ]
+    },
+    {
+      "id": "test_6",
+      "title": "LC Academic 3",
+      "file": "test_6.json",
+      "timer": {
+        "listening_minutes": 42,
+        "reading_minutes": 50,
+        "writing_minutes": 50
+      },
+      "sections": [
+        {
+          "id": "listening",
+          "title": "Listening",
+          "partsCount": 4
+        },
+        {
+          "id": "reading",
+          "title": "Reading",
+          "partsCount": 5
+        },
+        {
+          "id": "writing",
+          "title": "Writing",
+          "partsCount": 2
+        }
+      ]
+    }
+  ]
+}

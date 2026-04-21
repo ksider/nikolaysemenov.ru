@@ -1,0 +1,674 @@
+{
+  "id": "test_2",
+  "title": "LC General Practice 2",
+  "source": {
+    "folder": "PDF TEMP/LCG 2 PDFs",
+    "reading_listening_pdf": "LC General Test 2 - Exam Paper (LR).pdf",
+    "writing_pdf": "LC General Test 2 - Exam Paper (W).pdf",
+    "mark_scheme_pdf": "LC General Test 2 - Mark Scheme.pdf"
+  },
+  "timer": {
+    "listening_minutes": 35,
+    "reading_minutes": 50,
+    "writing_minutes": 45
+  },
+  "sections": [
+    {
+      "id": "listening",
+      "title": "Listening",
+      "audio": "/audio/test_2_listening.mp3",
+      "parts": [
+        {
+          "id": "part_1",
+          "title": "Part 1",
+          "type": "multiple_choice",
+          "instructions": "You will hear some short conversations. You will hear each conversation twice. Choose the correct answer to complete each conversation.",
+          "questions": [
+            {
+              "number": 1,
+              "prompt": "Conversation 1",
+              "options": [
+                "a) We can't take it again.",
+                "b) Let's ask someone.",
+                "c) Shall we leave it here?"
+              ],
+              "correct": "b) Let's ask someone."
+            },
+            {
+              "number": 2,
+              "prompt": "Conversation 2",
+              "options": [
+                "a) Absolutely, because of its location.",
+                "b) The owners retired and shut it down.",
+                "c) But my previous boss was even worse!"
+              ],
+              "correct": "b) The owners retired and shut it down."
+            },
+            {
+              "number": 3,
+              "prompt": "Conversation 3",
+              "options": [
+                "a) I think that's everything.",
+                "b) Just try and forget about it.",
+                "c) He'll probably do that next."
+              ],
+              "correct": "b) Just try and forget about it."
+            },
+            {
+              "number": 4,
+              "prompt": "Conversation 4",
+              "options": [
+                "a) Have you heard anything different?",
+                "b) Never mind, I'm sure you'll find something.",
+                "c) You can carry on looking for something better."
+              ],
+              "correct": "c) You can carry on looking for something better."
+            },
+            {
+              "number": 5,
+              "prompt": "Conversation 5",
+              "options": [
+                "a) Let me introduce you to him.",
+                "b) I'm sure I've seen him before.",
+                "c) It's a pleasure to meet you finally."
+              ],
+              "correct": "b) I'm sure I've seen him before."
+            },
+            {
+              "number": 6,
+              "prompt": "Conversation 6",
+              "options": [
+                "a) Oh, I didn't realise that.",
+                "b) I'm afraid I've no idea.",
+                "c) Sorry, I won't have a clue."
+              ],
+              "correct": "a) Oh, I didn't realise that."
+            },
+            {
+              "number": 7,
+              "prompt": "Conversation 7",
+              "options": [
+                "a) It isn't as bad as all that.",
+                "b) I'll come along to cheer you on.",
+                "c) Better luck next time."
+              ],
+              "correct": "b) I'll come along to cheer you on."
+            }
+          ]
+        },
+        {
+          "id": "part_2",
+          "title": "Part 2",
+          "type": "multiple_choice",
+          "instructions": "You will hear five conversations. Listen to the conversations and answer the questions. Choose the correct answer.",
+          "questions": [
+            {
+              "number": 8,
+              "prompt": "Why is the man thinking about applying for a different job?",
+              "options": [
+                "a) He wants the chance to get extra hours.",
+                "b) He wants more responsibility.",
+                "c) He wants a better salary."
+              ],
+              "correct": "c) He wants a better salary."
+            },
+            {
+              "number": 9,
+              "prompt": "The woman advises him to",
+              "options": [
+                "a) apply for more training courses.",
+                "b) talk to someone in HR.",
+                "c) stay in his present job for longer."
+              ],
+              "correct": "c) stay in his present job for longer."
+            },
+            {
+              "number": 10,
+              "prompt": "What surprised Jake when he started his job?",
+              "options": [
+                "a) how noisy it was",
+                "b) how tired it made him",
+                "c) how much lifting was involved"
+              ],
+              "correct": "a) how noisy it was"
+            },
+            {
+              "number": 11,
+              "prompt": "Jake's disappointed that the job doesn't offer",
+              "options": [
+                "a) a permanent contract.",
+                "b) the opportunity to build a career.",
+                "c) regular working hours every week."
+              ],
+              "correct": "b) the opportunity to build a career."
+            },
+            {
+              "number": 12,
+              "prompt": "What should the woman do with the application she's just received?",
+              "options": [
+                "a) give it to the assistant manager",
+                "b) telephone the applicant",
+                "c) put it in a file"
+              ],
+              "correct": "a) give it to the assistant manager"
+            },
+            {
+              "number": 13,
+              "prompt": "What should she do if more applications arrive by email?",
+              "options": [
+                "a) delete them",
+                "b) print them out",
+                "c) contact the senders"
+              ],
+              "correct": "c) contact the senders"
+            },
+            {
+              "number": 14,
+              "prompt": "Why did Selena become a furniture designer?",
+              "options": [
+                "a) There were several design companies in her area.",
+                "b) A relative was already a furniture designer.",
+                "c) She saw a design course that looked interesting."
+              ],
+              "correct": "a) There were several design companies in her area."
+            },
+            {
+              "number": 15,
+              "prompt": "Selena thinks the most important part of her job involves",
+              "options": [
+                "a) working as a team.",
+                "b) having creative skills.",
+                "c) understanding customer needs."
+              ],
+              "correct": "c) understanding customer needs."
+            },
+            {
+              "number": 16,
+              "prompt": "How does the woman feel about getting the train to work?",
+              "options": [
+                "a) frustrated by how unreliable it is",
+                "b) surprised at how full it is sometimes",
+                "c) irritated by other passengers' behaviour"
+              ],
+              "correct": "c) irritated by other passengers' behaviour"
+            },
+            {
+              "number": 17,
+              "prompt": "The man thinks their company should",
+              "options": [
+                "a) run a free bus service for staff living locally.",
+                "b) offer loans to help staff with travelling costs.",
+                "c) provide more parking spaces for staff cars."
+              ],
+              "correct": "b) offer loans to help staff with travelling costs."
+            }
+          ]
+        },
+        {
+          "id": "part_3",
+          "title": "Part 3",
+          "type": "gap_fill",
+          "instructions": "You will hear someone talking. Complete the information. Write short answers of one to three words.",
+          "questions": [
+            {
+              "number": 18,
+              "prompt": "Best subject at school",
+              "correct": [
+                "Music"
+              ]
+            },
+            {
+              "number": 19,
+              "prompt": "Reason for visiting Paris with sculptor Henry Moore",
+              "correct": [
+                "research",
+                "research trip"
+              ]
+            },
+            {
+              "number": 20,
+              "prompt": "Location in London of Hepworth's first exhibitions",
+              "correct": [
+                "her flat",
+                "flat"
+              ]
+            },
+            {
+              "number": 21,
+              "prompt": "Style of Hepworth's art",
+              "correct": [
+                "abstract"
+              ]
+            },
+            {
+              "number": 22,
+              "prompt": "Material Hepworth added to her later sculptures",
+              "correct": [
+                "wire",
+                "wires"
+              ]
+            },
+            {
+              "number": 23,
+              "prompt": "Frequent subject of many of her sculptures",
+              "correct": [
+                "mother and child",
+                "a mother and child"
+              ]
+            },
+            {
+              "number": 24,
+              "prompt": "Current owner of Hepworth's former home",
+              "correct": [
+                "museum",
+                "a museum"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "part_4",
+          "title": "Part 4",
+          "type": "multiple_choice",
+          "instructions": "You will hear a conversation. You will hear the conversation twice. Choose the correct answers.",
+          "questions": [
+            {
+              "number": 25,
+              "prompt": "What does Becky tell Tom about the first violin lessons she did as a teenager?",
+              "options": [
+                "a) She was given an instrument to play.",
+                "b) The teacher was an expert on the instrument.",
+                "c) Her parents paid for her to have some extra ones."
+              ],
+              "correct": "a) She was given an instrument to play."
+            },
+            {
+              "number": 26,
+              "prompt": "Tom gave up the piano some time ago because he",
+              "options": [
+                "a) didn't have one to play at home.",
+                "b) wanted to be different to his brother.",
+                "c) was hoping to get a place in an orchestra."
+              ],
+              "correct": "c) was hoping to get a place in an orchestra."
+            },
+            {
+              "number": 27,
+              "prompt": "What similar experience did Tom and Becky have when they started learning the violin?",
+              "options": [
+                "a) They found it tiring to hold one properly.",
+                "b) Their results weren't particularly impressive.",
+                "c) They had to spend too much time practising."
+              ],
+              "correct": "b) Their results weren't particularly impressive."
+            },
+            {
+              "number": 28,
+              "prompt": "When Tom tells Becky about his schoolmates, he",
+              "options": [
+                "a) complains that they weren't interested in his music.",
+                "b) admits that he was influenced by their musical tastes.",
+                "c) suggests that he felt under pressure to give up music."
+              ],
+              "correct": "b) admits that he was influenced by their musical tastes."
+            },
+            {
+              "number": 29,
+              "prompt": "Becky refers to one particular music lesson in order to",
+              "options": [
+                "a) explain why she feels nervous now.",
+                "b) encourage Tom to feel more confident.",
+                "c) describe an experience she benefitted from."
+              ],
+              "correct": "c) describe an experience she benefitted from."
+            },
+            {
+              "number": 30,
+              "prompt": "Tom and Becky agree that the piece they're playing today is",
+              "options": [
+                "a) very fast.",
+                "b) hard to learn.",
+                "c) beautiful music."
+              ],
+              "correct": "b) hard to learn."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reading",
+      "title": "Reading",
+      "parts": [
+        {
+          "id": "part_1a",
+          "title": "Part 1a",
+          "type": "multiple_choice",
+          "instructions": "Read the sentences below and decide which option can best replace the word in bold so that the meaning of the sentence remains the same.",
+          "questions": [
+            {
+              "number": 1,
+              "prompt": "The Prime Minister gave a lot of detail regarding her future plans for the national health system.",
+              "highlight": "regarding",
+              "options": [
+                "a) respecting",
+                "b) according",
+                "c) during",
+                "d) concerning"
+              ],
+              "correct": "d) concerning"
+            },
+            {
+              "number": 2,
+              "prompt": "The TV reporter was embarrassed when he fell over but it was highly entertaining for the viewers.",
+              "highlight": "entertaining",
+              "options": [
+                "a) funny",
+                "b) amusing",
+                "c) cheerful",
+                "d) witty"
+              ],
+              "correct": "b) amusing"
+            },
+            {
+              "number": 3,
+              "prompt": "The building project to improve the railway station has finally been approved.",
+              "highlight": "approved",
+              "options": [
+                "a) agreed",
+                "b) permitted",
+                "c) chosen",
+                "d) shown"
+              ],
+              "correct": "a) agreed"
+            },
+            {
+              "number": 4,
+              "prompt": "It's the teacher's duty to make sure all the students get on the school bus safely after the museum visit.",
+              "highlight": "duty",
+              "options": [
+                "a) commitment",
+                "b) responsibility",
+                "c) charge",
+                "d) work"
+              ],
+              "correct": "b) responsibility"
+            },
+            {
+              "number": 5,
+              "prompt": "The reindeer, with its thick woolly coat and large feet, is incredibly well adapted to life in the Arctic, where winter temperatures can drop to -50 C.",
+              "highlight": "adapted",
+              "options": [
+                "a) selected",
+                "b) presented",
+                "c) suited",
+                "d) arranged"
+              ],
+              "correct": "c) suited"
+            },
+            {
+              "number": 6,
+              "prompt": "There is mounting evidence that blue light from electronic devices can have a harmful effect on the skin and eyes, and disrupt sleep patterns.",
+              "highlight": "mounting",
+              "options": [
+                "a) multiplying",
+                "b) increasing",
+                "c) climbing",
+                "d) rising"
+              ],
+              "correct": "b) increasing"
+            }
+          ]
+        },
+        {
+          "id": "part_1b",
+          "title": "Part 1b",
+          "type": "multiple_choice",
+          "instructions": "Read the text and decide which option best fits each gap.",
+          "passage": "A dream job\n\nBusiness partners Jane Douglas and Eva Lento make luxury handmade chocolates. They have a tiny factory and coffee shop in a remote part of Scotland, with a wonderful sea view. Jane says, \"We are hard to find; that is part of the (7) of the business for tourists. When we discussed our business plan with our bank manager, he warned us about the disadvantages of setting up in a remote place, but we have (8) this into an advantage. In winter there is not much to do, so the cafe (9) somewhere for people to go. Customers like to take our chocolates to the top of a local mountain and eat them while watching the (10) sun.\" Jane and Eva have (11) six employees to cope with the growing demand.",
+          "questions": [
+            {
+              "number": 7,
+              "prompt": "Gap 7",
+              "options": [
+                "a) happiness",
+                "b) entertainment",
+                "c) attraction"
+              ],
+              "correct": "c) attraction"
+            },
+            {
+              "number": 8,
+              "prompt": "Gap 8",
+              "options": [
+                "a) turned",
+                "b) moved",
+                "c) taken"
+              ],
+              "correct": "a) turned"
+            },
+            {
+              "number": 9,
+              "prompt": "Gap 9",
+              "options": [
+                "a) lets",
+                "b) provides",
+                "c) allows"
+              ],
+              "correct": "b) provides"
+            },
+            {
+              "number": 10,
+              "prompt": "Gap 10",
+              "options": [
+                "a) going",
+                "b) setting",
+                "c) leaving"
+              ],
+              "correct": "b) setting"
+            },
+            {
+              "number": 11,
+              "prompt": "Gap 11",
+              "options": [
+                "a) rented",
+                "b) signed",
+                "c) hired"
+              ],
+              "correct": "c) hired"
+            }
+          ]
+        },
+        {
+          "id": "part_2",
+          "title": "Part 2",
+          "type": "sentence_insert",
+          "instructions": "Read the text about a businessman. Use the sentences to complete the text. Choose the correct sentence for each gap. There is one extra sentence you will not need.",
+          "passage": "Harry Selfridge - An American Innovator in London\n\nHarry Gordon Selfridge was born in Wisconsin, USA, in 1858. He left school at 14 to work in a bank and later joined Marshall Field's, a large department store in the city of Chicago. (12) Over the years, however, he worked his way up to become a partner. He married the boss's daughter and became very wealthy. In 1904, he opened his own department store. A few years later, Harry decided to sell up and retire.\n\nHarry and his wife travelled extensively on holiday, including visits to European capital cities. In London, he made a shock discovery. (13) Harry promptly resolved to come out of retirement and launch his own major store in London - Selfridges. It opened in 1909 and proved to be a sensation. In the early 1900s, typical London shops were rather dull and boring, and goods were kept locked away to guard against shoplifters. Shopping was a chore rather than a pleasure. Harry Selfridge redesigned the typical store layout to revolutionise the shopping experience. (14) The assistants were also trained to be helpful but not too pushy. There were fine restaurants with modest prices, a beauty department, and even reading rooms. What is more, a lot of effort was invested in advertising. (15) These were well-lit and there were ever-changing, eye-catching displays of a wide range of exotic goods.\n\nHarry also introduced the idea of special offers, which has been copied by retailers past and present. (16) This was for the express purpose of offering goods at discounted prices. He placed great marketing emphasis on Christmas and coined the slogan 'Only XX shopping days to Christmas'. The store was widely imitated by its competitors.\n\nIn particular, Harry sought to make his store appealing to female customers of all social classes. Selfridges became somewhere they could safely meet friends, browse products and have a good day out. Harry Selfridge is credited with many business quotations. (17) Examples include, 'The customer is always right' and 'The boss says I; the leader says we'.",
+          "options": [
+            "A) Even more astonishing was that 90,000 people turned up at the opening.",
+            "B) One such promotion was the concept of the bargain basement.",
+            "C) Customer service and the display of goods were well behind those in the USA.",
+            "D) One highly successful method was the shop's own windows.",
+            "E) These were repeated to staff to inspire and motivate them.",
+            "F) He was initially employed there as a stock boy.",
+            "G) To start with, all the goods were put on open display."
+          ],
+          "questions": [
+            {
+              "number": 12,
+              "prompt": "Gap 12",
+              "correct": "F) He was initially employed there as a stock boy."
+            },
+            {
+              "number": 13,
+              "prompt": "Gap 13",
+              "correct": "C) Customer service and the display of goods were well behind those in the USA."
+            },
+            {
+              "number": 14,
+              "prompt": "Gap 14",
+              "correct": "G) To start with, all the goods were put on open display."
+            },
+            {
+              "number": 15,
+              "prompt": "Gap 15",
+              "correct": "D) One highly successful method was the shop's own windows."
+            },
+            {
+              "number": 16,
+              "prompt": "Gap 16",
+              "correct": "B) One such promotion was the concept of the bargain basement."
+            },
+            {
+              "number": 17,
+              "prompt": "Gap 17",
+              "correct": "E) These were repeated to staff to inspire and motivate them."
+            }
+          ]
+        },
+        {
+          "id": "part_3",
+          "title": "Part 3",
+          "type": "matching",
+          "instructions": "Read the four texts about a TV programme called Master Designs. Which text gives you the answer to each question?",
+          "passage": "A\nI was thrilled when our new home in the countryside was featured on the TV show Master Designs. It came as a complete surprise when the judges actually awarded it the title of New Build of the Year. Since then, we have had a lot of attention from the media, and people even drive by the house and stop to stare and take photos. To start with, we got a bit fed up because it felt as if we had no privacy, but we are used to it now. Eventually people will give up coming to have a look, and we will be able to truly enjoy being here.\n\nB\nI was wondering if you saw Master Designs last night. Do you remember the building site we passed when we were walking along the cliff path by your aunt's holiday apartment in the summer? The whole thing was covered in plastic sheeting and looked really bizarre. Well, it was on Master Designs last night. You will not believe it - it has been transformed into a stunning house that looks like a sail. I do not normally bother to watch stuff about houses, but this was fascinating, and not just because we knew the house. If you missed the show, try and find out if it is available to watch on catch-up TV. Honestly, you will not regret it!\n\nC\nMaster Designs will be back on TV screens this Wednesday for the first episode of the new series. This time we feature a range of exciting home-building projects, including the most environmentally-friendly home we have seen in all the five series we have made so far. As usual we will be following each building project from start to finish, including all the highs and lows of the process. We will also be catching up with last year's winners, Josie and Sam Wilkins, to see how their stunning space-saving city home, built from an old garage block, looks one year on.\n\nD\nIt was an honour to receive the invitation to appear as the presenter of Master Designs again this year. I have been with the show since its first series, but I have to say every year the standard of the house designs increases. What I particularly love about doing this show is getting to know the homeowners. I was over the moon when Hans and Esther Block won two years ago for their exceptional design completed on a tiny budget. It proves people wrong who say you have to be wealthy and an expert to construct a property amazing enough to appear on Master Designs.",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "questions": [
+            {
+              "number": 18,
+              "prompt": "Which text contains a viewer's opinion of a TV programme?",
+              "correct": "B"
+            },
+            {
+              "number": 19,
+              "prompt": "Which text gives reasons why a house won the TV programme's award?",
+              "correct": "D"
+            },
+            {
+              "number": 20,
+              "prompt": "Which text has information about a TV programme provided by the broadcaster?",
+              "correct": "C"
+            },
+            {
+              "number": 21,
+              "prompt": "What is it like to live in a house that has been on Master Designs?",
+              "correct": "A"
+            },
+            {
+              "number": 22,
+              "prompt": "How long has this programme been on TV?",
+              "correct": "C"
+            },
+            {
+              "number": 23,
+              "prompt": "Where exactly is the house located?",
+              "correct": "B"
+            },
+            {
+              "number": 24,
+              "prompt": "Why should viewers consider having a house built?",
+              "correct": "D"
+            }
+          ]
+        },
+        {
+          "id": "part_4",
+          "title": "Part 4",
+          "type": "multiple_choice",
+          "instructions": "Read the text about working as a Woodland Conservation Manager and answer the questions.",
+          "passage": "Claire Inglis - My job as a Woodland Conservation Manager\n\nI graduated with a degree in Art History, and then completed a postgraduate qualification in Museum Studies. Then I began a career in education, working with children with behavioural problems. I found there was great value in enabling such students to access nature and wildlife as it encouraged them to re-engage with learning. As for myself, this sparked a personal interest in conservation and environmental work, and I eventually viewed it as a field I wanted to work in.\n\nMy next step was to take part in local conservation activities, which showed me how rewarding the work could be. This was on a voluntary basis, but it helped me define the particular areas I was interested in. Following many positive experiences, I decided to pursue a career in habitat conservation by going back to university to take a Master's degree. The course served only to confirm my passion for habitat management, and after completing it, I set about looking for jobs.\n\nI had the chance to do a PhD, but I felt it was time to put the ideas I had learnt into practice. I applied for the Woodland Conservation Manager post almost as soon as it was advertised and felt privileged just to be invited for an interview. The Woodland Trust, my employer, was impressed by my background in education, and the transferable skills I could bring to the role. They were also interested in the range of volunteering opportunities I had undertaken.\n\nI have been in my job for about a year now. A typical day for me includes undertaking site visits to assess the condition and development of the woodland, inspecting work undertaken by contractors, writing to-do lists for each of the volunteers, tree safety surveying and monitoring of health risks to different species, checking and updating public access signs, and even checking on grazing cattle. Although I aim to be on site as much as possible, there are times when I need to be at my desk in order to complete administration tasks.\n\nMy office is at my home, rather than at my employer's premises, so some could find this challenging in terms of missing daily interaction with colleagues. I have not experienced this to be an issue. Nor has managing my workload or deciding priorities proved to be a headache. It is sometimes the case, however, that issues arise that require very careful handling, and that can be tricky for me. One example is having to deal with local farmers who disagree with our conservation agenda.\n\nI still consider myself relatively new to the role. However, I have already learned so much through in-house training sessions. Spending time observing other members of staff at work has been invaluable to me, and I am forever grateful for the support that colleagues have generously provided. I always keep reference books handy to look up information on species that are harder to identify. When I meet tree specialists, I am inspired by the passion they show for sharing their knowledge.",
+          "questions": [
+            {
+              "number": 25,
+              "prompt": "What is Claire Inglis doing in the first paragraph?",
+              "options": [
+                "a) explaining why she found her first career very stressful",
+                "b) describing how she became attracted to a second career",
+                "c) comparing her route into conservation with a typical career path"
+              ],
+              "correct": "b) describing how she became attracted to a second career"
+            },
+            {
+              "number": 26,
+              "prompt": "Claire suggests that one benefit of doing a Master's degree was",
+              "options": [
+                "a) it proved to be more useful than volunteering.",
+                "b) it introduced her to many new aspects of her subject.",
+                "c) it convinced her she was studying the right subject."
+              ],
+              "correct": "c) it convinced her she was studying the right subject."
+            },
+            {
+              "number": 27,
+              "prompt": "What does Claire say about her application for her current job?",
+              "options": [
+                "a) At one point she nearly decided to withdraw it.",
+                "b) She was worried about her level of experience.",
+                "c) It was viewed favourably because of her past work."
+              ],
+              "correct": "c) It was viewed favourably because of her past work."
+            },
+            {
+              "number": 28,
+              "prompt": "As part of her job, Claire has to",
+              "options": [
+                "a) give tasks to others.",
+                "b) cut down diseased trees.",
+                "c) show visitors around."
+              ],
+              "correct": "a) give tasks to others."
+            },
+            {
+              "number": 29,
+              "prompt": "What aspect of her job does Claire find difficult?",
+              "options": [
+                "a) working by herself",
+                "b) defending her approach",
+                "c) organising how she spends her time"
+              ],
+              "correct": "b) defending her approach"
+            },
+            {
+              "number": 30,
+              "prompt": "In the final paragraph, Claire says she feels",
+              "options": [
+                "a) motivated by the enthusiasm of other people.",
+                "b) thankful for the opportunity to share her expertise.",
+                "c) proud that she has an interesting and worthwhile job."
+              ],
+              "correct": "a) motivated by the enthusiasm of other people."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "writing",
+      "title": "Writing",
+      "parts": [
+        {
+          "id": "part_1",
+          "title": "Part 1",
+          "type": "long_text",
+          "min_words": 100,
+          "max_words": 150,
+          "prompt": "You recently visited the shopping mall advertised below. Write a review of your visit for a customer review website. Mention: your journey to the shopping centre; the variety of shops and facilities; your opinion of the special offers.\n\nHamilton Shopping Mall\nVisit the city's newest shopping mall. Near the motorway (junction 9), parking for 4,000 cars. Electric buses depart every 10 minutes from the city centre. We have over 300 shops, including 12 department stores, plus restaurants, a cinema and a bowling alley. Discounts and special offers are always available and change weekly."
+        },
+        {
+          "id": "part_2",
+          "title": "Part 2",
+          "type": "long_text",
+          "min_words": 150,
+          "max_words": 200,
+          "prompt": "Write an essay for your college magazine entitled 'Some useful advice I was given about my studies'.\n\nDescribe some advice you received about your studies and say why this advice was useful to you."
+        }
+      ]
+    }
+  ]
+}

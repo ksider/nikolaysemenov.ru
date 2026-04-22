@@ -121,12 +121,19 @@ function saveProgress() {
 
 function getTimerSnapshot() {
   if (!appState.test || dom.timerPanel.classList.contains("is-hidden")) return null;
+  const elapsedSeconds = appState.timer.isPaused
+    ? appState.timer.elapsedSeconds
+    : appState.timer.accumulatedSeconds + Math.floor((Date.now() - appState.timer.startedAt) / 1000);
+  const remainingSeconds = getTimerMode() === "exam"
+    ? Math.max(0, appState.timer.limitSeconds - elapsedSeconds)
+    : appState.timer.remainingSeconds;
+
   return {
     mode: getTimerMode(),
     scope: getTimerScope(),
     sectionId: appState.activeSectionId,
-    elapsedSeconds: appState.timer.elapsedSeconds,
-    remainingSeconds: appState.timer.remainingSeconds
+    elapsedSeconds,
+    remainingSeconds
   };
 }
 
@@ -785,7 +792,7 @@ function renderWritingPart(section, part, locked) {
         <div class="writing-prompt">${escapeHtml(part.prompt).replaceAll("\n", "<br />")}</div>
         <textarea class="writing-box" data-writing="${escapeHtml(key)}" data-min="${escapeHtml(part.min_words)}" data-max="${escapeHtml(part.max_words)}" ${locked ? "disabled" : ""}>${escapeHtml(text)}</textarea>
         <div class="block-actions">
-          <span class="word-pill" data-word-count="${escapeHtml(key)}">Words: ${count}</span>
+          <span class="word-pill ${status.kind}" data-word-count="${escapeHtml(key)}">Words: ${count}</span>
           <span class="status-pill ${status.kind}" data-word-status="${escapeHtml(key)}">${escapeHtml(status.label)}</span>
         </div>
       </div>
@@ -925,7 +932,10 @@ function updateWritingStatus(textarea) {
   const status = wordStatus(count, Number(textarea.dataset.min), Number(textarea.dataset.max));
   const countNode = dom.examContent.querySelector(`[data-word-count="${CSS.escape(key)}"]`);
   const statusNode = dom.examContent.querySelector(`[data-word-status="${CSS.escape(key)}"]`);
-  if (countNode) countNode.textContent = `Words: ${count}`;
+  if (countNode) {
+    countNode.textContent = `Words: ${count}`;
+    countNode.className = `word-pill ${status.kind}`;
+  }
   if (statusNode) {
     statusNode.textContent = status.label;
     statusNode.className = `status-pill ${status.kind}`;
@@ -933,7 +943,7 @@ function updateWritingStatus(textarea) {
 }
 
 function wordStatus(count, min, max) {
-  if (min && count < min) return { kind: "warn", label: `Below limit: ${min}-${max} words` };
+  if (min && count < min) return { kind: "bad", label: `Below limit: ${min}-${max} words` };
   if (max && count > max) return { kind: "bad", label: `Above limit: ${min}-${max} words` };
   return { kind: "ok", label: `Within limit: ${min}-${max} words` };
 }
@@ -1100,20 +1110,42 @@ function startTimer() {
   const activeSection = appState.test.sections.find((section) => section.id === appState.activeSectionId);
   appState.timer.limitSeconds = getTimerScope() === "test" ? getTotalLimitSeconds() : getSectionLimitMinutes(activeSection) * 60;
   appState.timer.remainingSeconds = appState.timer.limitSeconds;
-  restorePracticeTimerIfAvailable(activeSection);
+  restoreTimerIfAvailable(activeSection);
   dom.timerPanel.classList.remove("is-hidden");
   renderTimer();
   scheduleTimerInterval();
 }
 
-function restorePracticeTimerIfAvailable(activeSection) {
-  const saved = appState.timer.savedState;
-  if (!appState.timer.restoreOnStart || !saved || saved.mode !== "practice") return;
-  if (saved.mode !== getTimerMode() || saved.scope !== getTimerScope() || saved.sectionId !== activeSection?.id) return;
+function timerSnapshotMatchesCurrentMode(saved, activeSection) {
+  if (!saved || saved.mode !== getTimerMode() || saved.scope !== getTimerScope()) return false;
+  if (saved.scope === "section" && saved.sectionId !== activeSection?.id) return false;
+  return true;
+}
 
-  appState.timer.accumulatedSeconds = Number(saved.elapsedSeconds) || 0;
+function restoreTimerIfAvailable(activeSection) {
+  const saved = appState.timer.savedState;
+  if (!appState.timer.restoreOnStart || !timerSnapshotMatchesCurrentMode(saved, activeSection)) return;
+
+  if (saved.mode === "practice") {
+    appState.timer.accumulatedSeconds = Math.max(0, Number(saved.elapsedSeconds) || 0);
+    appState.timer.elapsedSeconds = appState.timer.accumulatedSeconds;
+    appState.timer.remainingSeconds = Math.max(0, Number(saved.remainingSeconds) || appState.timer.remainingSeconds);
+    appState.timer.restoreOnStart = false;
+    return;
+  }
+
+  if (saved.mode !== "exam") return;
+
+  const savedRemaining = Number(saved.remainingSeconds);
+  const savedElapsed = Number(saved.elapsedSeconds);
+  const remaining = Number.isFinite(savedRemaining)
+    ? Math.min(appState.timer.limitSeconds, Math.max(0, savedRemaining))
+    : Math.max(0, appState.timer.limitSeconds - (Number.isFinite(savedElapsed) ? savedElapsed : 0));
+
+  appState.timer.remainingSeconds = remaining;
+  appState.timer.accumulatedSeconds = appState.timer.limitSeconds - remaining;
   appState.timer.elapsedSeconds = appState.timer.accumulatedSeconds;
-  appState.timer.remainingSeconds = Number(saved.remainingSeconds) || appState.timer.remainingSeconds;
+  appState.timer.startedAt = Date.now();
   appState.timer.restoreOnStart = false;
 }
 

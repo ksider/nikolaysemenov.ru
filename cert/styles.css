@@ -998,6 +998,16 @@ legend {
   color: #175cd3;
 }
 
+.word-pill.ok {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.word-pill.bad {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
 .status-pill.ok {
   background: var(--success-bg);
   color: var(--success);

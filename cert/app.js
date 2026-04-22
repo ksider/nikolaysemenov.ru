@@ -35,6 +35,7 @@ const dom = {
   resultsContent: document.querySelector("#resultsContent"),
   resultSubtitle: document.querySelector("#resultSubtitle"),
   resultHistory: document.querySelector("#resultHistory"),
+  topbarExitBtn: document.querySelector("#topbarExitBtn"),
   restartBtn: document.querySelector("#restartBtn")
 };
 
@@ -148,12 +149,32 @@ function loadProgress() {
   }
 }
 
+function appBasePath() {
+  const pathname = window.location.pathname;
+  const routeIndex = pathname.indexOf("/test/");
+  if (routeIndex >= 0) return pathname.slice(0, routeIndex);
+
+  const cleanPath = pathname.replace(/\/+$/, "");
+  if (!cleanPath || cleanPath === "/") return "";
+  if (/\.[^/]+$/.test(cleanPath)) {
+    const lastSlash = cleanPath.lastIndexOf("/");
+    return lastSlash > 0 ? cleanPath.slice(0, lastSlash) : "";
+  }
+  return cleanPath;
+}
+
+function routePath(path) {
+  const base = appBasePath();
+  const cleanPath = `/${String(path || "").replace(/^\/+/, "")}`;
+  return `${base}${cleanPath}` || "/";
+}
+
 function buildExamPath(file, sectionId = appState.activeSectionId) {
-  return `/test/${encodeURIComponent(file)}/section/${encodeURIComponent(sectionId || "")}`;
+  return routePath(`/test/${encodeURIComponent(file)}/section/${encodeURIComponent(sectionId || "")}`);
 }
 
 function buildResultsPath(file) {
-  return `/test/${encodeURIComponent(file)}/results`;
+  return routePath(`/test/${encodeURIComponent(file)}/results`);
 }
 
 function updateRoute(path) {
@@ -175,21 +196,27 @@ function resolveMediaPath(path) {
 function showStartScreen(push = true) {
   window.clearInterval(appState.timer.intervalId);
   dom.timerPanel.classList.add("is-hidden");
+  dom.topbarExitBtn.classList.add("is-hidden");
   dom.examScreen.classList.add("is-hidden");
   dom.resultsScreen.classList.add("is-hidden");
   dom.startScreen.classList.remove("is-hidden");
   document.querySelector("main").classList.remove("is-wide");
-  if (push) updateRoute("/");
+  if (push) updateRoute(routePath("/"));
 }
 
 function showExamScreen() {
   dom.startScreen.classList.add("is-hidden");
   dom.resultsScreen.classList.add("is-hidden");
   dom.examScreen.classList.remove("is-hidden");
+  dom.topbarExitBtn.classList.remove("is-hidden");
 }
 
 function parseRoute() {
-  const parts = window.location.pathname.split("/").filter(Boolean);
+  const base = appBasePath();
+  const routePathname = base && window.location.pathname.startsWith(base)
+    ? window.location.pathname.slice(base.length)
+    : window.location.pathname;
+  const parts = routePathname.split("/").filter(Boolean);
   if (parts[0] !== "test" || !parts[1]) return { name: "home" };
 
   const file = decodeURIComponent(parts[1]);
@@ -365,6 +392,7 @@ function renderActiveSection() {
 
   const locked = Boolean(appState.checked[section.id] || appState.timer.locked);
   dom.examScreen.classList.toggle("is-wide", section.id === "reading");
+  dom.examScreen.classList.toggle("is-listening", section.id === "listening");
   document.querySelector("main").classList.toggle("is-wide", section.id === "reading");
   const audio = section.audio
     ? `<div class="audio-box"><strong>Section audio</strong><audio controls src="${escapeHtml(resolveMediaPath(section.audio))}"></audio><p class="muted">${escapeHtml(section.audio)}</p></div>`
@@ -379,7 +407,6 @@ function renderActiveSection() {
         </div>
         <div class="section-head-actions">
           ${appState.checked[section.id] ? `<span class="score-pill">${scoreLabel(section.id)}</span>` : ""}
-          <button class="secondary-button" type="button" data-action="exit-test">Exit test</button>
         </div>
       </div>
       ${audio}
@@ -814,11 +841,6 @@ function bindSectionEvents(section) {
     checkButton.addEventListener("click", () => checkSection(section));
   }
 
-  const exitButton = dom.examContent.querySelector("[data-action='exit-test']");
-  if (exitButton) {
-    exitButton.addEventListener("click", exitTest);
-  }
-
   const saveWritingButton = dom.examContent.querySelector("[data-action='save-writing']");
   if (saveWritingButton) {
     saveWritingButton.addEventListener("click", () => {
@@ -1160,6 +1182,7 @@ function handleTimeExpired() {
 function showResults(push = true, persist = true) {
   window.clearInterval(appState.timer.intervalId);
   dom.timerPanel.classList.add("is-hidden");
+  dom.topbarExitBtn.classList.add("is-hidden");
   dom.examScreen.classList.add("is-hidden");
   dom.resultsScreen.classList.remove("is-hidden");
   dom.startScreen.classList.add("is-hidden");
@@ -1223,6 +1246,7 @@ function renderResultCard(section) {
 
 dom.refreshTests.addEventListener("click", loadTests);
 dom.startBtn.addEventListener("click", startExam);
+dom.topbarExitBtn.addEventListener("click", exitTest);
 dom.restartBtn.addEventListener("click", () => {
   showStartScreen(true);
   loadTests();

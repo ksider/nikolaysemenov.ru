@@ -59,7 +59,7 @@ code {
 .topbar {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -68,6 +68,14 @@ code {
   background: rgba(255, 255, 255, 0.92);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(14px);
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .eyebrow {
@@ -389,6 +397,32 @@ legend {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #f8fafc;
+}
+
+#examScreen.is-listening .audio-box {
+  position: fixed;
+  top: 8px;
+  left: 50%;
+  width: min(100% - 40px, 760px);
+  transform: translateX(-50%);
+  z-index: 30;
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+#examScreen.is-listening .audio-box strong,
+#examScreen.is-listening .audio-box .muted {
+  display: none;
+}
+
+#examScreen.is-listening .audio-box audio {
+  margin-top: 0;
+}
+
+#examScreen.is-listening .section-card {
+  padding-top: 72px;
 }
 
 .audio-box audio {
@@ -1003,6 +1037,22 @@ legend {
 
   .timer-panel {
     text-align: left;
+  }
+
+  .topbar-actions {
+    justify-content: stretch;
+  }
+
+  .topbar-actions > * {
+    flex: 1 1 auto;
+  }
+
+  #examScreen.is-listening .audio-box {
+    width: min(100% - 20px, 1180px);
+  }
+
+  #examScreen.is-listening .section-card {
+    padding-top: 84px;
   }
 
   .history-row {

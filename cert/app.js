@@ -203,7 +203,8 @@ function updateRoute(path) {
 }
 
 function staticAssetPath(path) {
-  return path.replace(/^\/+/, "");
+  if (window.location.protocol === "file:") return path.replace(/^\/+/, "");
+  return routePath(path);
 }
 
 function resolveMediaPath(path) {

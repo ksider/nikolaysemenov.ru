@@ -18,6 +18,7 @@ const appState = {
     isPaused: false,
     restoreOnStart: false,
     savedState: null,
+    sectionStates: {},
     locked: false
   }
 };
@@ -127,13 +128,22 @@ function getTimerSnapshot() {
   const remainingSeconds = getTimerMode() === "exam"
     ? Math.max(0, appState.timer.limitSeconds - elapsedSeconds)
     : appState.timer.remainingSeconds;
+  const sectionState = {
+    elapsedSeconds,
+    remainingSeconds
+  };
+  appState.timer.sectionStates = {
+    ...appState.timer.sectionStates,
+    [appState.activeSectionId]: sectionState
+  };
 
   return {
     mode: getTimerMode(),
     scope: getTimerScope(),
     sectionId: appState.activeSectionId,
     elapsedSeconds,
-    remainingSeconds
+    remainingSeconds,
+    sections: appState.timer.sectionStates
   };
 }
 
@@ -150,6 +160,7 @@ function loadProgress() {
     appState.sectionScores = saved.sectionScores || {};
     appState.activeSectionId = saved.activeSectionId || appState.activeSectionId;
     appState.timer.savedState = saved.timer || null;
+    appState.timer.sectionStates = saved.timer?.sections || {};
     appState.timer.restoreOnStart = Boolean(saved.timer);
   } catch {
     localStorage.removeItem(key);
@@ -330,7 +341,7 @@ function renderTestsList() {
 
 async function startExam() {
   if (!appState.selectedFile) return;
-  await enterExam(appState.selectedFile, null, true, true);
+  await enterExam(appState.selectedFile, null, true, false);
 }
 
 async function enterExam(file, sectionId = null, push = true, reset = false) {
@@ -345,6 +356,7 @@ async function enterExam(file, sectionId = null, push = true, reset = false) {
     appState.sectionScores = {};
     appState.activeSectionId = null;
     appState.timer.savedState = null;
+    appState.timer.sectionStates = {};
     appState.timer.restoreOnStart = false;
     loadProgress();
   }
@@ -354,6 +366,7 @@ async function enterExam(file, sectionId = null, push = true, reset = false) {
     appState.checked = {};
     appState.sectionScores = {};
     appState.timer.savedState = null;
+    appState.timer.sectionStates = {};
     appState.timer.restoreOnStart = false;
   }
 
@@ -365,13 +378,13 @@ async function enterExam(file, sectionId = null, push = true, reset = false) {
   showExamScreen();
   renderExam();
   startTimer();
+  saveProgress();
   if (push) updateRoute(buildExamPath(file, appState.activeSectionId));
 }
 
 function renderExam() {
   renderTabs();
   renderActiveSection();
-  saveProgress();
 }
 
 function renderTabs() {
@@ -384,11 +397,15 @@ function renderTabs() {
 
   dom.sectionTabs.querySelectorAll(".tab-button").forEach((button) => {
     button.addEventListener("click", () => {
+      saveProgress();
       appState.activeSectionId = button.dataset.section;
       appState.timer.locked = false;
       renderExam();
       updateRoute(buildExamPath(appState.selectedFile, appState.activeSectionId));
-      if (getTimerScope() === "section") startTimer();
+      if (getTimerScope() === "section") {
+        startTimer();
+        saveProgress();
+      }
     });
   });
 }
@@ -1122,11 +1139,22 @@ function timerSnapshotMatchesCurrentMode(saved, activeSection) {
   return true;
 }
 
-function restoreTimerIfAvailable(activeSection) {
+function savedTimerForActiveSection(activeSection) {
   const saved = appState.timer.savedState;
-  if (!appState.timer.restoreOnStart || !timerSnapshotMatchesCurrentMode(saved, activeSection)) return;
+  if (!saved || saved.mode !== getTimerMode() || saved.scope !== getTimerScope()) return null;
+  if (saved.scope !== "section") return saved;
 
-  if (saved.mode === "practice") {
+  const sectionState = appState.timer.sectionStates?.[activeSection?.id];
+  if (sectionState) return sectionState;
+  return timerSnapshotMatchesCurrentMode(saved, activeSection) ? saved : null;
+}
+
+function restoreTimerIfAvailable(activeSection) {
+  const rootSaved = appState.timer.savedState;
+  const saved = savedTimerForActiveSection(activeSection);
+  if (!saved) return;
+
+  if (rootSaved.mode === "practice") {
     appState.timer.accumulatedSeconds = Math.max(0, Number(saved.elapsedSeconds) || 0);
     appState.timer.elapsedSeconds = appState.timer.accumulatedSeconds;
     appState.timer.remainingSeconds = Math.max(0, Number(saved.remainingSeconds) || appState.timer.remainingSeconds);
@@ -1134,7 +1162,7 @@ function restoreTimerIfAvailable(activeSection) {
     return;
   }
 
-  if (saved.mode !== "exam") return;
+  if (rootSaved.mode !== "exam") return;
 
   const savedRemaining = Number(saved.remainingSeconds);
   const savedElapsed = Number(saved.elapsedSeconds);
@@ -1170,6 +1198,7 @@ function tickTimer() {
   }
 
   renderTimer();
+  saveProgress();
 }
 
 function pausePracticeTimer() {

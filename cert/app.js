@@ -2,6 +2,7 @@ const appState = {
   tests: [],
   selectedFile: null,
   loadedFile: null,
+  progressKey: null,
   test: null,
   activeSectionId: null,
   answers: {},
@@ -49,7 +50,29 @@ function getTimerScope() {
 }
 
 function storageKey() {
-  return appState.test ? `examforge:progress:${appState.test.id}` : null;
+  return appState.progressKey || defaultProgressKey();
+}
+
+function defaultProgressKey(testId = appState.test?.id) {
+  return testId ? `examforge:progress:${testId}` : null;
+}
+
+function newProgressKey(testId = appState.test?.id) {
+  return testId ? `examforge:progress:${testId}:${Date.now()}` : null;
+}
+
+function activeProgressStorageKey(testId = appState.test?.id) {
+  return testId ? `examforge:active-progress:${testId}` : null;
+}
+
+function saveActiveProgressKey() {
+  const key = activeProgressStorageKey();
+  if (key && appState.progressKey) sessionStorage.setItem(key, appState.progressKey);
+}
+
+function loadActiveProgressKey(testId = appState.test?.id) {
+  const key = activeProgressStorageKey(testId);
+  return key ? sessionStorage.getItem(key) : null;
 }
 
 function resultsStorageKey() {
@@ -101,9 +124,15 @@ function getTotalLimitSeconds() {
   return appState.test.sections.reduce((sum, section) => sum + getSectionLimitMinutes(section) * 60, 0);
 }
 
+function isCurrentTestCompleted() {
+  if (!appState.test?.sections?.length) return false;
+  return appState.test.sections.every((section) => Boolean(appState.checked[section.id]));
+}
+
 function saveProgress() {
   const key = storageKey();
   if (!key) return;
+  saveActiveProgressKey();
   localStorage.setItem(
     key,
     JSON.stringify({
@@ -147,14 +176,15 @@ function getTimerSnapshot() {
   };
 }
 
-function loadProgress() {
-  const key = storageKey();
+function loadProgress(progressKey = storageKey()) {
+  const key = progressKey;
   if (!key) return;
   const raw = localStorage.getItem(key);
   if (!raw) return;
 
   try {
     const saved = JSON.parse(raw);
+    appState.progressKey = key;
     appState.answers = saved.answers || {};
     appState.checked = saved.checked || {};
     appState.sectionScores = saved.sectionScores || {};
@@ -342,16 +372,18 @@ function renderTestsList() {
 
 async function startExam() {
   if (!appState.selectedFile) return;
-  await enterExam(appState.selectedFile, null, true, false);
+  await enterExam(appState.selectedFile, null, true, { reset: true, newAttempt: true });
 }
 
-async function enterExam(file, sectionId = null, push = true, reset = false) {
+async function enterExam(file, sectionId = null, push = true, options = {}) {
+  const enterOptions = typeof options === "boolean" ? { reset: options } : options;
   const needsLoad = !appState.test || appState.loadedFile !== file;
 
   if (needsLoad) {
     appState.test = await fetchTestFile(file);
     appState.selectedFile = file;
     appState.loadedFile = file;
+    appState.progressKey = null;
     appState.answers = {};
     appState.checked = {};
     appState.sectionScores = {};
@@ -359,16 +391,22 @@ async function enterExam(file, sectionId = null, push = true, reset = false) {
     appState.timer.savedState = null;
     appState.timer.sectionStates = {};
     appState.timer.restoreOnStart = false;
-    loadProgress();
+    if (!enterOptions.reset && !enterOptions.newAttempt) {
+      loadProgress(enterOptions.progressKey || loadActiveProgressKey(appState.test.id) || defaultProgressKey(appState.test.id));
+    }
   }
 
-  if (reset) {
+  if (enterOptions.reset) {
+    appState.progressKey = enterOptions.newAttempt ? newProgressKey(appState.test.id) : defaultProgressKey(appState.test.id);
     appState.answers = {};
     appState.checked = {};
     appState.sectionScores = {};
+    appState.activeSectionId = null;
     appState.timer.savedState = null;
     appState.timer.sectionStates = {};
     appState.timer.restoreOnStart = false;
+  } else if (enterOptions.progressKey && enterOptions.progressKey !== appState.progressKey) {
+    loadProgress(enterOptions.progressKey);
   }
 
   const firstSectionId = appState.test.sections[0]?.id || null;
@@ -378,8 +416,14 @@ async function enterExam(file, sectionId = null, push = true, reset = false) {
 
   showExamScreen();
   renderExam();
-  startTimer();
-  saveProgress();
+  if (isCurrentTestCompleted()) {
+    window.clearInterval(appState.timer.intervalId);
+    dom.timerPanel.classList.add("is-hidden");
+    appState.timer.locked = true;
+  } else {
+    startTimer();
+    saveProgress();
+  }
   if (push) updateRoute(buildExamPath(file, appState.activeSectionId));
 }
 
@@ -398,12 +442,12 @@ function renderTabs() {
 
   dom.sectionTabs.querySelectorAll(".tab-button").forEach((button) => {
     button.addEventListener("click", () => {
-      saveProgress();
+      if (!isCurrentTestCompleted()) saveProgress();
       appState.activeSectionId = button.dataset.section;
       appState.timer.locked = false;
       renderExam();
       updateRoute(buildExamPath(appState.selectedFile, appState.activeSectionId));
-      if (getTimerScope() === "section") {
+      if (!isCurrentTestCompleted() && getTimerScope() === "section") {
         startTimer();
         saveProgress();
       }
@@ -1058,7 +1102,7 @@ function renderResultHistory() {
           <strong>${escapeHtml(record.testTitle)}</strong>
           <span>${escapeHtml(record.activeSectionId || "Not started")}</span>
           <small>${new Date(record.updatedAt).toLocaleString()}</small>
-          <button class="secondary-button" type="button" data-continue-file="${escapeHtml(record.file)}" data-continue-section="${escapeHtml(record.activeSectionId || "")}">Continue</button>
+          <button class="secondary-button" type="button" data-continue-file="${escapeHtml(record.file)}" data-continue-section="${escapeHtml(record.activeSectionId || "")}" data-progress-key="${escapeHtml(record.key)}">Continue</button>
           <button class="danger-button" type="button" data-delete-progress="${escapeHtml(record.key)}">Delete</button>
         </div>
       `).join("")}
@@ -1083,7 +1127,9 @@ function renderResultHistory() {
   dom.resultHistory.innerHTML = `${progressHtml}${resultsHtml}`;
   dom.resultHistory.querySelectorAll("[data-continue-file]").forEach((button) => {
     button.addEventListener("click", () => {
-      enterExam(button.dataset.continueFile, button.dataset.continueSection || null, true);
+      enterExam(button.dataset.continueFile, button.dataset.continueSection || null, true, {
+        progressKey: button.dataset.progressKey
+      });
     });
   });
 
@@ -1276,9 +1322,123 @@ function showResults(push = true, persist = true) {
       <p class="muted">Writing is saved without automatic scoring.</p>
     </div>
     ${appState.test.sections.map(renderResultCard).join("")}
+    <div class="result-card result-actions-card">
+      <strong>Teacher export</strong>
+      <p class="muted">Download an HTML report with tasks, answers and writing texts.</p>
+      <button class="secondary-button" type="button" data-action="export-teacher-report">Download HTML</button>
+    </div>
   `;
 
+  const exportButton = dom.resultsContent.querySelector("[data-action='export-teacher-report']");
+  if (exportButton) exportButton.addEventListener("click", downloadTeacherReport);
+
   if (push) updateRoute(buildResultsPath(appState.selectedFile));
+}
+
+function reportAnswerClass(userAnswer, question) {
+  if (!userAnswer) return "missing";
+  return isAnswerCorrect(userAnswer, question) ? "correct" : "wrong";
+}
+
+function renderReportQuestion(section, question) {
+  const userAnswer = appState.answers[answerKey(section.id, question.number)] || "";
+  const answerClass = reportAnswerClass(userAnswer, question);
+  const correct = correctValues(question).filter(Boolean).join(" / ");
+  const needsCorrectAnswer = answerClass !== "correct" && correct;
+
+  return `
+    <div class="report-question">
+      <div class="report-prompt"><strong>${escapeHtml(question.number)}.</strong> ${escapeHtml(question.prompt || "Question")}</div>
+      <div class="report-answer ${answerClass}">My answer: ${userAnswer ? escapeHtml(userAnswer) : "No answer"}</div>
+      ${needsCorrectAnswer ? `<div class="report-correct">Correct answer: ${escapeHtml(correct)}</div>` : ""}
+    </div>
+  `;
+}
+
+function renderReportWritingPart(section, part) {
+  const text = appState.answers[answerKey(section.id, part.id)] || "";
+  const count = wordCount(text);
+
+  return `
+    <article class="report-part">
+      <h3>${escapeHtml(part.title || part.id)}</h3>
+      <div class="report-task">${escapeHtml(part.prompt || "").replaceAll("\n", "<br />")}</div>
+      <p class="report-meta">Words: ${count}</p>
+      <div class="report-writing">${escapeHtml(text || "No text submitted")}</div>
+    </article>
+  `;
+}
+
+function renderReportPart(section, part) {
+  if (part.type === "long_text") return renderReportWritingPart(section, part);
+  const questions = Array.isArray(part.questions) ? part.questions : [];
+
+  return `
+    <article class="report-part">
+      <h3>${escapeHtml(part.title || part.id)}</h3>
+      ${part.instructions ? `<p class="report-meta">${escapeHtml(part.instructions)}</p>` : ""}
+      ${part.passage ? `<div class="report-task">${escapeHtml(part.passage).replaceAll("\n", "<br />")}</div>` : ""}
+      ${questions.map((question) => renderReportQuestion(section, question)).join("")}
+    </article>
+  `;
+}
+
+function buildTeacherReportHtml() {
+  const generatedAt = new Date().toLocaleString();
+  const title = `${appState.test.title} - Teacher report`;
+  const body = appState.test.sections.map((section) => `
+    <section class="report-section">
+      <h2>${escapeHtml(section.title || section.id)}</h2>
+      ${(section.parts || []).map((part) => renderReportPart(section, part)).join("")}
+    </section>
+  `).join("");
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>${escapeHtml(title)}</title>
+  <style>
+    body { margin: 0; padding: 32px; font-family: Arial, sans-serif; color: #1d2430; line-height: 1.5; }
+    h1, h2, h3 { margin: 0 0 12px; }
+    h1 { font-size: 28px; }
+    h2 { margin-top: 28px; padding-bottom: 8px; border-bottom: 2px solid #d0d5dd; }
+    h3 { margin-top: 18px; font-size: 18px; }
+    .report-meta { color: #667085; font-size: 14px; }
+    .report-part { margin: 18px 0; padding: 16px; border: 1px solid #d0d5dd; border-radius: 8px; }
+    .report-task { margin: 12px 0; padding: 12px; background: #f8fafc; border: 1px solid #eaecf0; border-radius: 6px; }
+    .report-question { margin: 12px 0; padding-top: 12px; border-top: 1px solid #eaecf0; }
+    .report-answer { margin-top: 6px; font-weight: 700; }
+    .report-answer.correct { color: #027a48; }
+    .report-answer.wrong, .report-answer.missing { color: #b42318; }
+    .report-correct { margin-top: 4px; color: #175cd3; font-weight: 700; }
+    .report-writing { white-space: pre-wrap; padding: 14px; border: 1px solid #d0d5dd; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>${escapeHtml(title)}</h1>
+  <p class="report-meta">Generated: ${escapeHtml(generatedAt)}</p>
+  ${body}
+</body>
+</html>`;
+}
+
+function reportFileName() {
+  const base = `${appState.test.id || "test"}-teacher-report`;
+  return `${base.replace(/[^a-z0-9_-]+/gi, "-").toLowerCase()}.html`;
+}
+
+function downloadTeacherReport() {
+  const blob = new Blob([buildTeacherReportHtml()], { type: "text/html;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = reportFileName();
+  document.body.append(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
 }
 
 function writingWordCounts() {

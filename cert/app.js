@@ -536,10 +536,37 @@ function collectDragOptions(part, questions) {
 }
 
 function renderDragChip(option, locked, label = option) {
+  const usedClass = isDragValueUsed(option) ? "is-used" : "";
+
   return `
-    <button class="drag-chip" type="button" draggable="${locked ? "false" : "true"}" data-drag-value="${escapeAttr(option)}" ${locked ? "disabled" : ""}>
-      ${escapeHtml(label)}
+    <button class="drag-chip ${usedClass}" type="button" draggable="${locked ? "false" : "true"}" data-drag-value="${escapeAttr(option)}" ${locked ? "disabled" : ""}>
+      ${renderOptionLabel(label)}
+      ${usedClass ? `<span class="option-used-label">Used</span>` : ""}
     </button>
+  `;
+}
+
+function isDragValueUsed(option) {
+  const sectionPrefix = `${appState.activeSectionId}:`;
+  return Object.entries(appState.answers).some(([key, value]) => (
+    key.startsWith(sectionPrefix) && String(value) === String(option)
+  ));
+}
+
+function optionLabelParts(value) {
+  const text = String(value ?? "").trim();
+  const match = text.match(/^([A-Z])\)\s+(.+)$/);
+  if (!match) return null;
+  return { marker: match[1], text: match[2] };
+}
+
+function renderOptionLabel(value) {
+  const parts = optionLabelParts(value);
+  if (!parts) return escapeHtml(value);
+
+  return `
+    <span class="option-marker" aria-hidden="true">${escapeHtml(parts.marker)}</span>
+    <span class="option-text">${escapeHtml(parts.text)}</span>
   `;
 }
 
@@ -656,8 +683,8 @@ function renderInlineDropzone(section, question, locked, placeholder = "Drop ans
 
   return `
     <button class="drop-zone ${escapeHtml(className)} ${filledClass} ${resultClassFor(section, question)}" type="button" data-drop-key="${escapeHtml(key)}" ${locked ? "disabled" : ""}>
-      <span>${value ? escapeHtml(value) : escapeHtml(placeholder)}</span>
-      ${value && !locked ? `<small data-clear-drop="${escapeHtml(key)}">Clear</small>` : ""}
+      <span>${value ? renderOptionLabel(value) : escapeHtml(placeholder)}</span>
+      ${value && !locked ? `<small class="drop-clear" data-clear-drop="${escapeHtml(key)}" aria-label="Remove answer" title="Remove answer">&times;</small>` : ""}
     </button>
   `;
 }
@@ -850,10 +877,10 @@ function bindDragDropEvents() {
     });
 
     zone.addEventListener("click", (event) => {
-      const clearKey = event.target.dataset.clearDrop;
-      if (clearKey) {
+      const clearButton = event.target.closest("[data-clear-drop]");
+      if (clearButton) {
         event.stopPropagation();
-        setDroppedAnswer(clearKey, "");
+        setDroppedAnswer(clearButton.dataset.clearDrop, "");
         return;
       }
 

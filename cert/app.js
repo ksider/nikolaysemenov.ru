@@ -1322,7 +1322,13 @@ function deleteResultRecord(recordId) {
 
 async function openResultRecord(recordId) {
   const record = loadResultRecords().find((item) => item.id === recordId);
-  if (!record?.file) return;
+  if (!record) return;
+
+  const hasFullAttempt = Boolean(record.file && record.answers && record.checked);
+  if (!hasFullAttempt) {
+    openTeacherReportRecord(record);
+    return;
+  }
 
   await enterExam(record.file, record.activeSectionId || null, true, {
     progressKey: record.progressKey || defaultProgressKey(record.testId || record.file),
@@ -1339,6 +1345,73 @@ async function openResultRecord(recordId) {
 
   renderExam();
   showResults(false, false);
+}
+
+function buildTeacherReportFromRecord(record) {
+  const generatedAt = new Date().toLocaleString();
+  const title = `${record.testTitle || record.testId || "Test"} - Teacher report`;
+  const sections = record.sectionScores || {};
+  const sectionRows = Object.entries(sections).map(([sectionId, score]) => {
+    const label = `${sectionId.charAt(0).toUpperCase()}${sectionId.slice(1)}`;
+    return `
+      <section class="report-part">
+        <h3>${escapeHtml(label)}</h3>
+        <p class="report-meta">Score: ${escapeHtml(score.correct)} / ${escapeHtml(score.total)}</p>
+      </section>
+    `;
+  }).join("");
+  const writing = record.writingWordCounts || {};
+  const writingRows = Object.keys(writing).length
+    ? `
+      <section class="report-part">
+        <h3>Writing</h3>
+        ${Object.entries(writing).map(([partId, count]) => `<p class="report-meta">${escapeHtml(partId)}: ${escapeHtml(count)} words</p>`).join("")}
+      </section>
+    `
+    : "";
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>${escapeHtml(title)}</title>
+  <style>
+    body { margin: 0; padding: 32px; font-family: Arial, sans-serif; color: #1d2430; line-height: 1.5; }
+    h1, h2, h3 { margin: 0 0 12px; }
+    h1 { font-size: 28px; }
+    .report-meta { color: #667085; font-size: 14px; }
+    .report-part { margin: 18px 0; padding: 16px; border: 1px solid #d0d5dd; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>${escapeHtml(title)}</h1>
+  <p class="report-meta">Generated: ${escapeHtml(generatedAt)}</p>
+  <section class="report-part">
+    <h3>Summary</h3>
+    <p class="report-meta">Total score: ${escapeHtml(record.totalCorrect ?? 0)} / ${escapeHtml(record.totalQuestions ?? 0)}</p>
+    <p class="report-meta">Completed: ${escapeHtml(record.completedAt || "")}</p>
+  </section>
+  ${sectionRows}
+  ${writingRows}
+</body>
+</html>`;
+}
+
+function openTeacherReportRecord(record) {
+  const html = buildTeacherReportFromRecord(record);
+  const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const win = window.open(url, "_blank", "noopener,noreferrer");
+  if (!win) {
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${String(record.testId || "test")}-teacher-report.html`;
+    document.body.append(link);
+    link.click();
+    link.remove();
+  }
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 function syncTimerForActiveSection() {

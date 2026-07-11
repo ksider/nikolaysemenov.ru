@@ -1,238 +1,703 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Nikolai Semenov</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-     <link rel="icon" type="image/x-icon" href="favicon.png">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Noto+Sans:wght@900&family=PT+Sans:wght@400;700&family=PT+Serif:wght@400&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <main class="resume">
-      <section class="section section--hero">
-        <div class="section__text hero">
-          <h1 class="hero__name">
-            <span>Nikolai</span>
-            <span>Semenov</span>
-          </h1>
-          <p class="hero__tagline">Polymer Scientist,<br />Engineer</p>
-          <p class="experience__body hero__bio">
-           I work with polymer formulations and processes, developing materials and scaling them from lab to production. I’m really interested in biobased and filled systems, extrusion, and injection molding. I’m looking for a role where I can put my experience to good use and build reliable, real-world materials.
-          </p>
-        </div>
-        <a class="social__preview social__preview--hero" href="/PPP">
-          <span class="sr-only">Polymer Processing Planner</span>
-          <img
-            class="social__preview-image"
-            src="assets/ipi/ipi4.png"
-            alt="Polymer Processing Planner"
-          />
-        </a>
-        <div class="section__media">
-          <div class="placeholder placeholder--portrait" aria-hidden="true">&nbsp;</div>
-        </div>
-      </section>
-<!-- 
-      <section class="section section--seed">
-        <div class="section__text">
-      <h2 class="experience__title"><div class="logo_seed">SEED</div>
-            R&D <span class="hand">boutique</span></h2>
-          <img src="assets/seed.png" class="seed-preview__image" alt="">
-          <p class="experience__body">
-            something will happen <a href="/seed">soon</a>...or not <a href="#contact">write me</a>
-          </p>
-        </div>
-      </section>
- --> 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nikolai Semenov — Polymer Engineer</title>
+<meta name="description" content="Nikolai Semenov — Polymer Engineer. R&D, process and technology ownership across biobased, elastomeric and composite polymer systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Emoji:wght@300..700&family=Noto+Sans+Mono:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-      <section class="section section--lead">
-        <div class="section__text">
-          <h2 class="experience__title"><span class="hand">New</span>&nbsp;packaging solutions</h2>
-          <!-- <p class="experience__org"></p> <a href="https://bpacks.eco" class="bpacks"></a>-->
-          <p class="experience__body">
-            At Bpacks&nbsp;Lab, where I lead R&amp;D, we develop bio&#8209;based materials from tree bark and biopolymers. I’ve taken several formulations from early lab mixes to functional trays and cups, ready for thermoforming or injection molding. I also set up pilot runs and coordinated testing with partner labs.
-          </p>
-        </div>
-        <div class="section__media">
-          <div class="placeholder placeholder--trays" aria-hidden="true"><img src="assets/tray.png" alt=""></div>
-        </div>
-      </section>
+  <link rel="stylesheet" href="styles.css" />
+<style>
+  
+</style>
+</head>
+<body>
+<div class="page">
 
-      <section class="section section--director">
-        <div class="section__media">
-          <div class="placeholder placeholder--forks" aria-hidden="true"><img src="assets/o.png" alt=""></div>
-        </div>
-        <div class="section__text">
-          <h2 class="experience__title">Polymer for <span class="hand">the&nbsp;sea</span></h2>
-          <!-- <p class="experience__org"></p> -->
-          <p class="experience__body">
-            As co-founder and head of development at BEREZKA, I worked on creating a plant&#8209;based composite material that decomposes in salt&nbsp;water. We manufactured and tested pilot samples of the product &mdash; cups and cutlery &mdash; and confirmed that they are fully compostable at home.
-          </p>
-        </div>
-      </section>
+  <header class="hero">
 
-      <section class="section section--senior">
-        <div class="section__text">
-          <h2 class="experience__title">Rheology <span class="hand">and</span> reinforcement</h2>
-          <img class="rhe-preview__image" src="assets/mt.png" alt="" aria-hidden="true" />
-          <!-- <p class="experience__org">IAM RAS</p> -->
-          <p class="experience__body">
-            During my time as a Scientist at the Institute of Applied Mechanics, I specialised in the study of the rheology of polymers and filled systems. My work involved smart materials and polymer reinforcement theory, as well as helping young researchers to develop their skills.
-          </p>
+    <div class="hero-inner">
+      <div class="avatar">
+        <div class="avatar-inner">
+          <img id="avatarImg" src="assets/sq.jpg" alt="Nikolai Semenov"
+               onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='flex';">
+          <div class="avatar-fallback" id="avatarFallback">NS</div>
         </div>
-      </section>
+      </div>
+      <div class="hero-text">
+        <p class="eyebrow">Polymer Engineer</p>
+        <h1>Nikolai Semenov</h1>
+        <p class="role-line">R&amp;D, Process &amp; Technology Ownership</p>
+        <div class="meta-row">
+          <span class="meta-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.58 7-12A7 7 0 0 0 5 10c0 4.42 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            Belgrade, Serbia · open to relocation
+          </span>
+          <span class="meta-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11 11 0 0 0 3.4.55 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .55 3.4 1 1 0 0 1-.25 1Z"/></svg>
+            +381 62 147 5186
+          </span>
+          <a class="meta-item is-link" href="mailto:semenov.ne@gmail.com">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+            semenov.ne@gmail.com
+          </a>
+          <a class="meta-item is-link" href="https://www.linkedin.com/in/nikolay-semenov/" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            LinkedIn
+          </a>
+          <a class="meta-item is-link" href="https://scholar.google.ru/citations?user=QD5YQOMAAAAJ&hl=en" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            Google Scholar
+          </a>
+          <span class="meta-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg>
+            English (Professional) · Russian (Native)
+          </span>
+        </div>
+        <div class="target-roles">
+          <span class="chip chip-outline">Senior R&amp;D Engineer</span>
+          <span class="chip chip-outline">Principal Polymer Engineer</span>
+          <span class="chip chip-outline">Hands-on R&amp;D Manager</span>
+        </div>
+      </div>
+    </div>
+  </header>
 
-       <section class="section section--ai-apps">
-        <div class="section__text">
-        <div class="ai-apps">
-            <p class="ai-apps__headline"><span class="hand">Vibe</span>coding</p>
-            <p class="ai-apps__note">These are small, practical applications I built with ChatGPT to solve real problems in my daily technical work. I use them myself — for example, to generate QR codes, inspect FTIR spectra, and quickly work with data where existing tools are either too heavy or simply missing.</p>
-            <ol class="ai-apps__list">
-              <li><a href="https://github.com/ksider/IM-planner">Polymer scale-up Planner</a> — Research planner for different polymer manufacturing processes.</li>
-             <li><a href="https://nikolaysemenov.ru/ftir">FTIR viewer</a> — Infrared spectrometer spectrum viewer. Supports JCAMP-DX files and adds peaks to tables with tooltips.</li>
+  <main>
 
-             <li><a href="https://nikolaysemenov.ru/qr">QR-Generator-UI</a> — A single-page QR code generator with extensive styling controls, logo support, and shareable configuration links.</li>
-             <li><a href="https://nikolaysemenov.ru/polymers">Interactive-Plastic-Identification</a> — Follow the flowchart: answer the questions and compare your observations to narrow down possible plastics.</li>
-             <li><a href="https://github.com/ksider/Bly">Bly</a> — Offline badge generator for conferences and events — built to run entirely in your browser.</li>
-             <li><a href="https://nikolaysemenov.ru/pdf">PDF merger</a> — This is a small service that merges images into PDFs. There is also a <a href="https://github.com/ksider/PDF">version</a> with a server component that can merge Word and PDF files.</li>
-            
-            </ol>
+    <!-- SUMMARY -->
+    <section class="block" id="summary">
+      <div class="section-head"><span class="section-dot"></span><span class="section-label">Summary</span></div>
+      <div class="callout">
+        <p>Polymer Engineer specializing in taking difficult, highly filled, and processing-sensitive polymer systems from lab formulation to stable industrial production — proven across distinct material classes, from elastomers and silicones to biobased composites. <strong>18+ years</strong> developing polymer materials for compounding, extrusion and injection molding applications, with a consistent record of stabilizing narrow process windows for moisture-sensitive, highly filled, and otherwise unstable formulations that standard processing struggles with. PhD-level background in polymer rheology enables deep root-cause analysis of complex processing defects and formulation failures.</p>
+        <p>Track record spans rubber and elastomeric composites, silicone insulator formulations, fiber-reinforced and damping materials, and biobased/fiber-filled packaging systems — played key technical roles in <strong>10+ joint</strong> industrial–academic R&amp;D programs through to technology transfer, and delivering <strong>6+ biobased formulations</strong> from concept to pilot customer validation with measurable shelf-life extension in food-contact applications. Authored SOPs, validation protocols, and production-ready technical documentation, and advised client facilities on process start-up and stabilization. Practiced EU food-contact regulatory compliance (EU Reg. 10/2011, 1935/2004) in pilot customer documentation.</p>
+        <p>Pragmatic and hands-on, actively targeting Senior Individual Contributor (IC) or R&amp;D Manager roles — prioritizing complex processing challenges, lab-to-production scale-up, and immediate technical value over administrative management titles.</p>
+      </div>
+    </section>
+
+    <!-- CORE COMPETENCIES -->
+    <section class="block" id="competencies">
+      <div class="section-head"><span class="section-dot"></span><span class="section-label">Core Competencies</span></div>
+      <div class="tag-cloud">
+        <span class="tag-outline">Formulation &amp; compounding</span>
+        <span class="tag-outline">Process window stabilization &amp; scale-up</span>
+        <span class="tag-outline">Filled polymer systems &amp; composites</span>
+        <span class="tag-outline">Biobased &amp; biodegradable polymers (TPS, PBS, PBAT, PLA)</span>
+        <span class="tag-outline">Lab-to-production technology transfer</span>
+        <span class="tag-outline">Material characterization for QC</span>
+        <span class="tag-outline">Food-contact compliance support</span>
+        <span class="tag-outline">DoE &amp; root-cause analysis</span>
+        <span class="tag-outline">SOP authoring &amp; validation protocols</span>
+        <span class="tag-outline">Project &amp; technology ownership</span>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="block" id="experience">
+      <div class="section-head"><span class="section-dot"></span><span class="section-label">Experience</span></div>
+
+      <!-- Bpacks Lab -->
+      <article class="card">
+        <div class="card-top">
+          <h3 class="card-role">Bpacks Lab — Head of R&amp;D</h3>
+          <span class="date-chip">Jul 2023 – May 2026</span>
+        </div>
+        <p class="card-sub">Belgrade, Serbia</p>
+        <p class="card-tagline">Applied R&amp;D — biobased and fiber-filled polymer composites for food-contact packaging</p>
+        <p class="card-intro">Owned applied R&amp;D and product development for biobased and fiber-filled polymer composites destined for rigid food-contact packaging (trays, cups, lids), covering materials characterization of moisture-sensitive biopolymer systems through formulation, pilot validation, and industrial scale-up. Designed experimental programs combining laboratory work with pilot-line trials and prepared regulatory-facing technical documentation for pilot customers.</p>
+        <ul class="achv-list">
+          <li><a class="achv" onclick="openModal('m-bpacks-build')">Built the R&amp;D function from inception<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a> — set up the laboratory (equipment specification, supplier qualification, method validation) and recruited and led a <a class="achv" onclick="openModal('m-bpacks-team')">4-person team (2 PhDs, 2 engineers)<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>.</li>
+          <li><a class="achv" onclick="openModal('m-bpacks-formulations')">Developed and optimized<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5-6-3.5Z" fill="currentColor" stroke="none"/></svg></a> 6+ biobased and fiber-filled polymer formulations for rigid food-contact packaging (trays, cups, lids), advancing each from concept to pilot customer validation.</li>
+          <li>Extended fresh <a class="achv" onclick="openModal('m-bpacks-shelflife')">berry shelf life<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>  by 7 daysand <a class="achv" onclick="openModal('m-bpacks-shelflife-mushrooms')">mushroom shelf<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a> life by 4 days through targeted material selection and barrier packaging optimization, directly enabling customer <a class="achv" onclick="openModal('m-pincir-bio')">retail commercialization<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>.</li>
+          <li>Prepared material specifications, validation protocols, and production-oriented technical documentation for pilot customers in compliance with EU Regulation <a class="achv" href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32011R010">10/2011</a> and <a class="achv" href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32004R1935">1935/2004</a>.</li>
+          <li>Optimized tooling parameters and <a href="../PPP">processing windows</a>, cutting defect rates and enabling reliable output across extrusion and injection-molding platforms.</li>
+          <li>Examined structure–property relationships of moisture-sensitive polymer systems, with findings feeding directly into formulation decisions.</li>
+          <li>Performed manufacturability pre-screening of part geometry using Altair Inspire Mold (draft angle analysis, venting layout, air trap prediction) to validate formulation–process compatibility before issuing tooling specifications to mold designers.</li>
+        </ul>
+      </article>
+
+      <!-- Institute of Applied Mechanics -->
+      <article class="card">
+        <div class="card-top">
+          <h3 class="card-role">Institute of Applied Mechanics — Senior Researcher</h3>
+          <span class="date-chip">Jan 2008 – Mar 2023</span>
+        </div>
+        <p class="card-sub">Moscow, Russia · Polymer Materials Science</p>
+        <p class="card-tagline">15-year engineering career across formulation development, composite reinforcement, and industrial technology transfer</p>
+        <div class="progression">
+          <b class="progression_start">Lab Assistant (2008)</b><span class="sep">→</span><b class="progression_sec">Junior Researcher (2009)</b><span class="sep">→</span><b class="progression_third">Researcher (2013)</b><span class="sep">→</span><b  class="progression_last">Senior Researcher (2018)</b>
+        </div>
+        <p class="card-intro">Owned formulation and process development for filled polymer systems, elastomers, and composite materials over a 15-year tenure, contributed to 6+ joint industrial–academic R&amp;D programs from concept through technology transfer for commercial clients. Built and ran experimental programs to diagnose processing issues, optimize filler–matrix interactions, and translate material behavior into robust, production-ready formulations. Supervised technical staff and mentored junior engineers through project delivery.</p>
+        <ul class="achv-list">
+          <li><a class="achv" onclick="openModal('m-institute-smart')">Smart Materials Engineering<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>: developed field-responsive (electro- and magnetorheological) elastomer and suspension formulations for a semi-active vibration-control device program; supervised the experimental team and coordinated cross-group collaboration through to working prototypes. Optimized curing formulations for structural adhesives and industrial coatings to eliminate processing defects.</li>
+          <li><a class="achv" onclick="openModal('m-institute-organosilane')">Rubber &amp; Composite Formulation<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>: Developed reinforced rubber and elastomeric composite formulations, including surface activation and modification of natural and mineral fillers to meet target mechanical properties. Designed and implemented an organosilane-based surface-modification process for mineral fillers, including in-situ modification during milling, as lead engineer on a materials-development project.</li>
+          <li><strong>Process &amp; Quality Diagnostics:</strong> Used AFM and interferometric surface analysis to troubleshoot filler–matrix interactions in highly filled systems and resolve quality issues; applied the same diagnostic toolkit to root-cause analysis of impact-damaged materials on a project investigating failure mechanisms of protective screens.</li>
+          <li><strong>Industrial Silicone &amp; Composite Engineering:</strong> Directed development and scale-up of silicone insulator formulations, authoring full SOPs for production; formulated fiber-reinforced polymers and specialized elastomeric damping materials operating across a −50 °C to +30 °C range, including development of torsion dampers for overhead ultra-high-voltage power lines, with documentation prepared for industrial implementation.</li>
+          <li><strong>Biomedical Materials Engineering:</strong> Engineered core-shell magnetically responsive sorbent materials for <a class="achv" onclick="openModal('m-institute-sorbent')">selective target extraction<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a> and developed analytical workflows for bio-fluid processing and fractionation.</li>
+          <li><strong>Early-Career Materials Development:</strong> Developed and tested low-filled elastomer formulations containing carbon nanotubes and conducted probe-microscopy-based quality assessment of reinforcement performance in hyperelastic composites with low nanofiller content.</li>
+          <li><a class="achv" onclick="openModal('m-institute-technical-leadership')">Technical Leadership<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>: Supervised 6 MSc students and mentored junior researchers through applied project completion in polymer materials development; authored 15+ technical/peer-reviewed publications documenting formulation and process work.</li>
+        </ul>
+      </article>
+
+      <!-- BERЁZKA -->
+      <article class="card">
+        <div class="card-top">
+          <h3 class="card-role">BERЁZKA — Director of Innovation &amp; Co-Founder</h3>
+          <span class="date-chip">Jun 2020 – Mar 2023</span>
+        </div>
+        <p class="card-sub">Moscow, Russia · part-time, ~20% FTE</p>
+        <p class="card-tagline">Sustainable packaging startup — fully plant-based biodegradable composites</p>
+        <ul class="achv-list">
+          <li><a class="achv" onclick="openModal('m-berezka-co-founding')">Co-founded the venture and directed<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a> applied R&amp;D for a sustainable packaging startup, conducting research on fully biobased polymer composites for disposable, injection-molded materials including cups and tableware.</li>
+          <li> <a class="achv" onclick="openModal('m-berezka-degradation')">Studied degradation behavior</a> and environmental stability of plant-based polymer systems, including testing under saline-water exposure and real-use conditions, bridging experimental research with pilot-scale material validation.</li>
+          <li><a class="achv" onclick="openModal('m-berezka-mvp')">Delivered an MVP<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>  in <a class="achv" onclick="openModal('m-berezka-pilot')">pilot manufacturing<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>, positioning the company for commercial launch.</li>
+          <li>Formulated and optimized materials across 2+ processing platforms (injection molding, compounding), achieving consistent part quality at pilot scale.</li>
+          <li>Performed mold filling simulation using SolidWorks Plastics (flow analysis, weld line prediction, air trap identification) to validate material processability and generate technical specifications for mold designers.</li>
+        </ul>
+      </article>
+
+      <!-- Independent Consulting -->
+      <article class="card">
+        <div class="card-top">
+          <h3 class="card-role">Independent Consulting — Technology Consultant, Polymer Processing</h3>
+          <span class="date-chip">Feb 2018 – Dec 2021</span>
+        </div>
+        <p class="card-sub">Worldwide · remote, ~5% FTE, self-employed</p>
+        <ul class="achv-list">
+          <li>Advised 5+ SME clients on polymer compounding, extrusion, and injection-molding start-up and stabilization, diagnosing formulation and processing errors that were causing costly production instability.</li>
+          <li><a class="achv" onclick="openModal('m-consulting-line')">Launched and stabilized one industrial compounding line from equipment commissioning through first-article qualification<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>.</li>
+          <li>Developed 10+ custom polymer formulations (wood–plastic composites, recycled PVC, elastomers, silicones) tailored to specific processing constraints, reducing variability during early production runs.</li>
+          <li>Implemented quality control procedures and raw-material qualification workflows, establishing repeatable production standards across multiple client facilities.</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- TECHNICAL SKILLS -->
+    <section class="block" id="technical-skills">
+      <div class="section-head"><span class="section-dot"></span><span class="section-label">Technical Skills</span></div>
+
+      <div class="skill-group">
+        <p class="skill-group-label">Characterization</p>
+        <div>
+          <span class="badge badge--teal">Rheology (rotational, dynamic)</span>
+          <span class="badge badge--teal">DSC</span>
+          <span class="badge badge--teal">DMA</span>
+          <span class="badge badge--teal">Mechanical testing (ISO/ASTM)</span>
+          <span class="badge badge--teal">OTR / WVTR</span>
+          <span class="badge badge--teal">Microscopy (AFM, SEM, optical)</span>
+          <span class="badge badge--teal">Spectroscopy (FTIR, Raman)</span>
+          <span class="badge badge--teal">Interferometry</span>
+        </div>
       </div>
 
+      <div class="skill-group">
+        <p class="skill-group-label">Processing &amp; Scale-up</p>
+        <div>
+          <span class="badge badge--amber">Twin-screw compounding</span>
+          <span class="badge badge--amber">Extrusion</span>
+          <span class="badge badge--amber">Injection molding</span>
+          <span class="badge badge--amber">Thermoforming</span>
+          <span class="badge badge--amber">Lab-to-production transfer</span>
+          <span class="badge badge--amber">Process window stabilization</span>
+          <span class="badge badge--amber">Tooling optimization</span>
+          <span class="badge badge--amber">Industrial trials</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <p class="skill-group-label">Quality &amp; Compliance</p>
+        <div>
+          <span class="badge badge--moss">Food-contact materials (FCM)</span>
+          <span class="badge badge--moss">EU Reg. 10/2011</span>
+          <span class="badge badge--moss">EU Reg. 1935/2004</span>
+          <span class="badge badge--moss">PPWR</span>
+          <span class="badge badge--moss">Migration testing</span>
+          <span class="badge badge--moss">QC procedures</span>
+          <span class="badge badge--moss">Supplier qualification</span>
+          <span class="badge badge--moss">Material specifications</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <p class="skill-group-label">Methodology</p>
+        <div>
+          <span class="badge badge--plum">Design of Experiments (DoE)</span>
+          <span class="badge badge--plum">R scripting</span>
+          <span class="badge badge--plum">ANOVA</span>
+          <span class="badge badge--plum">FFD</span>
+          <span class="badge badge--plum">BBD</span>
+          <span class="badge badge--plum">Root-cause analysis</span>
+          <span class="badge badge--plum">Process troubleshooting</span>
+          <span class="badge badge--plum">Technical documentation</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <p class="skill-group-label">Software</p>
+        <div>
+          <span class="badge badge--slate">OriginPro</span>
+          <span class="badge badge--slate">Excel (advanced)</span>
+          <span class="badge badge--slate">Autodesk Fusion 360</span>
+          <span class="badge badge--slate">SolidWorks Plastics</span>
+          <span class="badge badge--slate">Altair Inspire Mold</span>
+          <span class="badge badge--slate">MATLAB</span>
+          <span class="badge badge--slate">COMSOL</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section class="block" id="education">
+      <div class="section-head"><span class="section-dot"></span><span class="section-label">Education</span></div>
+      <div class="edu-item">
+        <p class="edu-degree">PhD (Candidate of Science) — Mechanics of Fluid, Gas and Plasma (focus: Rheology)</p>
+        <p class="edu-inst">Institute of Applied Mechanics, Russian Academy of Sciences · Moscow, Russia · Sep 2009 – Aug 2013</p>
+        <p class="edu-thesis">Dissertation: "Rheology and Mechanics of Electrically Controlled Polyimide-Based Nanosuspensions"</p>
+      </div>
+      <div class="edu-item">
+        <p class="edu-degree">Engineer Degree (MSc equivalent) &amp; Bachelor — Material Science and Technology of New Materials</p>
+        <p class="edu-inst">Moscow State Academy of Fine Chemical Technology · Moscow, Russia · Sep 2003 – Feb 2009</p>
+        <p class="edu-thesis">Graduating work: "Study of Reinforcing Activity of Nanofillers of Different Nature According to the Data of Physical-Mechanical and Dynamic Tests"</p>
+      </div>
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section class="block" id="publications">
+      <div class="section-head"><span class="section-dot"></span><span class="section-label">Publications</span></div>
+      <p class="card-intro" style="margin-bottom:14px;">15+ peer-reviewed papers in applied polymer physics and rheology, documenting formulation and process development work (2012–2023).</p>
+      <div>
+        <a class="link-btn" href="https://scholar.google.ru/citations?user=QD5YQOMAAAAJ&hl=en" target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          Full list on Google Scholar
+        </a>
+        <a class="link-btn" href="https://www.researchgate.net/profile/Nikolay-Semenov" target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          ResearchGate profile
+        </a>
+      </div>
+    </section>
+
+    <!-- ADDITIONAL ACTIVITIES -->
+    <section class="block" id="additional">
+      <div class="section-head"><span class="section-dot"></span><span class="section-label">Additional Professional Activities</span></div>
+      <ul class="plain-list">
+        <li>Delivered applied training courses: "Rheology of Polymer Composites," "Introduction to Polymer Materials Science," and "Atomic Force Microscopy" (lectures and hands-on laboratory/practical sessions).</li>
+        <li>Supervised and mentored 6 MSc students in materials science and engineering through applied project completion.</li>
+        <li>Appointed Chair of the Graduation Examination Committee (MSc level) at a leading Russian technical university, 2022.</li>
+        <li>Long-term (2010–2022) member of the Technical and Program Committee of The All-Russian Scientific Conference with International Participation: "Mechanics of Composite Materials and Structures, Complex and Heterogeneous Media."</li>
+      </ul>
+    </section>
+
+    <!-- MEDIA -->
+    <section class="block" id="media">
+      <div class="section-head"><span class="section-dot"></span><span class="section-label">Industry Features &amp; Media</span></div>
+      <ul class="plain-list">
+        <li>"<a class="achv" onclick="openModal('m-media-feature')">Rigid Packaging from Bark<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>" — feature article, Bioplastics Magazine (2024).</li>
+        <li>Expert commentary on sustainable material alternatives featured in Plastics Today and Packaging Tech Today.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    <h2>Let's talk</h2>
+    <p>Open to relocation · Senior IC and hands-on R&amp;D Manager roles</p>
+    <div class="footer-links">
+      <a class="btn-primary" href="mailto:semenov.ne@gmail.com">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+        semenov.ne@gmail.com
+      </a>
+      <a class="link-btn" href="https://www.linkedin.com/in/nikolay-semenov/" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        LinkedIn
+      </a>
+    </div>
+  </footer>
+
 </div>
-      </section>
-    
 
-      <section class="section section--education">
-        <div class="section__media">
-          <div class="placeholder placeholder--tv" aria-hidden="true">
-            <img src="assets/tv.png" alt="" height="150px"/>
-          </div>
+<!-- ============ MODALS ============ -->
+<!-- BPACKS Modals-->
+<dialog id="m-bpacks-build">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">Bpacks Lab · 2023–2026</p>
+    <h3 class="modal-title">Building an R&amp;D function from zero</h3>
+    <div class="modal-visual">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="m3 17 5-5 4 4 3-3 6 6"/></svg>
+      <span>Photo / video placeholder — swap in a picture of the lab or the team here.</span>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Context</p>
+      <p>When this role began, there was no laboratory, no equipment, and no team — only a mandate to develop biobased packaging materials.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Approach</p>
+      <p>Specified and sourced lab equipment, qualified suppliers, and validated test methods before a single formulation trial could run. In parallel, recruited and led a 4-person team — two PhDs and two engineers — structured around characterization, formulation, and pilot-line support.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Result</p>
+      <p>A functioning, credentialed R&amp;D lab capable of running the full loop from raw-material screening to pilot customer validation, in place within the first months of the role.</p>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="m-bpacks-team">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">Bpacks Lab · 2023–2026</p>
+    <h3 class="modal-title">Team</h3>
+    <div class="modal-visual">
+<img src="assets/bpacks-team.jpg" alt="Bpacks Lab Team">
+    </div>
+    <!-- <div class="modal-section">
+      <p class="modal-section-label">Context</p>
+      <p>When this role began, there was no laboratory, no equipment, and no team — only a mandate to develop biobased packaging materials.</p>
+    </div> -->
+  </div>
+</dialog>
+
+
+<dialog id="m-bpacks-formulations" class="dialog-wide">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+ <p class="modal-label">Bpacks Lab · 2023–2026</p>
+    <h3 class="modal-title">Six-plus formulations, concept to pilot validation</h3>
+
+    <div class="modal-video">
+      <iframe
+        data-src="https://www.youtube.com/embed/I89GR3E850hj7qOF"
+        title="YouTube video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        loading="lazy"></iframe>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Context</p>
+      <p>Rigid food-contact packaging — trays, cups, lids — made from biobased and fiber-filled polymer composites, a materials class that is notoriously sensitive to moisture and processing conditions.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Approach</p>
+      <p>Ran parallel formulation programs combining lab-scale compounding trials with pilot-line runs, iterating on filler content, additive packages, and processing windows for each target application.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Result</p>
+      <p>Six-plus formulations carried from first concept through to validation with pilot customers, each cycle completed within roughly twelve months.</p>
+    </div>
+  </div>
+</dialog>
+
+
+
+<dialog id="m-bpacks-shelflife">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">Bpacks Lab · 2023–2026</p>
+    <h3 class="modal-title">7 extra days for berries</h3>
+    <div class="modal-visual">
+      <img src="assets/bpacks-shelflife-berries.jpg" alt="Fresh berries in packaging">
+    </div>
+    <!-- <div class="modal-section">
+      <p class="modal-section-label">Context</p>
+      <p>Fresh produce packaging lives or dies on shelf life — a few extra days of freshness can be the difference between a retail listing and a rejected pitch.</p>
+    </div> -->
+
+  </div>
+</dialog>
+
+<dialog id="m-bpacks-shelflife-mushrooms">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">Bpacks Lab · 2023–2026</p>
+    <h3 class="modal-title">4 extra days for mushrooms</h3>
+    <div class="modal-visual">
+      <img src="assets/bpacks-shelflife-mushrooms.jpg" alt="Fresh mushrooms in packaging">
+    </div>
+    <!-- <div class="modal-section">
+      <p class="modal-section-label">Context</p>
+      <p>Fresh produce packaging lives or dies on shelf life — a few extra days of freshness can be the difference between a retail listing and a rejected pitch.</p>
+    </div> -->
+
+  </div>
+</dialog>
+
+<dialog id="m-pincir-bio">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">Bpacks Lab · 2023–2026</p>
+    <h3 class="modal-title">Pincir Bio</h3>
+    <div class="modal-visual"><img src="assets/pb.jpg" alt="Pincir Bio"></div>
+    <div class="modal-section">
+      <p class="modal-section-label">Bio Resseller</p>
+      <p>Fresh produce packaging lives or dies on shelf life — a few extra days of freshness can be the difference between a retail listing and a rejected pitch.</p>
+      <p><a href="https://www.instagram.com/p/DN5NHdegotv/">Pincir Bio Instagram</a></p>
+    </div>
+  </div>
+</dialog>
+
+<!-- Institute of Applied Mechanics -->
+
+<dialog id="m-institute-smart">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">Institute of Applied Mechanics · 2008–2023</p>
+    <h3 class="modal-title">Fluids and elastomers that respond to a field</h3>
+    <div class="modal-visual">
+      <img src="assets/mt.png" alt="Photo / video placeholder — a prototype of the semi-active vibration-control device fits here." />
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Context</p>
+      <p>A semi-active vibration-control device needed a material that could change its mechanical behavior on command — the same underlying physics as the electrorheological nanosuspensions studied in the PhD, applied here to electro- and magnetorheological elastomers and suspensions.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Approach</p>
+      <p>Developed the field-responsive formulations, supervised the experimental team, and coordinated across groups through to working prototypes. Also optimized curing formulations for structural adhesives and industrial coatings to remove processing defects elsewhere in the same program.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Result</p>
+      <p>Working prototypes of a semi-active, field-tunable vibration-control device, plus defect-free curing processes carried into adjacent product lines.</p>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="m-institute-organosilane">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">Institute of Applied Mechanics · 2008–2023</p>
+    <h3 class="modal-title">Designing a surface-modification process for mineral fillers</h3>
+    <div class="modal-visual">
+<img src="assets/filler.png" alt="Photo / video placeholder — a filler or composite sample fits here." />
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Context</p>
+      <p>Reinforced rubber and elastomeric composites need their fillers to bond well with the surrounding matrix — untreated mineral fillers often don't.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Approach</p>
+      <p>Designed and implemented an organosilane-based surface-modification process, including in-situ modification during milling, as lead engineer on the project.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Result</p>
+      <p>Filler–matrix adhesion tuned to meet target mechanical properties, feeding directly into the reinforced rubber and composite formulations developed on the program.</p>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="m-institute-sorbent">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">Institute of Applied Mechanics · 2008–2023</p>
+    <h3 class="modal-title">From silicone insulators to torsion dampers on power lines</h3>
+    <div class="modal-visual">
+<img src="assets/sorbent.jpg" alt="Photo / video placeholder — a silicone insulator or torsion damper fits here." />
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Context</p>
+      <p>Two industrial product lines with very different demands: silicone insulator formulations for production, and elastomeric damping materials that needed to perform reliably from −50 °C to +30 °C.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Approach</p>
+      <p>Directed development and scale-up of the silicone insulator formulations, authoring full SOPs for production. Separately, formulated fiber-reinforced polymers and damping materials for torsion dampers on overhead ultra-high-voltage power lines, preparing documentation for industrial implementation.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Result</p>
+      <p>Production-ready silicone insulator SOPs and a cold-to-warm-rated torsion-damper material, both carried through to industrial use.</p>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="m-institute-technical-leadership">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">Institute of Applied Mechanics · 2008–2023</p>
+    <h3 class="modal-title">Mentoring and technical leadership</h3>
+    <div class="modal-visual">
+      <img src="assets/mentoring.jpg" alt="Photo / video placeholder — a mentoring or team photo fits here." />
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Result</p>
+      <p>6 MSc students successfully completed projects under supervision, and 15+ publications were authored, contributing to the body of knowledge in polymer materials science.</p>
+    </div>
+  </div>
+</dialog>
+
+  <dialog id="m-berezka-co-founding">
+    <div class="modal-inner">
+        <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+        </button>
+        <p class="modal-label">BERЁZKA · 2020–2023</p>
+        <h3 class="modal-title">MVP</h3>
+        <div class="modal-visual">
+<img src="images/beryozka-founding.jpg" alt="A photo of the MVP cup and tableware" />
         </div>
-    
-        <div class="section__text education">
-          <p class="education__item">
-            <span class="education__degree">PhD</span>
-            <span class="education__details">Mechanics of Fluid, Gas, and Plasma</span>
-          </p>
-          <p class="education__item">
-            <span class="education__degree">Engineer <span class="hand">&amp; BSc</span></span>
-            <span class="education__details">Materials Science and Technology of New Materials</span>
-          </p>
+        <div class="modal-section">
+        <p class="modal-section-label">Context</p>
+        <p>Co-founded a venture to develop and commercialize disposable tableware made entirely from plant-based, biodegradable composites.</p>
         </div>
-      </section>
+    </div>
+</dialog>
 
-      <section class="section section--social" id="contact">
-        <div class="section__text">
-          <div class="social">
-            <h2 class="social__title">Let’s stay in <span class="hand">touch</span></h2>
-            <p class="social__email">I’m just one email away → <a href="mailto:semenov.ne@gmail.com">semenov.ne@gmail.com</a>
-            </p>
-            <p class="social__description">
-              or catch me on socials:
-            </p>
-            <ul class="social__list" aria-label="Social media">
-              <li class="social__item">
-                <a class="social__link" href="https://www.linkedin.com/in/nikolay-semenov/" target="_blank" rel="noopener noreferrer">
-                  <svg class="social__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path
-                      d="M4.5 9h3.6v11H4.5zM6.3 4a2.1 2.1 0 110.02-4.2 2.1 2.1 0 01-0.02 4.2zM10.6 9h3.4v1.5h0.1c0.5-0.9 1.7-1.8 3.6-1.8 3.8 0 4.6 2.4 4.6 5.6V20h-3.6v-5c0-1.2-0.02-2.9-1.9-2.9-1.9 0-2.1 1.3-2.1 2.9V20h-3.6z"
-                    />
-                  </svg>
-                  <span class="sr-only">LinkedIn</span>
-                </a>
-              </li>
-              <li class="social__item">
-                <a class="social__link" href="https://github.com/ksider" target="_blank" rel="noopener noreferrer">
-                  <svg class="social__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path
-                      d="M12 0.3a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.4 1.1 3 .8.1-.6.4-1.1.7-1.3-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 016 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.9.1 3.2.8.9 1.2 2 1.2 3.3 0 4.5-2.7 5.5-5.3 5.8.4.3.7.9.7 1.8v2.6c0 .3.2.7.8.6A12 12 0 0012 .3z"
-                    />
-                  </svg>
-                  <span class="sr-only">GitHub</span>
-                </a>
-              </li>
-              <li class="social__item">
-                <a class="social__link" href="https://x.com/Ksider" target="_blank" rel="noopener noreferrer">
-                  <svg class="social__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path
-                      d="M21 6.8a6.3 6.3 0 01-1.8.5 3.2 3.2 0 001.4-1.7 6.4 6.4 0 01-2 0.8 3.2 3.2 0 00-5.5 2.2c0 .3 0 .6.1.9a9.1 9.1 0 01-6.6-3.3 3.2 3.2 0 001 4.3 3.2 3.2 0 01-1.5-.4v.1a3.2 3.2 0 002.6 3.1 3.2 3.2 0 01-1.5.1 3.2 3.2 0 002.9 2.1A6.5 6.5 0 013 17a9.1 9.1 0 004.9 1.4c5.9 0 9.1-4.9 9.1-9.1v-.4A6.5 6.5 0 0021 6.8z"
-                    />
-                  </svg>
-                  <span class="sr-only">Twitter</span>
-                </a>
-              </li>
-              <li class="social__item">
-                <a class="social__link" href="https://www.youtube.com/@SemenovNicolay" target="_blank" rel="noopener noreferrer">
-                  <svg class="social__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path
-                      d="M21.6 7.2a2.6 2.6 0 00-1.8-1.8C18 5 12 5 12 5s-6 0-7.8.4a2.6 2.6 0 00-1.8 1.8A27.3 27.3 0 002 12a27.3 27.3 0 00.4 4.8 2.6 2.6 0 001.8 1.8C6 19 12 19 12 19s6 0 7.8-.4a2.6 2.6 0 001.8-1.8A27.3 27.3 0 0022 12a27.3 27.3 0 00-.4-4.8zM10 15V9l5 3z"
-                    />
-                  </svg>
-                  <span class="sr-only">YouTube</span>
-                </a>
-              </li>
-              <li class="social__item">
-                <a class="social__link" href="https://t.me/nikolaysemenov" target="_blank" rel="noopener noreferrer">
-                  <svg class="social__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path
-                      d="M21.5 3.4l-19 8a1 1 0 00.1 1.9l4.8 1.5 2 6.3a1 1 0 001.7.4l2.8-3.6 5.1 3.7a1 1 0 001.6-.6l3-15a1 1 0 00-1.1-1.2zM9.2 17.2l-1-3.2 7.5-4.7-4.9 6.1 4.7 3.4z"
-                    />
-                  </svg>
-                  <span class="sr-only">Telegram</span>
-                </a>
-              </li>
-              <li class="social__item">
-                <a class="social__link" href="https://wa.me/79265749813" target="_blank" rel="noopener noreferrer">
-                  <svg class="social__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path
-                      d="M12.1 2a9.8 9.8 0 00-8.4 14.5L2.2 22l5.7-1.5A9.8 9.8 0 1012.2 2zm4.6 13.9c-.2.6-1.1 1-1.7 1-1.5.1-3-.5-4.1-1.4a6.5 6.5 0 01-2.4-3.4c-.1-.6 0-1.2.4-1.7.2-.2.5-.5.8-.4l1.1.5c.2.1.4.5.3.8l-.2.6c-.1.2 0 .4.1.6.4.6.9 1.1 1.6 1.4.2.1.4 0 .5-.1l.6-.8c.1-.2.4-.3.6-.2l1.3.5c.3.1.6.3.7.6.1.2.1.5 0 .7z"
-                    />
-                  </svg>
-                  <span class="sr-only">WhatsApp</span>
-                </a>
-              </li>
-            </ul>
-          </div>
+<dialog id="m-berezka-degradation">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">BERЁZKA · 2020–2023</p>
+    <h3 class="modal-title">Degradation Studies</h3>
+    <div class="modal-visual">
+<img src="images/beryozka-degradation.jpg" alt="A photo of the degradation study setup" />
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Context</p>
+      <p>Studied the degradation behavior and environmental stability of plant-based, biodegradable composites under saline-water exposure and real-use conditions.</p>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="m-berezka-mvp">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">BERЁZKA · 2020–2023</p>
+    <h3 class="modal-title">An MVP that survived pilot manufacturing</h3>
+    <div class="modal-visual">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="m3 17 5-5 4 4 3-3 6 6"/></svg>
+      <span>Photo / video placeholder — the cup / tableware MVP fits here.</span>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Context</p>
+      <p>BERЁZKA set out to prove that disposable tableware — cups, in particular — could be made entirely from plant-based, biodegradable composites at commercial quality.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Approach</p>
+      <p>Co-founded the venture and directed applied R&amp;D, studying degradation behavior and environmental stability under saline-water exposure and real-use conditions, then formulating and optimizing materials across injection molding and compounding.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Result</p>
+      <p>An MVP validated in pilot manufacturing with consistent part quality, positioning the company for commercial launch.</p>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="m-berezka-pilot">
+    <div class="modal-inner">
+        <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+        </button>
+        <p class="modal-label">BERЁZKA · 2020–2023</p>
+        <h3 class="modal-title">Pilot Manufacturing</h3>
+        <div class="modal-visual">
+<img src="images/beryozka-pilot.jpg" alt="A photo of the pilot manufacturing setup" />
         </div>
-        </section>
-     
-    </main>
-    <script>
-      (function () {
-        var previewImage = document.querySelector('.social__preview-image');
-        if (!previewImage) return;
+        <div class="modal-section">
+        <p class="modal-section-label">Context</p>
+        <p>BERЁZKA's MVP was validated in pilot manufacturing, demonstrating consistent part quality and positioning the company for commercial launch.</p>
+        </div>
 
-        var candidates = [
-          'assets/ipi/ipi1.png',
-          'assets/ipi/ipi2.png',
-          'assets/ipi/ipi3.png',
-          'assets/ipi/ipi4.png'
-        ];
+    </div>
+</dialog>
 
-        var choice = candidates[Math.floor(Math.random() * candidates.length)];
-        previewImage.src = choice;
-      })();
-    </script>
 
-    <!-- Yandex.Metrika counter -->   
-<script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(16681432, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/16681432" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
-<!-- /Yandex.Metrika counter -->
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-X25WXQ0818"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<dialog id="m-consulting-line">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">Independent Consulting · 2018–2021</p>
+    <h3 class="modal-title">Commissioning a compounding line, start to finish</h3>
+    <div class="modal-visual">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="m3 17 5-5 4 4 3-3 6 6"/></svg>
+      <span>Photo / video placeholder — the commissioned line fits here.</span>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Context</p>
+      <p>A client needed a new industrial compounding line to go from installed equipment to reliably producing acceptable parts — the gap between those two states is where most production timelines slip.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Approach</p>
+      <p>Worked through equipment commissioning, process set-up, and troubleshooting, carrying the line through to first-article qualification.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Result</p>
+      <p>One industrial compounding line launched and stabilized — part of a broader track record advising 5+ SME clients on compounding, extrusion, and injection-molding start-ups.</p>
+    </div>
+  </div>
+</dialog>
 
-  gtag('config', 'G-X25WXQ0818');
-</script>
-  </body>
+<dialog id="m-phd-dissertation">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">PhD Dissertation · 2013</p>
+    <h3 class="modal-title">Rheology of electrically controlled nanosuspensions</h3>
+    <div class="modal-visual">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="m3 17 5-5 4 4 3-3 6 6"/></svg>
+      <span>Photo / video placeholder — a rheometer flow curve or lab photo fits here.</span>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Context</p>
+      <p>Some suspensions of nanoscale particles can shift from behaving like a liquid to behaving like a near-solid in milliseconds, simply by switching on an electric field — a property called the electrorheological effect.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Approach</p>
+      <p>The dissertation examined how field strength, particle concentration, and flow conditions govern that transition in polyimide-based nanosuspensions, using rotational and dynamic rheometry to map the material's behavior under shear.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Why it stuck around</p>
+      <p>That same instinct — for how a material's internal structure governs its flow and processing behavior — carried forward into every role since, from stabilizing moisture-sensitive biopolymers to tuning field-responsive elastomers.</p>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="m-media-feature">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">Bioplastics Magazine · 2024</p>
+    <h3 class="modal-title">"Rigid Packaging from Bark"</h3>
+    <div class="modal-visual">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="m3 17 5-5 4 4 3-3 6 6"/></svg>
+      <span>Photo / video placeholder — a scan or photo of the magazine feature fits here.</span>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Context</p>
+      <p>A feature article on the bark-based rigid packaging work developed during the Bpacks Lab program.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Also featured in</p>
+      <p>Expert commentary on sustainable material alternatives in Plastics Today and Packaging Tech Today.</p>
+    </div>
+  </div>
+</dialog>
+
+ <script src="script.js"></script>
+</body>
 </html>

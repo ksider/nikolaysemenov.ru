@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV Components — сниппеты повторяющихся элементов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAFAF8; --paper-raised:#FFFFFF;
+    --ink:#1C1E1F; --ink-soft:#46494B; --slate:#6B7178;
+    --line:#E6E3DC; --line-strong:#D6D2C8;
+    --accent:#1F6F6B; --accent-dark:#154E4B; --accent-soft:#E3F0EF; --accent-soft-strong:#CDE5E3;
+    --amber:#9C6A2B; --amber-soft:#F3E9DB;
+    --moss:#6C7A52; --moss-soft:#EBEFE1;
+    --plum:#7C5C82; --plum-soft:#F1E8F2;
+    --slate-chip:#5B6570; --slate-soft:#EAEBE6;
+    --radius-sm:8px; --radius-md:14px; --radius-lg:22px;
+    --font-display:'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    --font-body:'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--font-body); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .page{ max-width:760px; margin:0 auto; padding:56px 24px 96px; }
+
+  .ref-header{ margin-bottom:40px; }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--accent-dark); margin:0 0 8px;
+  }
+  h1{
+    font-family:var(--font-display); font-weight:700; font-size:clamp(24px,4.2vw,32px);
+    line-height:1.15; margin:0 0 10px; letter-spacing:-.01em;
+  }
+  .ref-header p{ color:var(--ink-soft); font-size:14.5px; max-width:58ch; margin:0; }
+
+  /* ---- snippet card shell ---- */
+  section.demo{
+    background:var(--paper-raised); border:1px solid var(--line); border-radius:var(--radius-lg);
+    padding:22px 24px; margin-bottom:16px;
+  }
+  section.demo h2{
+    font-family:var(--font-display); font-size:16px; font-weight:600; margin:0 0 2px;
+    display:flex; align-items:center; gap:8px;
+  }
+  section.demo h2 .n{
+    font-family:var(--font-mono); font-size:12px; color:var(--slate); font-weight:500;
+  }
+  section.demo > p.desc{ color:var(--slate); font-size:13px; margin:2px 0 14px; }
+
+  .demo-live{
+    border:1.5px dashed var(--line-strong); border-radius:var(--radius-md);
+    padding:16px 18px; background:var(--paper); margin-bottom:12px;
+  }
+
+  .snippet-caption{
+    font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--slate); margin:12px 0 6px;
+  }
+  .snippet{
+    position:relative; background:#1C1E1F; color:#E7E5E0; border-radius:var(--radius-md);
+    padding:16px 46px 16px 18px; overflow-x:auto;
+  }
+  .snippet pre{ margin:0; }
+  .snippet code{ font-family:var(--font-mono); font-size:12px; line-height:1.6; white-space:pre; }
+  .copy-btn{
+    position:absolute; top:9px; right:9px; background:rgba(255,255,255,.08); color:#E7E5E0;
+    border:1px solid rgba(255,255,255,.18); border-radius:999px; padding:5px 11px;
+    font-size:11px; font-family:var(--font-body); font-weight:500; cursor:pointer; white-space:nowrap;
+  }
+  .copy-btn:hover{ background:rgba(255,255,255,.16); }
+  .copy-btn.copied{ background:var(--accent); border-color:var(--accent); color:#fff; }
+
+  .note{ font-size:12.5px; color:var(--slate); margin:8px 0 0; }
+  .note code{ font-family:var(--font-mono); font-size:11.5px; background:var(--slate-soft); padding:1px 5px; border-radius:4px; color:var(--ink-soft); }
+
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; border-radius:4px; }
+
+  /* ============ preview-only styles (already in the main CV file — not repeated as snippets) ============ */
+  dialog{
+    border:none; border-radius:var(--radius-lg); padding:0;
+    width:min(560px, calc(100% - 32px)); max-height:min(640px, 85vh);
+    box-shadow:0 24px 70px rgba(15,20,20,.22);
+  }
+  dialog.dialog-wide{ width:min(720px, calc(100% - 32px)); }
+  dialog::backdrop{ background:rgba(24,26,26,.5); backdrop-filter:blur(2px); }
+  .modal-inner{ padding:30px 30px 28px; overflow-y:auto; max-height:min(640px, 85vh); position:relative; }
+  .modal-close{
+    position:absolute; top:18px; right:18px; width:32px; height:32px; border-radius:50%;
+    border:1px solid var(--line); background:var(--paper-raised); color:var(--slate);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .modal-close:hover{ background:var(--slate-soft); }
+  .modal-label{
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--accent-dark); margin:0 0 8px;
+  }
+  .modal-title{ font-family:var(--font-display); font-weight:600; font-size:21px; margin:0 0 18px; padding-right:30px; }
+  .modal-section{ margin-bottom:14px; }
+  .modal-section:last-child{ margin-bottom:0; }
+  .modal-section-label{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--slate); margin:0 0 4px;
+  }
+  .modal-section p{ margin:0; font-size:14.5px; color:var(--ink-soft); }
+  .modal-visual{
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    border:1.5px dashed var(--line-strong); border-radius:var(--radius-md); padding:24px;
+    color:var(--slate); background:var(--paper); margin-bottom:20px; text-align:center; overflow:hidden;
+  }
+  .modal-visual svg{ color:var(--line-strong); }
+  .modal-visual span{ font-size:12.5px; max-width:320px; }
+  .modal-visual img, .modal-visual video{
+    display:block; width:100%; max-height:280px; object-fit:cover; border-radius:calc(var(--radius-md) - 4px);
+  }
+  .modal-visual:has(img), .modal-visual:has(video){
+    border-style:solid; border-color:var(--line); background:var(--paper-raised); padding:0;
+  }
+  .modal-video{ width:100%; aspect-ratio:16/9; border-radius:calc(var(--radius-md) - 4px); overflow:hidden; margin-bottom:20px; background:#000; }
+  .modal-video iframe{ width:100%; height:100%; border:0; display:block; }
+
+  ul.achv-list{ margin:0; padding:0; list-style:none; }
+  ul.achv-list li{ position:relative; padding-left:18px; margin-bottom:8px; font-size:15px; color:var(--ink-soft); }
+  ul.achv-list li:last-child{ margin-bottom:0; }
+  ul.achv-list li::before{ content:''; position:absolute; left:2px; top:9px; width:4px; height:4px; border-radius:50%; background:var(--line-strong); }
+  .achv{
+    background:transparent; border:none; padding:0; margin:0; font:inherit; font-weight:500;
+    color:var(--accent-dark); border-bottom:1.5px dashed var(--accent); cursor:pointer;
+    text-align:left; display:inline; line-height:inherit; transition:background-color .15s ease;
+  }
+  .achv:hover{ background:var(--accent-soft); border-bottom-style:solid; }
+  .achv svg{ vertical-align:-1px; margin-left:2px; }
+
+  .badge{ display:inline-block; padding:6px 11px; border-radius:999px; font-size:13.5px; font-weight:500; margin:0 8px 8px 0; }
+  .badge--teal{ background:var(--accent-soft); color:var(--accent-dark); }
+  .badge--amber{ background:var(--amber-soft); color:var(--amber); }
+  .badge--moss{ background:var(--moss-soft); color:var(--moss); }
+  .badge--plum{ background:var(--plum-soft); color:var(--plum); }
+  .badge--slate{ background:var(--slate-soft); color:var(--slate-chip); }
+
+  .tag-outline{
+    display:inline-block; padding:9px 14px; border-radius:var(--radius-sm);
+    border:1px solid var(--accent-soft-strong); background:var(--paper-raised);
+    color:var(--accent-dark); font-size:14px; font-weight:500;
+  }
+  .chip{ display:inline-flex; align-items:center; gap:6px; font-size:13px; line-height:1; padding:7px 12px; border-radius:999px; font-family:var(--font-body); font-weight:500; }
+  .chip-outline{ border:1px solid var(--line-strong); color:var(--ink-soft); background:transparent; }
+
+  .section-head{ display:flex; align-items:center; gap:10px; }
+  .section-dot{ width:7px; height:7px; border-radius:50%; background:var(--accent); flex:0 0 auto; }
+  .section-label{ font-family:var(--font-mono); font-size:12.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--slate); }
+  .section-head::after{ content:''; flex:1 1 auto; height:1px; background:var(--line); }
+
+  .card{
+    background:var(--paper-raised); border:1px solid var(--line); border-radius:var(--radius-lg);
+    padding:22px 24px; box-shadow:0 1px 2px rgba(20,20,20,.04);
+  }
+  .card-top{ display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:2px; }
+  .card-role{ font-family:var(--font-display); font-weight:600; font-size:18px; margin:0; }
+  .date-chip{ font-family:var(--font-mono); font-size:12.5px; color:var(--slate); background:var(--slate-soft); padding:5px 10px; border-radius:999px; white-space:nowrap; }
+  .card-sub{ font-size:14px; color:var(--slate); margin:0 0 6px; }
+  .card-tagline{ font-style:italic; color:var(--ink-soft); font-size:14.5px; margin:0 0 14px; }
+  .card-intro{ color:var(--ink-soft); font-size:15px; margin:0 0 16px; }
+
+  .progression{
+    display:flex; flex-wrap:wrap; align-items:center; gap:6px; font-family:var(--font-mono); font-size:12px;
+    color:var(--slate); padding:10px 14px; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-sm);
+  }
+  .progression b{ color:var(--ink-soft); font-weight:500; }
+  .progression .sep{ color:var(--line-strong); }
+
+  .edu-degree{ font-family:var(--font-display); font-weight:600; font-size:16px; margin:0 0 3px; }
+  .edu-inst{ font-size:14px; color:var(--slate); margin:0 0 6px; }
+  .edu-thesis{ font-size:14.5px; color:var(--ink-soft); font-style:italic; margin:0; }
+
+  .link-btn{
+    display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:500; color:var(--accent-dark);
+    text-decoration:none; padding:9px 14px; border:1px solid var(--accent-soft-strong); border-radius:var(--radius-sm);
+  }
+  .link-btn:hover{ background:var(--accent-soft); }
+
+  .meta-item{ display:inline-flex; align-items:center; gap:6px; font-size:14px; color:var(--ink-soft); text-decoration:none; }
+  .meta-item svg{ color:var(--slate); flex:0 0 auto; }
+  .meta-item.is-link{ color:var(--accent-dark); }
+  .meta-item.is-link svg{ color:var(--accent-dark); }
+  .meta-item.is-link:hover{ text-decoration:underline; }
+
+  @media (max-width:600px){
+    .page{ padding:40px 18px 72px; }
+    section.demo{ padding:18px 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="ref-header">
+    <p class="eyebrow">CV Components</p>
+    <h1>Сниппеты повторяющихся элементов</h1>
+    <p>Базовые стили уже есть в основном файле CV — здесь только сами блоки: превью вживую + код для копирования.</p>
+  </header>
+
+  <!-- 1 -->
+  <section class="demo">
+    <h2>Achievement — обычный пункт<span class="n">без попапа</span></h2>
+    <div class="demo-live">
+      <ul class="achv-list"><li>Обычный пункт списка — просто факт, без попапа.</li></ul>
+    </div>
+    <div class="snippet">
+      <button class="copy-btn" onclick="copySnippet(this)">Копировать</button>
+      <pre><code>&lt;li&gt;Текст обычного пункта — без попапа.&lt;/li&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="demo">
+    <h2>Achievement — текстовый попап<span class="n">Context / Approach / Result</span></h2>
+    <div class="demo-live">
+      <ul class="achv-list">
+        <li><button class="achv" onclick="openModal('demo-text')">короткое пояснение к достижению<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></button>.</li>
+      </ul>
+    </div>
+    <div class="snippet">
+      <button class="copy-btn" onclick="copySnippet(this)">Копировать</button>
+      <pre><code>&lt;li&gt;&lt;button class="achv" onclick="openModal('m-example-text')"&gt;короткое пояснение к достижению
+  &lt;svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M7 17 17 7M9 7h8v8"/&gt;&lt;/svg&gt;
+&lt;/button&gt;.&lt;/li&gt;
+
+&lt;dialog id="m-example-text"&gt;
+  &lt;div class="modal-inner"&gt;
+    &lt;button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close"&gt;
+      &lt;svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"&gt;&lt;path d="M5 5l14 14M19 5 5 19"/&gt;&lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;p class="modal-label"&gt;Метка · Год&lt;/p&gt;
+    &lt;h3 class="modal-title"&gt;Заголовок достижения&lt;/h3&gt;
+    &lt;div class="modal-section"&gt;
+      &lt;p class="modal-section-label"&gt;Context&lt;/p&gt;
+      &lt;p&gt;...&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="modal-section"&gt;
+      &lt;p class="modal-section-label"&gt;Approach&lt;/p&gt;
+      &lt;p&gt;...&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="modal-section"&gt;
+      &lt;p class="modal-section-label"&gt;Result&lt;/p&gt;
+      &lt;p&gt;...&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/dialog&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="demo">
+    <h2>Achievement — попап с фото</h2>
+    <div class="demo-live">
+      <ul class="achv-list">
+        <li><button class="achv" onclick="openModal('demo-photo')">короткое пояснение к достижению<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></button>.</li>
+      </ul>
+    </div>
+    <div class="snippet">
+      <button class="copy-btn" onclick="copySnippet(this)">Копировать</button>
+      <pre><code>&lt;li&gt;&lt;button class="achv" onclick="openModal('m-example-photo')"&gt;короткое пояснение к достижению
+  &lt;svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M7 17 17 7M9 7h8v8"/&gt;&lt;/svg&gt;
+&lt;/button&gt;.&lt;/li&gt;
+
+&lt;dialog id="m-example-photo"&gt;
+  &lt;div class="modal-inner"&gt;
+    &lt;button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close"&gt;
+      &lt;svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"&gt;&lt;path d="M5 5l14 14M19 5 5 19"/&gt;&lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;p class="modal-label"&gt;Метка · Год&lt;/p&gt;
+    &lt;h3 class="modal-title"&gt;Заголовок достижения&lt;/h3&gt;
+    &lt;div class="modal-visual"&gt;
+      &lt;img src="pb.jpg" alt="Краткое описание фото"&gt;
+    &lt;/div&gt;
+    &lt;div class="modal-section"&gt;
+      &lt;p class="modal-section-label"&gt;Context&lt;/p&gt;
+      &lt;p&gt;...&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/dialog&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="demo">
+    <h2>Achievement — попап с видео<span class="n">YouTube</span></h2>
+    <div class="demo-live">
+      <ul class="achv-list">
+        <li><button class="achv" onclick="openModal('demo-video')">короткое пояснение к достижению<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5-6-3.5Z" fill="currentColor" stroke="none"/></svg></button>.</li>
+      </ul>
+    </div>
+    <div class="snippet">
+      <button class="copy-btn" onclick="copySnippet(this)">Копировать</button>
+      <pre><code>&lt;li&gt;&lt;button class="achv" onclick="openModal('m-example-video')"&gt;короткое пояснение к достижению
+  &lt;svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"&gt;
+    &lt;circle cx="12" cy="12" r="9"/&gt;
+    &lt;path d="M10 8.5v7l6-3.5-6-3.5Z" fill="currentColor" stroke="none"/&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;.&lt;/li&gt;
+
+&lt;dialog id="m-example-video" class="dialog-wide"&gt;
+  &lt;div class="modal-inner"&gt;
+    &lt;button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close"&gt;
+      &lt;svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"&gt;&lt;path d="M5 5l14 14M19 5 5 19"/&gt;&lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;p class="modal-label"&gt;Метка · Год&lt;/p&gt;
+    &lt;h3 class="modal-title"&gt;Заголовок достижения&lt;/h3&gt;
+    &lt;div class="modal-video"&gt;
+      &lt;iframe
+        data-src="https://www.youtube.com/embed/VIDEO_ID"
+        title="YouTube video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        loading="lazy"&gt;&lt;/iframe&gt;
+    &lt;/div&gt;
+    &lt;div class="modal-section"&gt;
+      &lt;p class="modal-section-label"&gt;Context&lt;/p&gt;
+      &lt;p&gt;...&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/dialog&gt;</code></pre>
+    </div>
+    <p class="note">Замени <code>VIDEO_ID</code> на ID своего видео (часть ссылки после <code>v=</code>).</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="demo">
+    <h2>Skill badge<span class="n">Technical Skills — цветные бейджи</span></h2>
+    <div class="demo-live">
+      <span class="badge badge--teal">Rheology</span>
+      <span class="badge badge--amber">Extrusion</span>
+      <span class="badge badge--moss">EU Reg. 10/2011</span>
+      <span class="badge badge--plum">DoE</span>
+      <span class="badge badge--slate">OriginPro</span>
+    </div>
+    <div class="snippet">
+      <button class="copy-btn" onclick="copySnippet(this)">Копировать</button>
+      <pre><code>&lt;span class="badge badge--teal"&gt;Навык&lt;/span&gt;
+&lt;span class="badge badge--amber"&gt;Навык&lt;/span&gt;
+&lt;span class="badge badge--moss"&gt;Навык&lt;/span&gt;
+&lt;span class="badge badge--plum"&gt;Навык&lt;/span&gt;
+&lt;span class="badge badge--slate"&gt;Навык&lt;/span&gt;</code></pre>
+    </div>
+    <p class="note">teal — Characterization, amber — Processing &amp; Scale-up, moss — Quality &amp; Compliance, plum — Methodology, slate — Software.</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="demo">
+    <h2>Core Competency chip<span class="n">контурный тег</span></h2>
+    <div class="demo-live">
+      <span class="tag-outline">Formulation &amp; compounding</span>
+    </div>
+    <div class="snippet">
+      <button class="copy-btn" onclick="copySnippet(this)">Копировать</button>
+      <pre><code>&lt;span class="tag-outline"&gt;Текст компетенции&lt;/span&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="demo">
+    <h2>Target role chip<span class="n">шапка страницы</span></h2>
+    <div class="demo-live">
+      <span class="chip chip-outline">Senior R&amp;D Engineer</span>
+    </div>
+    <div class="snippet">
+      <button class="copy-btn" onclick="copySnippet(this)">Копировать</button>
+      <pre><code>&lt;span class="chip chip-outline"&gt;Название роли&lt;/span&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="demo">
+    <h2>Section header<span class="n">заголовок секции</span></h2>
+    <div class="demo-live">
+      <div class="section-head"><span class="section-dot"></span><span class="section-label">Section Name</span></div>
+    </div>
+    <div class="snippet">
+      <button class="copy-btn" onclick="copySnippet(this)">Копировать</button>
+      <pre><code>&lt;div class="section-head"&gt;&lt;span class="section-dot"&gt;&lt;/span&gt;&lt;span class="section-label"&gt;Название секции&lt;/span&gt;&lt;/div&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="demo">
+    <h2>Experience card<span class="n">целиком, для новой позиции</span></h2>
+    <div class="demo-live">
+      <article class="card">
+        <div class="card-top">
+          <h3 class="card-role">Компания — Должность</h3>
+          <span class="date-chip">Мес. Год – Мес. Год</span>
+        </div>
+        <p class="card-sub">Город, страна</p>
+        <p class="card-tagline">Одна строка — суть роли</p>
+        <p class="card-intro">Вводный абзац: зону ответственности и контекст роли, 2-4 предложения.</p>
+        <ul class="achv-list">
+          <li>Обычное достижение без попапа.</li>
+          <li><button class="achv" onclick="openModal('demo-text')">достижение с попапом — детали по клику<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></button>.</li>
+        </ul>
+      </article>
+    </div>
+    <div class="snippet">
+      <button class="copy-btn" onclick="copySnippet(this)">Копировать</button>
+      <pre><code>&lt;article class="card"&gt;
+  &lt;div class="card-top"&gt;
+    &lt;h3 class="card-role"&gt;Компания — Должность&lt;/h3&gt;
+    &lt;span class="date-chip"&gt;Мес. Год – Мес. Год&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;p class="card-sub"&gt;Город, страна&lt;/p&gt;
+  &lt;p class="card-tagline"&gt;Одна строка — суть роли&lt;/p&gt;
+  &lt;p class="card-intro"&gt;Вводный абзац: зона ответственности и контекст, 2-4 предложения.&lt;/p&gt;
+  &lt;ul class="achv-list"&gt;
+    &lt;li&gt;Обычное достижение без попапа.&lt;/li&gt;
+    &lt;li&gt;&lt;button class="achv" onclick="openModal('m-id')"&gt;достижение с попапом&lt;/button&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/article&gt;</code></pre>
+    </div>
+    <p class="note">Достижения внутри — любой из вариантов 1–4 выше (обычный / текст / фото / видео).</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="demo">
+    <h2>Progression breadcrumb<span class="n">карьерная лесенка внутри одной компании</span></h2>
+    <div class="demo-live">
+      <div class="progression"><b>Позиция 1 (год)</b><span class="sep">→</span><b>Позиция 2 (год)</b><span class="sep">→</span><b>Позиция 3 (год)</b></div>
+    </div>
+    <div class="snippet">
+      <button class="copy-btn" onclick="copySnippet(this)">Копировать</button>
+      <pre><code>&lt;div class="progression"&gt;
+  &lt;b&gt;Позиция 1 (год)&lt;/b&gt;&lt;span class="sep"&gt;→&lt;/span&gt;
+  &lt;b&gt;Позиция 2 (год)&lt;/b&gt;&lt;span class="sep"&gt;→&lt;/span&gt;
+  &lt;b&gt;Позиция 3 (год)&lt;/b&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="demo">
+    <h2>Education item</h2>
+    <div class="demo-live">
+      <p class="edu-degree">Степень — Специальность</p>
+      <p class="edu-inst">Университет · Город · Мес. Год – Мес. Год</p>
+      <p class="edu-thesis">Тема работы: "..."</p>
+    </div>
+    <div class="snippet">
+      <button class="copy-btn" onclick="copySnippet(this)">Копировать</button>
+      <pre><code>&lt;div class="edu-item"&gt;
+  &lt;p class="edu-degree"&gt;Степень — Специальность&lt;/p&gt;
+  &lt;p class="edu-inst"&gt;Университет · Город · Мес. Год – Мес. Год&lt;/p&gt;
+  &lt;p class="edu-thesis"&gt;Тема работы: "..."&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="demo">
+    <h2>Link button<span class="n">внешняя ссылка</span></h2>
+    <div class="demo-live">
+      <a class="link-btn" href="#" onclick="return false;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        Текст ссылки
+      </a>
+    </div>
+    <div class="snippet">
+      <button class="copy-btn" onclick="copySnippet(this)">Копировать</button>
+      <pre><code>&lt;a class="link-btn" href="https://..." target="_blank" rel="noopener"&gt;
+  &lt;svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M7 17 17 7M9 7h8v8"/&gt;&lt;/svg&gt;
+  Текст ссылки
+&lt;/a&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="demo">
+    <h2>Contact meta item<span class="n">иконка + текст, шапка</span></h2>
+    <div class="demo-live">
+      <span class="meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg>
+        Обычный текст
+      </span>
+      &nbsp;&nbsp;
+      <a class="meta-item is-link" href="#" onclick="return false;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+        Кликабельная ссылка
+      </a>
+    </div>
+    <div class="snippet">
+      <button class="copy-btn" onclick="copySnippet(this)">Копировать</button>
+      <pre><code>&lt;!-- обычный текст (не ссылка) --&gt;
+&lt;span class="meta-item"&gt;
+  &lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"&gt;...&lt;/svg&gt;
+  Текст
+&lt;/span&gt;
+
+&lt;!-- кликабельная ссылка (mailto, tel, https) --&gt;
+&lt;a class="meta-item is-link" href="mailto:..."&gt;
+  &lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"&gt;...&lt;/svg&gt;
+  Текст
+&lt;/a&gt;</code></pre>
+    </div>
+  </section>
+
+</div>
+
+<!-- рабочие попапы для живых примеров -->
+<dialog id="demo-text">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">Bpacks Lab · 2024</p>
+    <h3 class="modal-title">Пример: 7 дней к сроку хранения ягод</h3>
+    <div class="modal-section">
+      <p class="modal-section-label">Context</p>
+      <p>Срок хранения решает, попадёт ли упаковка на полку ритейлера.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Approach</p>
+      <p>Подбор материала совместили с оптимизацией барьерных свойств упаковки.</p>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Result</p>
+      <p>+7 дней для ягод и +4 дня для грибов.</p>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="demo-photo">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">Демо · фото</p>
+    <h3 class="modal-title">Как фото ложится в рамку</h3>
+    <div class="modal-visual">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='280'%3E%3Crect width='560' height='280' fill='%23E3F0EF'/%3E%3Ccircle cx='280' cy='110' r='52' fill='%23CDE5E3'/%3E%3Ctext x='280' y='210' font-family='monospace' font-size='15' fill='%23154E4B' text-anchor='middle'%3Eexample-photo.jpg%3C/text%3E%3C/svg%3E" alt="Пример фото-заглушки">
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Context</p>
+      <p>Заглушка — в реальном попапе здесь будет твоя фотография.</p>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="demo-video" class="dialog-wide">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <p class="modal-label">Демо · видео</p>
+    <h3 class="modal-title">Как встраивается видео с YouTube</h3>
+    <div class="modal-video">
+      <iframe
+        data-src="https://www.youtube.com/embed/jNQXAC9IVRw"
+        title="YouTube video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        loading="lazy"></iframe>
+    </div>
+    <div class="modal-section">
+      <p class="modal-section-label">Context</p>
+      <p>Видео подгружается при открытии попапа и останавливается при закрытии.</p>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  function openModal(id){
+    var d = document.getElementById(id);
+    if (!d) return;
+    d.querySelectorAll('iframe[data-src]').forEach(function(f){ if (!f.src) f.src = f.dataset.src; });
+    if (typeof d.showModal === 'function') d.showModal();
+  }
+  document.querySelectorAll('dialog').forEach(function(d){
+    d.addEventListener('click', function(e){
+      var r = d.getBoundingClientRect();
+      var inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      if (!inside) d.close();
+    });
+    d.addEventListener('close', function(){
+      d.querySelectorAll('iframe[data-src]').forEach(function(f){ f.src = ''; });
+    });
+  });
+
+  function copySnippet(btn){
+    var code = btn.parentElement.querySelector('code');
+    var text = code.textContent;
+    function done(){
+      var original = btn.textContent;
+      btn.textContent = 'Скопировано ✓';
+      btn.classList.add('copied');
+      setTimeout(function(){ btn.textContent = original; btn.classList.remove('copied'); }, 1600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text, done); });
+    } else {
+      fallbackCopy(text, done);
+    }
+  }
+  function fallbackCopy(text, cb){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(ta);
+    cb();
+  }
+</script>
+</body>
+</html>

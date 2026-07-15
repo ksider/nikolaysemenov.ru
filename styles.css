@@ -93,6 +93,14 @@
     font-size:32px;
     color:var(--accent-dark);
   }
+  .ava-row{
+    display:flex;
+    flex-wrap:wrap;
+    align-items: center;
+    justify-content: center;
+    gap:8px 18px;
+    /* margin-bottom:20px; */
+  }
   .hero-text{ flex:1 1 auto; min-width:0; }
   .eyebrow{
     font-family:var(--font-mono);
@@ -244,7 +252,7 @@
     justify-content:space-between;
     align-items:baseline;
     gap:16px;
-    flex-wrap:wrap;
+    flex-wrap:nowrap;
     margin-bottom:2px;
   }
   .card-role{

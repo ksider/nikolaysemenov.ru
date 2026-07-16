@@ -1,3 +1,28 @@
+function openModal(id){
+  var d = document.getElementById(id);
+  if (!d) return;
+  d.querySelectorAll('iframe[data-src]').forEach(function(f){
+    if (!f.src) f.src = f.dataset.src;
+  });
+  if (typeof d.showModal === 'function') d.showModal();
+}
+
+document.querySelectorAll('dialog').forEach(function(d){
+  d.addEventListener('close', function(){
+    d.querySelectorAll('iframe[data-src]').forEach(function(f){
+      f.src = ''; // остановить видео при закрытии
+    });
+  });
+
+  // клик по фону (вне modal-inner) закрывает попап
+  d.addEventListener('click', function(e){
+    var r = d.getBoundingClientRect();
+    var inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+    if (!inside) d.close();
+  });
+});
+
+
 (function(){
   var nav = document.getElementById('sideNav');
   if (!nav) return;
@@ -24,59 +49,69 @@
   });
 
   var links = nav.querySelectorAll('a');
-  var isScrolling = false;           // ← новый флаг
-  var activeLinkDuringScroll = null; // ← запоминаем, какой пункт должен светиться
+
+  function setActive(link){
+    links.forEach(function(l){ l.classList.remove('active'); });
+    if (link) link.classList.add('active');
+  }
+
+  // --- подавляем обсервер только на время самого скролла после клика ---
+  var isManualScroll = false;
+  var settleTimer = null;
+  var hardCapTimer = null;
+
+  function releaseManualScroll(){
+    isManualScroll = false;
+    clearTimeout(settleTimer);
+    clearTimeout(hardCapTimer);
+  }
+
+  links.forEach(function(link){
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+
+      var id = link.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+
+      isManualScroll = true;
+      setActive(link);
+
+      // скроллим так, чтобы верх блока оказался ровно в центре экрана —
+      // то есть там же, где его "читает" IntersectionObserver ниже
+      var rect = target.getBoundingClientRect();
+      var targetY = rect.top + window.scrollY - window.innerHeight * 0.5;
+      window.scrollTo({ top: Math.max(targetY, 0), behavior: 'smooth' });
+
+      if (history.pushState) history.pushState(null, '', '#' + id);
+
+      // сброс, как только скролл реально остановился
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(releaseManualScroll, 150);
+
+      // страховка: даже если событий scroll не будет вовсе (клик по уже
+      // видимому разделу) — подавление снимется само и обсервер не зависнет
+      clearTimeout(hardCapTimer);
+      hardCapTimer = setTimeout(releaseManualScroll, 1500);
+    });
+  });
+
+  window.addEventListener('scroll', function(){
+    if (!isManualScroll) return;
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(releaseManualScroll, 150);
+  }, { passive: true });
 
   var observer = new IntersectionObserver(function(entries){
-    if (isScrolling) return; // во время программного скролла игнорируем обсервер
-
+    if (isManualScroll) return;
     entries.forEach(function(entry){
       var link = nav.querySelector('a[href="#' + entry.target.id + '"]');
       if (!link) return;
-
       if (entry.isIntersecting){
-        links.forEach(function(l){ l.classList.remove('active'); });
-        link.classList.add('active');
+        setActive(link);
       }
     });
   }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
 
   sections.forEach(function(sec){ observer.observe(sec); });
-
-  // === Обработка кликов по пунктам меню ===
-  nav.addEventListener('click', function(e){
-    var link = e.target.closest('a');
-    if (!link) return;
-
-    var targetId = link.getAttribute('href').slice(1);
-    var targetSection = document.getElementById(targetId);
-    if (!targetSection) return;
-
-    isScrolling = true;
-    activeLinkDuringScroll = link;
-
-    // сразу подсвечиваем кликнутый пункт
-    links.forEach(function(l){ l.classList.remove('active'); });
-    link.classList.add('active');
-
-    // плавный скролл
-    targetSection.scrollIntoView({ behavior: 'smooth' });
-
-    // определяем, когда скролл реально закончился
-    var scrollTimeout;
-    function checkScrollEnd(){
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(function(){
-        if (window.pageYOffset + window.innerHeight >= document.documentElement.scrollHeight - 10 ||
-            Math.abs(targetSection.getBoundingClientRect().top) < 50) { // достаточно близко
-          
-          isScrolling = false;
-          activeLinkDuringScroll = null;
-          window.removeEventListener('scroll', checkScrollEnd);
-        }
-      }, 150);
-    }
-
-    window.addEventListener('scroll', checkScrollEnd, { passive: true });
-  });
 })();

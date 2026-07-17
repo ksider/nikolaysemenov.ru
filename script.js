@@ -115,3 +115,21 @@ document.querySelectorAll('dialog').forEach(function(d){
 
   sections.forEach(function(sec){ observer.observe(sec); });
 })();
+
+document.addEventListener('click', function(e){
+  var img = e.target.closest('.modal-visual img');
+  if (!img) return;
+
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  if (!lightbox || !lightboxImg) return;
+
+  lightboxImg.src = img.src;
+  lightboxImg.alt = img.alt || '';
+  lightbox.showModal();
+});
+
+// клик на увеличенной картинке в лайтбоксе — закрывает именно лайтбокс
+document.getElementById('lightboxImg').addEventListener('click', function(){
+  document.getElementById('lightbox').close();
+});

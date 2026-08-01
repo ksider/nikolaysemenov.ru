@@ -106,7 +106,9 @@
     gap:8px 18px;
     /* margin-bottom:20px; */
   }
-  .hero-text{ flex:1 1 auto; min-width:0; }
+  .hero-text{ 
+    margin-top: 60px;
+    flex:1 1 auto; min-width:0; }
   .eyebrow{
     font-family:var(--font-mono);
     font-size:12.5px;

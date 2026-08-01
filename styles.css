@@ -65,7 +65,7 @@
     flex:0 0 auto;
     width:250px; height:250px;
     border-radius:50%;
-    border:1.5px dashed var(--line-strong);
+    border:2px dashed var(--line-strong);
     padding:5px;
     display:flex;
   }
@@ -74,10 +74,15 @@
     width:100%; height:100%;
     border-radius:50%;
     overflow:hidden;
-    /* background:var(--accent-soft); */
+    background:#E9E4E0;
+    /* 155,145,133 var(--slate-soft)*/
     display:flex;
     align-items:center;
     justify-content:center;
+
+  /* background-image: url('assets/flower.png');
+  background-size: contain;
+  background-position: center; */
   }
   .avatar-inner img{
     width:100%; height:100%;

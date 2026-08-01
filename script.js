@@ -133,3 +133,27 @@ document.addEventListener('click', function(e){
 document.getElementById('lightboxImg').addEventListener('click', function(){
   document.getElementById('lightbox').close();
 });
+
+
+function copyCred(btn, text){
+  function showCopied(){
+    var icon = btn.querySelector('svg');
+    var original = icon.outerHTML;
+    icon.outerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
+    btn.classList.add('copied');
+    setTimeout(function(){
+      btn.querySelector('svg').outerHTML = original;
+      btn.classList.remove('copied');
+    }, 1200);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(showCopied);
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(ta);
+    showCopied();
+  }
+}

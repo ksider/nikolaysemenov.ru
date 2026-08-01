@@ -31,6 +31,7 @@
     --font-display:'Noto Sans', sans-serif;;
     --font-body:'Noto Sans', sans-serif;
     --font-mono:'Noto Sans Mono', monospace;
+    --highlight-font:'Homemade Apple', cursive;
   }
 
   *{ box-sizing:border-box; }
@@ -46,6 +47,7 @@
   }
   a{ color:var(--accent-dark); }
   .page{ max-width:860px; margin:0 auto; padding:0 24px 96px; }
+  
  
   /* ---------- HERO ---------- */
   .hero{
@@ -195,6 +197,11 @@
     flex:1 1 auto;
     height:1px;
     background:var(--line);
+  }
+
+  .highlight{ 
+    font-family:var(--highlight-font); 
+    text-transform:none;
   }
  
   /* callout */
@@ -381,6 +388,21 @@
   }
   .link-btn:hover{ background:var(--accent-soft); }
  
+  /* vibecode */
+  .vibecode{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    gap: 10px;
+  }
+  .vibecode img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 10px;
+  }
+
   /* footer */
   footer{
     border-top:1px solid var(--line);

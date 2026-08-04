@@ -1,4 +1,6 @@
 User-agent: *
-Allow: /
+Allow: /index.html
+Disallow: /assets/
+Disallow: /
 
 Sitemap: https://nikolaysemenov.ru/sitemap.xml

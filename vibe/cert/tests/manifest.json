@@ -161,6 +161,68 @@
           "partsCount": 2
         }
       ]
+    },
+    {
+      "id": "test_7",
+      "title": "Gen R",
+      "file": "test_7.json",
+      "timer": {
+        "listening_minutes": 40,
+        "reading_minutes": 50,
+        "writing_minutes": 50
+      },
+      "sections": [
+        {
+          "id": "reading",
+          "title": "Reading",
+          "partsCount": 5
+        }
+      ]
+    },
+    {
+      "id": "test_8",
+      "title": "Gen R 2",
+      "file": "test_8.json",
+      "timer": {
+        "reading_minutes": 50
+      },
+      "sections": [
+        {
+          "id": "reading",
+          "title": "Reading",
+          "partsCount": 5
+        }
+      ]
+    },
+    {
+      "id": "test_9",
+      "title": "Gen R 3",
+      "file": "test_9.json",
+      "timer": {
+        "reading_minutes": 50
+      },
+      "sections": [
+        {
+          "id": "reading",
+          "title": "Reading",
+          "partsCount": 5
+        }
+      ]
+    },
+    {
+      "id": "cloude_reading_1",
+      "title": "Cloude reading 1",
+      "file": "test_10.json",
+      "timer": {
+        "reading_minutes": 50
+      },
+      "sections": [
+        {
+          "id": "reading",
+          "title": "Reading",
+          "partsCount": 5
+        }
+      ]
     }
   ]
 }

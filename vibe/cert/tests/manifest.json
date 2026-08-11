@@ -223,6 +223,36 @@
           "partsCount": 5
         }
       ]
+    },
+    {
+      "id": "test_synonyms_hard_1",
+      "title": "Synonym Practice B2-C1",
+      "file": "test_11.json",
+      "timer": {
+        "reading_minutes": 20
+      },
+      "sections": [
+        {
+          "id": "reading",
+          "title": "Reading",
+          "partsCount": 1
+        }
+      ]
+    },
+    {
+      "id": "cloude_vocab_1",
+      "title": "Cloude vocab 1",
+      "file": "test_12.json",
+      "timer": {
+        "reading_minutes": 20
+      },
+      "sections": [
+        {
+          "id": "reading",
+          "title": "Reading",
+          "partsCount": 1
+        }
+      ]
     }
   ]
 }

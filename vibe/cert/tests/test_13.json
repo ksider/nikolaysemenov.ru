@@ -1,0 +1,51 @@
+{
+  "test_id": "writing_test_1",
+  "writing": {
+    "part_1": [
+      {
+        "id": "w1_p1_1",
+        "task_type": "email",
+        "situation": "Moreton Town Centre Improvements\n\nIt is one year since we introduced some new facilities in the town centre. We would now like to hear how residents feel about these facilities, including the new children's play area and new swimming pool in the leisure centre.\n\nWe would also like to know if we should continue with the farmer's market every month and the free bus service from the out-of-town car park every Saturday.\n\nThe Town Council",
+        "instruction": "You recently read the announcement above on your local council website. Write an email to the council.",
+        "points_to_include": [
+          "the new facilities",
+          "the quality of products at the farmer's market",
+          "whether the free bus service works well"
+        ]
+      },
+      {
+        "id": "w1_p1_2",
+        "task_type": "review",
+        "situation": "The South Quay Mall\n\nOur wonderful new mall is now fully open in the South Quay area.\n\nThere are buses from all parts of the city to this new destination for shopping, having a snack or a delicious meal, or just meeting friends.\n\nThere is free parking, with a large area for disabled drivers. Our mall has been designed to be fully accessible for everyone, including wheelchair users.\n\nSee you soon!",
+        "instruction": "You recently visited the South Quay Mall. Write a review for a city tourist website.",
+        "points_to_include": [
+          "the range of shops in the mall",
+          "the quality of the facilities",
+          "the ease of access for disabled people"
+        ]
+      }
+    ],
+    "part_2": [
+      {
+        "id": "w2_p2_1",
+        "task_type": "short_story",
+        "title": null,
+        "instruction": "Write a short story for a college magazine about people moving to a new location. Explain why the people are moving and describe how they feel about the move.",
+        "word_count": {
+          "min": 150,
+          "max": 200
+        }
+      },
+      {
+        "id": "w2_p2_2",
+        "task_type": "short_story",
+        "title": null,
+        "instruction": "Write a short story for a college magazine about a frightening situation which ended well. Describe what happened and how the character in the story felt about the events.",
+        "word_count": {
+          "min": 150,
+          "max": 200
+        }
+      }
+    ]
+  }
+}

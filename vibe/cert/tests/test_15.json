@@ -1,0 +1,51 @@
+{
+  "test_id": "writing_test_3",
+  "writing": {
+    "part_1": [
+      {
+        "id": "w1_p1_5",
+        "task_type": "email",
+        "situation": "Our Community Centre\n\nDear Members\n\nI'm writing to ask for your feedback on the facilities at our community centre. We'd love to hear about the things you like, but as we have some money to spend, please tell us about any facilities you think could be improved. Also, are there any new facilities you think the centre could offer?\n\nThanks for your help with this.\n\nJo Lloyd (Manager)",
+        "instruction": "You've seen this notice at the community centre in your neighbourhood. Write an email to the manager giving your opinion.",
+        "points_to_include": [
+          "something good about the centre",
+          "something that could be improved",
+          "a suggestion for a new facility"
+        ]
+      },
+      {
+        "id": "w1_p1_6",
+        "task_type": "email",
+        "situation": "A Restaurant for the Staff?\n\nSeveral people have asked me whether it would be possible to have a staff restaurant. A number of reasons have been given in support of this idea, but I'd like to hear from as many of you as possible with your views. Please email me as soon as possible.\n\nThanks\n\nMike\n\nGeneral Manager",
+        "instruction": "You've seen this notice on the staff noticeboard where you work. Write an email to the manager giving your own opinion.",
+        "points_to_include": [
+          "whether you would use the restaurant",
+          "how staff would benefit from it",
+          "what the manager should do next"
+        ]
+      }
+    ],
+    "part_2": [
+      {
+        "id": "w2_p2_5",
+        "task_type": "email",
+        "title": null,
+        "instruction": "Write an email to a friend about your first day in a new job. Describe what happened and how you feel about the job.",
+        "word_count": {
+          "min": 150,
+          "max": 200
+        }
+      },
+      {
+        "id": "w2_p2_6",
+        "task_type": "short_story",
+        "title": "The Lost Notebook",
+        "instruction": "Write a short story for a magazine, with the title 'The Lost Notebook'. Describe what happened and how the person felt during the experience.",
+        "word_count": {
+          "min": 150,
+          "max": 200
+        }
+      }
+    ]
+  }
+}

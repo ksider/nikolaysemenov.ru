@@ -256,24 +256,48 @@
     },
     {
       "id": "test_13",
-      "title": "test_13.json",
+      "title": "Writing Practice 13",
       "file": "test_13.json",
-      "timer": {},
-      "sections": []
+      "timer": {
+        "writing_minutes": 45
+      },
+      "sections": [
+        {
+          "id": "writing",
+          "title": "Writing",
+          "partsCount": 2
+        }
+      ]
     },
     {
       "id": "test_14",
-      "title": "test_14.json",
+      "title": "Writing Practice 14",
       "file": "test_14.json",
-      "timer": {},
-      "sections": []
+      "timer": {
+        "writing_minutes": 45
+      },
+      "sections": [
+        {
+          "id": "writing",
+          "title": "Writing",
+          "partsCount": 2
+        }
+      ]
     },
     {
       "id": "test_15",
-      "title": "test_15.json",
+      "title": "Writing Practice 15",
       "file": "test_15.json",
-      "timer": {},
-      "sections": []
+      "timer": {
+        "writing_minutes": 45
+      },
+      "sections": [
+        {
+          "id": "writing",
+          "title": "Writing",
+          "partsCount": 2
+        }
+      ]
     }
   ]
 }

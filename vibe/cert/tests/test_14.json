@@ -1,51 +1,35 @@
 {
-  "test_id": "writing_test_2",
-  "writing": {
-    "part_1": [
-      {
-        "id": "w1_p1_3",
-        "task_type": "email",
-        "situation": "Come and work at Hi Bean Café and Food Store\n\nWe need waiters, shop assistants and kitchen staff. We're looking for full-time and part-time staff to join our team. Choose when you work!\n\nGenerous pay and a great working environment.\n\nApply to Jake.Brown@hibean.click by 29th January",
-        "instruction": "You see the job advertisement above online. Write an email applying for one of the jobs.",
-        "points_to_include": [
-          "say which job you're interested in",
-          "give details of any experience you have",
-          "say why you think you'd be good at the job"
-        ]
-      },
-      {
-        "id": "w1_p1_4",
-        "task_type": "review",
-        "situation": "Hamilton Shopping Mall\n\nVisit the city's newest shopping mall.\n\nNear the motorway (junction 9), parking for 4,000 cars.\n\nElectric buses depart every 10 minutes from the city centre.\n\nWe have over 300 shops, including 12 department stores, plus restaurants, a cinema and a bowling alley.\n\nDiscounts and special offers are always available and change weekly.",
-        "instruction": "You recently visited the shopping mall advertised above. Write a review of your visit for a customer review website.",
-        "points_to_include": [
-          "your journey to the shopping centre",
-          "the variety of shops and facilities",
-          "your opinion of the special offers"
-        ]
-      }
-    ],
-    "part_2": [
-      {
-        "id": "w2_p2_3",
-        "task_type": "article",
-        "title": null,
-        "instruction": "Write an article for a travel magazine about a beautiful natural location that you like to visit. Describe what you can see and do there, as well as the atmosphere at the location.",
-        "word_count": {
-          "min": 150,
-          "max": 200
+  "id": "test_14",
+  "title": "Writing Practice 14",
+  "source": {
+    "folder": "Generated",
+    "writing_source": "writing_p_1.txt + writing_p_2.txt"
+  },
+  "timer": {
+    "writing_minutes": 45
+  },
+  "sections": [
+    {
+      "id": "writing",
+      "title": "Writing",
+      "parts": [
+        {
+          "id": "part_1",
+          "title": "Part 1",
+          "type": "long_text",
+          "min_words": 100,
+          "max_words": 150,
+          "prompt": "You recently visited the South Quay Mall. Write a review for a city tourist website.\n\nMention:\n- the range of shops in the mall\n- the quality of the facilities\n- the ease of access for disabled people.\n\nThe South Quay Mall\nOur wonderful new mall is now fully open in the South Quay area.\nThere are buses from all parts of the city to this new destination for shopping, having a snack or a delicious meal, or just meeting friends.\nThere is free parking, with a large area for disabled drivers. Our mall has been designed to be fully accessible for everyone, including wheelchair users.\nSee you soon!"
+        },
+        {
+          "id": "part_2",
+          "title": "Part 2",
+          "type": "long_text",
+          "min_words": 150,
+          "max_words": 200,
+          "prompt": "Write a short story for a college magazine about a frightening situation which ended well. Describe what happened and how the character in the story felt about the events."
         }
-      },
-      {
-        "id": "w2_p2_4",
-        "task_type": "essay",
-        "title": "Some useful advice I was given about my studies",
-        "instruction": "Write an essay for your college magazine entitled 'Some useful advice I was given about my studies'. Describe some advice you received about your studies and say why this advice was useful to you.",
-        "word_count": {
-          "min": 150,
-          "max": 200
-        }
-      }
-    ]
-  }
+      ]
+    }
+  ]
 }

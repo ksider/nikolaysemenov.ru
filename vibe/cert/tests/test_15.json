@@ -1,51 +1,35 @@
 {
-  "test_id": "writing_test_3",
-  "writing": {
-    "part_1": [
-      {
-        "id": "w1_p1_5",
-        "task_type": "email",
-        "situation": "Our Community Centre\n\nDear Members\n\nI'm writing to ask for your feedback on the facilities at our community centre. We'd love to hear about the things you like, but as we have some money to spend, please tell us about any facilities you think could be improved. Also, are there any new facilities you think the centre could offer?\n\nThanks for your help with this.\n\nJo Lloyd (Manager)",
-        "instruction": "You've seen this notice at the community centre in your neighbourhood. Write an email to the manager giving your opinion.",
-        "points_to_include": [
-          "something good about the centre",
-          "something that could be improved",
-          "a suggestion for a new facility"
-        ]
-      },
-      {
-        "id": "w1_p1_6",
-        "task_type": "email",
-        "situation": "A Restaurant for the Staff?\n\nSeveral people have asked me whether it would be possible to have a staff restaurant. A number of reasons have been given in support of this idea, but I'd like to hear from as many of you as possible with your views. Please email me as soon as possible.\n\nThanks\n\nMike\n\nGeneral Manager",
-        "instruction": "You've seen this notice on the staff noticeboard where you work. Write an email to the manager giving your own opinion.",
-        "points_to_include": [
-          "whether you would use the restaurant",
-          "how staff would benefit from it",
-          "what the manager should do next"
-        ]
-      }
-    ],
-    "part_2": [
-      {
-        "id": "w2_p2_5",
-        "task_type": "email",
-        "title": null,
-        "instruction": "Write an email to a friend about your first day in a new job. Describe what happened and how you feel about the job.",
-        "word_count": {
-          "min": 150,
-          "max": 200
+  "id": "test_15",
+  "title": "Writing Practice 15",
+  "source": {
+    "folder": "Generated",
+    "writing_source": "writing_p_1.txt + writing_p_2.txt"
+  },
+  "timer": {
+    "writing_minutes": 45
+  },
+  "sections": [
+    {
+      "id": "writing",
+      "title": "Writing",
+      "parts": [
+        {
+          "id": "part_1",
+          "title": "Part 1",
+          "type": "long_text",
+          "min_words": 100,
+          "max_words": 150,
+          "prompt": "You see the following job advertisement online. Write an email applying for one of the jobs. In your email:\n- say which job you're interested in\n- give details of any experience you have\n- say why you think you'd be good at the job.\n\nCome and work at Hi Bean Café and Food Store\nWe need waiters, shop assistants and kitchen staff. We're looking for full-time and part-time staff to join our team. Choose when you work!\nGenerous pay and a great working environment.\nApply to Jake.Brown@hibean.click by 29th January."
+        },
+        {
+          "id": "part_2",
+          "title": "Part 2",
+          "type": "long_text",
+          "min_words": 150,
+          "max_words": 200,
+          "prompt": "Write an article for a travel magazine about a beautiful natural location that you like to visit. Describe what you can see and do there, as well as the atmosphere at the location."
         }
-      },
-      {
-        "id": "w2_p2_6",
-        "task_type": "short_story",
-        "title": "The Lost Notebook",
-        "instruction": "Write a short story for a magazine, with the title 'The Lost Notebook'. Describe what happened and how the person felt during the experience.",
-        "word_count": {
-          "min": 150,
-          "max": 200
-        }
-      }
-    ]
-  }
+      ]
+    }
+  ]
 }

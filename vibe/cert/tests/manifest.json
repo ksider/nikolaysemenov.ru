@@ -298,6 +298,51 @@
           "partsCount": 2
         }
       ]
+    },
+    {
+      "id": "test_16",
+      "title": "Writing Practice 16",
+      "file": "test_16.json",
+      "timer": {
+        "writing_minutes": 45
+      },
+      "sections": [
+        {
+          "id": "writing",
+          "title": "Writing",
+          "partsCount": 2
+        }
+      ]
+    },
+    {
+      "id": "test_17",
+      "title": "Writing Practice 17",
+      "file": "test_17.json",
+      "timer": {
+        "writing_minutes": 45
+      },
+      "sections": [
+        {
+          "id": "writing",
+          "title": "Writing",
+          "partsCount": 2
+        }
+      ]
+    },
+    {
+      "id": "test_18",
+      "title": "Writing Practice 18",
+      "file": "test_18.json",
+      "timer": {
+        "writing_minutes": 45
+      },
+      "sections": [
+        {
+          "id": "writing",
+          "title": "Writing",
+          "partsCount": 2
+        }
+      ]
     }
   ]
 }

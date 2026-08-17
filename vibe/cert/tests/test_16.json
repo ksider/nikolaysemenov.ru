@@ -1,0 +1,35 @@
+{
+  "id": "test_16",
+  "title": "Writing Practice 16",
+  "source": {
+    "folder": "Generated",
+    "writing_source": "writing_p_1.txt + writing_p_2.txt"
+  },
+  "timer": {
+    "writing_minutes": 45
+  },
+  "sections": [
+    {
+      "id": "writing",
+      "title": "Writing",
+      "parts": [
+        {
+          "id": "part_1",
+          "title": "Part 1",
+          "type": "long_text",
+          "min_words": 100,
+          "max_words": 150,
+          "prompt": "You recently visited the shopping mall advertised below. Write a review of your visit for a customer review website. Mention: your journey to the shopping centre; the variety of shops and facilities; your opinion of the special offers.\n\nHamilton Shopping Mall\nVisit the city's newest shopping mall.\nNear the motorway (junction 9), parking for 4,000 cars.\nElectric buses depart every 10 minutes from the city centre.\nWe have over 300 shops, including 12 department stores, plus restaurants, a cinema and a bowling alley.\nDiscounts and special offers are always available and change weekly."
+        },
+        {
+          "id": "part_2",
+          "title": "Part 2",
+          "type": "long_text",
+          "min_words": 150,
+          "max_words": 200,
+          "prompt": "Write an essay for your college magazine entitled 'Some useful advice I was given about my studies'. Describe some advice you received about your studies and say why this advice was useful to you."
+        }
+      ]
+    }
+  ]
+}

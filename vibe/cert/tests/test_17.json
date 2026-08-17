@@ -1,0 +1,35 @@
+{
+  "id": "test_17",
+  "title": "Writing Practice 17",
+  "source": {
+    "folder": "Generated",
+    "writing_source": "writing_p_1.txt + writing_p_2.txt"
+  },
+  "timer": {
+    "writing_minutes": 45
+  },
+  "sections": [
+    {
+      "id": "writing",
+      "title": "Writing",
+      "parts": [
+        {
+          "id": "part_1",
+          "title": "Part 1",
+          "type": "long_text",
+          "min_words": 100,
+          "max_words": 150,
+          "prompt": "You've seen this notice at the community centre in your neighbourhood. Write an email to the manager giving your opinion.\n\nIn your email, mention:\n- something good about the centre\n- something that could be improved\n- a suggestion for a new facility.\n\nOur Community Centre\nDear Members\nI'm writing to ask for your feedback on the facilities at our community centre. We'd love to hear about the things you like, but as we have some money to spend, please tell us about any facilities you think could be improved. Also, are there any new facilities you think the centre could offer?\nThanks for your help with this.\nJo Lloyd (Manager)"
+        },
+        {
+          "id": "part_2",
+          "title": "Part 2",
+          "type": "long_text",
+          "min_words": 150,
+          "max_words": 200,
+          "prompt": "Write an email to a friend about your first day in a new job. Describe what happened and how you feel about the job."
+        }
+      ]
+    }
+  ]
+}

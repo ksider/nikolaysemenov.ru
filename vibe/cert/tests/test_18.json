@@ -1,0 +1,35 @@
+{
+  "id": "test_18",
+  "title": "Writing Practice 18",
+  "source": {
+    "folder": "Generated",
+    "writing_source": "writing_p_1.txt + writing_p_2.txt"
+  },
+  "timer": {
+    "writing_minutes": 45
+  },
+  "sections": [
+    {
+      "id": "writing",
+      "title": "Writing",
+      "parts": [
+        {
+          "id": "part_1",
+          "title": "Part 1",
+          "type": "long_text",
+          "min_words": 100,
+          "max_words": 150,
+          "prompt": "You've seen this notice on the staff noticeboard where you work. Write an email to the manager giving your own opinion.\n\nMention:\n- whether you would use the restaurant\n- how staff would benefit from it\n- what the manager should do next.\n\nA Restaurant for the Staff?\nSeveral people have asked me whether it would be possible to have a staff restaurant. A number of reasons have been given in support of this idea, but I'd like to hear from as many of you as possible with your views. Please email me as soon as possible.\n\nThanks\nMike\nGeneral Manager"
+        },
+        {
+          "id": "part_2",
+          "title": "Part 2",
+          "type": "long_text",
+          "min_words": 150,
+          "max_words": 200,
+          "prompt": "Write a short story for a magazine, with the title The Lost Notebook. Describe what happened and how the person felt during the experience."
+        }
+      ]
+    }
+  ]
+}

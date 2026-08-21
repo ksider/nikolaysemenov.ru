@@ -1,0 +1,35 @@
+{
+  "id": "test_20",
+  "title": "Writing Practice 20",
+  "source": {
+    "folder": "Generated",
+    "writing_source": "Wonderful World.pdf + visit to your country.pdf"
+  },
+  "timer": {
+    "writing_minutes": 45
+  },
+  "sections": [
+    {
+      "id": "writing",
+      "title": "Writing",
+      "parts": [
+        {
+          "id": "part_1",
+          "title": "Part 1",
+          "type": "long_text",
+          "min_words": 100,
+          "max_words": 150,
+          "prompt": "You recently visited a theme park. Write a review about it for a local tourism website. Mention:\n• what you thought about the rides\n• how safe you feel the theme park is\n• who you would recommend the park to.\n\nVisit Our Wonderful World theme park this summer!\nTake our rides and travel around the wonderful world which we live in. Go down our exciting water rides in a boat or in a rubber ring. Follow our adventure route, solve the puzzles and win a prize. Enjoy delicious food in our Rainforest Café!"
+        },
+        {
+          "id": "part_2",
+          "title": "Part 2",
+          "type": "long_text",
+          "min_words": 150,
+          "max_words": 200,
+          "prompt": "Write an email to an English-speaking friend advising him/her about a visit to your country. He/she wants to know if August is a good time to come and visit and what he/she should see while there."
+        }
+      ]
+    }
+  ]
+}

@@ -343,6 +343,36 @@
           "partsCount": 2
         }
       ]
+    },
+    {
+      "id": "test_19",
+      "title": "Writing Practice 19",
+      "file": "test_19.json",
+      "timer": {
+        "writing_minutes": 45
+      },
+      "sections": [
+        {
+          "id": "writing",
+          "title": "Writing",
+          "partsCount": 2
+        }
+      ]
+    },
+    {
+      "id": "test_20",
+      "title": "Writing Practice 20",
+      "file": "test_20.json",
+      "timer": {
+        "writing_minutes": 45
+      },
+      "sections": [
+        {
+          "id": "writing",
+          "title": "Writing",
+          "partsCount": 2
+        }
+      ]
     }
   ]
 }

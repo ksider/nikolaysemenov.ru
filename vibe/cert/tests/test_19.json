@@ -1,0 +1,35 @@
+{
+  "id": "test_19",
+  "title": "Writing Practice 19",
+  "source": {
+    "folder": "Generated",
+    "writing_source": "City Museum.pdf + feel nervous.pdf"
+  },
+  "timer": {
+    "writing_minutes": 45
+  },
+  "sections": [
+    {
+      "id": "writing",
+      "title": "Writing",
+      "parts": [
+        {
+          "id": "part_1",
+          "title": "Part 1",
+          "type": "long_text",
+          "min_words": 100,
+          "max_words": 150,
+          "prompt": "You recently visited the City Museum. Write a review about it for a local tourism website. Mention:\n• what you thought about the displays and the café\n• how easy it was to book a guided tour\n• who you would recommend the museum to.\n\nVisit the City Museum this weekend!\nFind out about the 1000-year history of the city and the people who lived here. Our ten rooms contain displays of early pots and plates, furniture, clothes, and many beautiful works of art. Entry to all ten rooms is free! Don't forget to visit the café where you'll find a wide range of hot and cold drinks and snacks. Guided tours are available – just book online before you come."
+        },
+        {
+          "id": "part_2",
+          "title": "Part 2",
+          "type": "long_text",
+          "min_words": 150,
+          "max_words": 200,
+          "prompt": "Write a short story for a college magazine about an event which made someone feel nervous, but which turned out to be all right in the end. Describe why the person felt nervous and why he/she did not really need to worry."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+// ============================================================
+// GRID SYSTEM
+// Reusable arrangement utilities
+// ============================================================
+
+// --- Grid utilities ---
+.grid {
+  display: grid;
+  gap: var(--grid-gap, 20px);
+}
+
+.grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.grid--auto {
+  grid-template-columns: repeat(auto-fit, minmax(var(--grid-min, 240px), 1fr));
+}
+
+.grid--sidebar {
+  grid-template-columns: auto 1fr;
+}
+
+.grid--top {
+  align-items: start;
+}
+
+.grid--middle {
+  align-items: center;
+}
+
+.grid--stretch {
+  align-items: stretch;
+}
+
+// --- Cluster utilities ---
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cluster-gap, 14px);
+}
+
+.cluster--h-center {
+  justify-content: center;
+}
+
+.cluster--v-center {
+  align-items: center;
+}
+
+// --- Gap utilities ---
+.gap-2xs {
+  --grid-gap: 6px;
+  --cluster-gap: 6px;
+}
+
+.gap-xs {
+  --grid-gap: 8px;
+  --cluster-gap: 8px;
+}
+
+.gap-sm {
+  --grid-gap: 10px;
+  --cluster-gap: 10px;
+}
+
+.gap-md {
+  --grid-gap: 14px;
+  --cluster-gap: 12px;
+}
+
+.gap-lg {
+  --grid-gap: 20px;
+  --cluster-gap: 18px;
+}
+
+.gap-xl {
+  --grid-gap: 32px;
+  --cluster-gap: 24px;
+}
+
+// --- Responsive grid behavior ---
+@media (max-width: 900px) {
+  .grid--3,
+  .grid--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid--2,
+  .grid--3,
+  .grid--4,
+  .grid--sidebar {
+    grid-template-columns: 1fr;
+  }
+}

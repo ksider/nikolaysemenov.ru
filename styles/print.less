@@ -1,0 +1,35 @@
+// ============================================================
+// PRINT STYLES
+// Стили для печати
+// ============================================================
+
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .hero-curve,
+  .hero-caption {
+    display: none;
+  }
+
+  .card {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    break-inside: avoid;
+  }
+
+  .achv {
+    border-bottom: none;
+    color: @ink;
+    font-weight: 600;
+  }
+
+  dialog {
+    display: none;
+  }
+
+  .side-nav {
+    display: none;
+  }
+}

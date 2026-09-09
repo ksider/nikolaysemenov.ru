@@ -1,0 +1,51 @@
+// ============================================================
+// RESPONSIVE DESIGN
+// Адаптивность для разных экранов
+// ============================================================
+
+// --- Tablet / Small Desktop ---
+@media (max-width: 900px) {
+  .grid--3,
+  .grid--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+// --- Mobile ---
+@media (max-width: 640px) {
+  .page {
+    padding: 0 18px 72px;
+  }
+
+  .hero {
+    padding: 44px 0 32px;
+  }
+
+  .hero-inner {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .hero-text {
+    margin-top: 32px;
+  }
+
+  .meta-row {
+    justify-content: center;
+  }
+
+  .section-head {
+    margin-bottom: 14px;
+  }
+
+  .card {
+    padding: 22px 20px;
+  }
+
+  .grid--2,
+  .grid--3,
+  .grid--4,
+  .grid--sidebar {
+    grid-template-columns: 1fr;
+  }
+}

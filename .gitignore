@@ -5,3 +5,4 @@ polymers/.DS_Store
 /inv
 /.vscode
 */tmp
+node_modules/

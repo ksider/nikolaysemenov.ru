@@ -1,26 +1,25 @@
-// ============================================================
-// MAIN LESS FILE
-// Главный файл стилей - компилируется в styles.css в корне
-// Все модули импортируются относительно этой папки
-// ============================================================
+// out: ../styles.css, compress:true
 
 // 1. Variables (цвета, шрифты, радиусы)
-@import "variables";
+@import "./variables";
+@import "./media";
 
 // 2. Base styles (* reset, body, page)
-@import "base";
+@import "./base";
 
-// 3. Typography (шрифты, текстовые стили)
-@import "typography";
+// 3. Typography
+@import "./typography";
 
 // 4. Grid system (сетка, cluster, gaps)
-@import "grid";
+@import "./grid";
 
-// 5. Components (все блоки сайта)
-@import "components";
+// 5. Components 
+@import "./components";
+@import "./helpers";
 
 // 6. Responsive design (медиа-запросы)
-@import "responsive";
+@import "./responsive";
+
 
 // 7. Print styles (@media print)
-@import "print";
+@import "./print";

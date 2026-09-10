@@ -1,7 +1,9 @@
-// ============================================================
+// main: main.less
+
+// 
 // TYPOGRAPHY
 // Шрифты, размеры, строки, стили текста
-// ============================================================
+// 
 
 body {
   font-family: @font-body;
@@ -31,129 +33,4 @@ h1 {
   letter-spacing: -0.01em;
 }
 
-// --- Typography utilities ---
-.eyebrow {
-  font-family: @font-mono;
-  font-size: 12.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: @accent-dark;
-  margin: 0 0 6px;
-}
 
-.role-line {
-  font-family: @font-display;
-  font-weight: 500;
-  font-size: 17px;
-  color: @ink-soft;
-  margin: 0 0 18px;
-}
-
-.highlight {
-  font-family: @highlight-font;
-  text-transform: none;
-}
-
-// --- Section head ---
-.section-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 18px;
-}
-
-.section-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: @accent;
-  flex: 0 0 auto;
-}
-
-.section-label {
-  font-family: @font-mono;
-  font-size: 12.5px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: @slate;
-}
-
-.section-head::after {
-  content: '';
-  flex: 1 1 auto;
-  height: 1px;
-  background: @line;
-}
-
-// --- Skill group label ---
-.skill-group {
-  margin-bottom: 20px;
-}
-
-.skill-group:last-child {
-  margin-bottom: 0;
-}
-
-.skill-group-label {
-  font-family: @font-mono;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: @slate;
-  margin: 0 0 10px;
-}
-
-// --- Meta ---
-.meta-row {
-  margin-bottom: 20px;
-}
-
-.meta-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  color: @ink-soft;
-  text-decoration: none;
-}
-
-.meta-item svg {
-  color: @slate;
-  flex: 0 0 auto;
-}
-
-.meta-item a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.meta-item.is-link {
-  color: @accent-dark;
-}
-
-.meta-item.is-link svg {
-  color: @accent-dark;
-}
-
-.meta-item.is-link:hover {
-  text-decoration: underline;
-}
-
-// --- Chip ---
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  line-height: 1;
-  padding: 7px 12px;
-  border-radius: 999px;
-  font-family: @font-body;
-  font-weight: 500;
-}
-
-.chip-outline {
-  border: 1px solid @line-strong;
-  color: @ink-soft;
-  background: transparent;
-}

@@ -220,7 +220,7 @@ body {
 }
 
 .consulting-offer-inner {
-  max-width: 860px;
+  max-width: 1024px;
   margin: 0 auto;
   padding: 64px 24px 58px;
   display: grid;
@@ -303,7 +303,11 @@ body {
 .consulting-services p { margin: 4px 0 0; color: #BFDCD9; font-size: 13px; line-height: 1.5; }
 .service-number { position: absolute; left: 0; top: 17px; color: #F2C879; font-family: @font-mono; font-size: 11px; }
 
-.consulting-evidence { grid-column: 1 / -1; padding-top: 4px; }
+.consulting-evidence { 
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 28px 30px;
+  grid-column: 1 / -1; padding-top: 4px; }
 .consulting-evidence .card-intro { max-width: 760px; color: #D8EBE9; }
 .consulting-evidence .achv-list li { color: #C5DFDC; }
 .consulting-evidence .achv-list li::before { background: #F2C879; }
@@ -312,8 +316,11 @@ body {
 
 // --- Achievement list ---
 ul.achv-list {
-  margin: 0;
-  padding: 0;
+  max-width: 860px;
+  margin: 0 auto;
+  // margin: 0;
+  // padding: 0;
+  padding: 28px 30px;
   list-style: none;
 }
 

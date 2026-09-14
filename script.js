@@ -43,6 +43,8 @@ document.querySelectorAll('dialog').forEach(function(d){
     var link = document.createElement('a');
     link.href = '#' + sec.id;
     link.textContent = labelEl.textContent.trim();
+    link.setAttribute('data-label', labelEl.textContent.trim());
+    link.setAttribute('aria-label', labelEl.textContent.trim());
     nav.appendChild(link);
 
     sections.push(sec);

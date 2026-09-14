@@ -813,30 +813,74 @@ dialog.lightbox-dialog .modal-close:hover {
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  align-items: flex-end;
+  gap: 8px;
   z-index: 40;
 }
 
 .side-nav a {
-  display: block;
-  padding: 6px 0 6px 14px;
-  border-left: 2px solid @line;
-  font-family: @font-mono;
-  font-size: 9px;
-  color: @slate;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 24px;
+  height: 14px;
+  padding: 0;
+  color: transparent;
+  font-size: 0;
   text-decoration: none;
   white-space: nowrap;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition: width 0.2s ease;
 }
 
-.side-nav a:hover {
-  color: @ink-soft;
+.side-nav a::before {
+  content: '';
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: @line-strong;
+  transition: width 0.2s ease, background-color 0.2s ease;
 }
 
 .side-nav a.active {
-  color: @accent-dark;
-  border-left-color: @accent;
-  font-weight: 500;
+  width: 32px;
+}
+
+.side-nav a.active::before {
+  width: 28px;
+  background: @accent;
+}
+
+.side-nav a:hover::before,
+.side-nav a:focus-visible::before {
+  width: 28px;
+  background: @accent-dark;
+}
+
+.side-nav a::after {
+  content: attr(data-label);
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) translateX(4px);
+  padding: 6px 9px;
+  border: 1px solid @line;
+  border-radius: @radius-sm;
+  background: @paper-raised;
+  color: @ink-soft;
+  font-family: @font-mono;
+  font-size: 10px;
+  letter-spacing: .03em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+.side-nav a:hover::after,
+.side-nav a:focus-visible::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
 }
 
 @media (max-width: 1180px) {

@@ -314,6 +314,65 @@ body {
 .consulting-evidence .achv { color: #F2C879; border-bottom-color: #F2C879; }
 .consulting-evidence .achv:hover { background: rgba(242, 200, 121, .14); }
 
+.consulting-case-list {
+  counter-reset: consulting-case;
+  margin-top: 24px !important;
+  padding: 0 !important;
+  border-top: 1px solid rgba(216, 235, 233, .28);
+}
+
+.consulting-case-list li {
+  counter-increment: consulting-case;
+  margin: 0 !important;
+  padding: 18px 16px 18px 54px !important;
+  border-bottom: 1px solid rgba(216, 235, 233, .28);
+  transition: background-color .15s ease, padding-left .15s ease;
+}
+
+.consulting-case-list li::before {
+  content: '0' counter(consulting-case);
+  left: 16px !important;
+  top: 20px !important;
+  width: auto !important;
+  height: auto !important;
+  background: transparent !important;
+  color: #F2C879;
+  font-family: @font-mono;
+  font-size: 11px !important;
+}
+
+.consulting-case-list li:hover {
+  padding-left: 58px !important;
+  background: rgba(242, 200, 121, .07);
+}
+
+.consulting-next-step {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding-top: 34px;
+ // border-top: 1px solid rgba(216, 235, 233, .28);
+}
+
+.consulting-next-step h2 {
+  margin: 0 0 6px;
+  font-family: @font-display;
+  font-size: clamp(22px, 3vw, 30px);
+  line-height: 1.15;
+}
+
+.consulting-next-step p:not(.consulting-label) {
+  margin: 0;
+  color: #BFDCD9;
+  font-size: 13.5px;
+}
+
+.consulting-next-step .footer-links { flex: 0 0 auto; }
+.consulting-next-step .btn-primary { background: #F2C879; color: @ink; }
+.consulting-next-step .btn-primary:hover { background: #FFD993; }
+
 // --- Achievement list ---
 ul.achv-list {
   max-width: 860px;

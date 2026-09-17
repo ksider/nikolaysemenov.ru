@@ -516,6 +516,70 @@ footer {
   text-align: center;
 }
 
+.vibe-portal-footer {
+  border-top: 1px solid @line;
+  padding-top: 36px;
+  text-align: left;
+}
+
+.vibe-portal-card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border: 1px solid @line-strong;
+  border-radius: @radius-lg;
+  background: #EEE6D8;
+  color: @ink;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(44, 38, 29, 0.08);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.vibe-portal-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(44, 38, 29, 0.14);
+}
+
+.vibe-portal-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: inherit;
+  filter: saturate(.86);
+}
+
+.vibe-portal-copy {
+  position: absolute;
+  left: clamp(22px, 5vw, 52px);
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transform: translateY(-50%);
+  max-width: none;
+  color: #25221D;
+  text-shadow: 0 1px 0 rgba(255, 250, 239, .55);
+}
+
+.vibe-portal-kicker {
+  margin-bottom: 10px;
+  font-family: @font-mono;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #5B5347;
+}
+
+.vibe-portal-title {
+  font-family: @font-serif;
+  font-size: clamp(22px, 3.4vw, 34px);
+  line-height: 1.05;
+  white-space: nowrap;
+}
+
 footer h2 {
   font-family: @font-display;
   font-size: 22px;

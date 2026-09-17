@@ -14,6 +14,16 @@
 
 
 <link rel="stylesheet" href="styles.css" />
+<style>
+.vibe-portal-footer{border-top:1px solid #E6E3DC;padding-top:36px;text-align:left}
+.vibe-portal-card{position:relative;display:block;overflow:hidden;aspect-ratio:16/9;border:1px solid #D6D2C8;border-radius:22px;background:#EEE6D8;color:#1C1E1F;text-decoration:none;box-shadow:0 8px 24px rgba(44,38,29,.08);transition:transform .2s ease,box-shadow .2s ease}
+.vibe-portal-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(44,38,29,.14)}
+.vibe-portal-card img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;border-radius:inherit;filter:saturate(.86)}
+.vibe-portal-copy{position:absolute;left:clamp(22px,5vw,52px);top:50%;display:flex;flex-direction:column;align-items:flex-start;transform:translateY(-50%);max-width:none;color:#25221D;text-shadow:0 1px 0 rgba(255,250,239,.55)}
+.vibe-portal-kicker{margin-bottom:10px;font-family:'Noto Sans Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5B5347}
+.vibe-portal-title{font-family:'Source Serif 4','Noto Serif',serif;font-size:clamp(22px,3.4vw,34px);line-height:1.05;white-space:nowrap}
+@media (max-width:640px){.vibe-portal-footer{padding-top:28px}.vibe-portal-card{aspect-ratio:auto;min-height:360px}.vibe-portal-card img{min-height:360px;object-position:58% center}.vibe-portal-copy{top:auto;bottom:28px;max-width:72%}.vibe-portal-kicker{font-size:9px}.vibe-portal-title{font-size:25px;white-space:normal;overflow-wrap:anywhere}}
+</style>
 
 <!-- Canonical URL -->
 <link rel="canonical" href="https://nikolaisemenov.com/">
@@ -692,7 +702,14 @@
   </section>
   </main>
 
-  <footer></footer>
+  <footer class="vibe-portal-footer">
+    <a class="vibe-portal-card" href="https://vibe.nikolaisemenov.com" target="_blank" rel="noopener noreferrer">
+      <img src="assets/vibe-engraving.png" alt="Гравюра с открытым порталом в сад экспериментов">
+      <span class="vibe-portal-copy">
+         <span class="vibe-portal-title">Multitool</span>
+      </span>
+    </a>
+  </footer>
 
 </div>
 

@@ -80,6 +80,16 @@
 
   .consulting-evidence { grid-column: auto; }
 
+  .consulting-case-list {
+    grid-template-columns: 1fr;
+  }
+
+  .consulting-case-list li,
+  .consulting-case-list li:nth-child(n) {
+    grid-column: 1;
+    margin: 0 !important;
+  }
+
   .consulting-next-step {
     grid-column: auto;
     align-items: flex-start;

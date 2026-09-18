@@ -304,10 +304,12 @@ body {
 .service-number { position: absolute; left: 0; top: 17px; color: #F2C879; font-family: @font-mono; font-size: 11px; }
 
 .consulting-evidence { 
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 28px 30px;
-  grid-column: 1 / -1; padding-top: 4px; }
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 28px 0 0;
+  grid-column: 1 / -1;
+}
 .consulting-evidence .card-intro { max-width: 760px; color: #D8EBE9; }
 .consulting-evidence .achv-list li { color: #C5DFDC; }
 .consulting-evidence .achv-list li::before { background: #F2C879; }
@@ -316,23 +318,51 @@ body {
 
 .consulting-case-list {
   counter-reset: consulting-case;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 14px;
+  width: 100vw;
+  max-width: none !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: 0 !important;
   margin-top: 24px !important;
-  padding: 0 !important;
-  border-top: 1px solid rgba(216, 235, 233, .28);
+  padding: 0 24px !important;
 }
 
 .consulting-case-list li {
   counter-increment: consulting-case;
+  grid-column: span 6;
+  display: flex;
+  align-items: center;
+  min-height: 132px;
   margin: 0 !important;
-  padding: 18px 16px 18px 54px !important;
-  border-bottom: 1px solid rgba(216, 235, 233, .28);
-  transition: background-color .15s ease, padding-left .15s ease;
+  padding: 22px 22px 22px 54px !important;
+  font-size: 17px !important;
+  line-height: 1.55;
+  border: 1px solid rgba(216, 235, 233, .28);
+  border-radius: 28px 38px 30px 42px;
+  background: rgba(255, 255, 255, .055);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+  transition: background-color .2s ease, border-color .2s ease, transform .2s ease;
 }
+
+.consulting-case-list .case-copy {
+  display: block;
+  width: 100%;
+}
+
+.consulting-case-list li:nth-child(1) { grid-column: span 7; border-radius: 36px 26px 42px 30px; }
+.consulting-case-list li:nth-child(2) { grid-column: span 5; }
+.consulting-case-list li:nth-child(3) { grid-column: span 5; border-radius: 26px 42px 30px 38px; }
+.consulting-case-list li:nth-child(4) { grid-column: span 7; }
+.consulting-case-list li:nth-child(5) { grid-column: span 6; border-radius: 42px 30px 36px 26px; }
+.consulting-case-list li:nth-child(6) { grid-column: span 6; }
 
 .consulting-case-list li::before {
   content: '0' counter(consulting-case);
   left: 16px !important;
-  top: 20px !important;
+  top: 50% !important;
+  transform: translateY(-50%);
   width: auto !important;
   height: auto !important;
   background: transparent !important;
@@ -342,8 +372,9 @@ body {
 }
 
 .consulting-case-list li:hover {
-  padding-left: 58px !important;
-  background: rgba(242, 200, 121, .07);
+  background: rgba(242, 200, 121, .09);
+  border-color: rgba(242, 200, 121, .45);
+  transform: translateY(-2px);
 }
 
 .consulting-next-step {

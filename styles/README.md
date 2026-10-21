@@ -12,7 +12,7 @@ styles/
 ├── components.less    # Компоненты сайта (hero, cards, modal, etc.)
 ├── responsive.less    # Медиа-запросы для адаптивности
 ├── print.less         # Стили для печати
-└── style.css         # Скомпилированный CSS (генерируется из main.less)
+└── main.less          # Точка входа сборки, импортирует модули выше
 ```
 
 ## Build
@@ -24,19 +24,19 @@ npm run build:css
 
 ### Auto-compilation (watch mode)
 ```bash
-npm run watch:css
+npm run build
 ```
 
 ### Manual compilation
 ```bash
-npx lessc styles/main.less > styles/style.css
+npx lessc styles/main.less _site/styles.css
 ```
 
 ## Usage
 
 1. Edit `.less` files in the `styles/` directory
-2. Run `npm run build:css` to compile to `style.css`
-3. The main `index.html` references `styles.css` in the root, which is a copy of `styles/style.css`
+2. Run `npm run build` to compile LESS and render the Nunjucks templates
+3. The generated page in `_site/index.html` references `_site/styles.css`
 
 ## File Descriptions
 

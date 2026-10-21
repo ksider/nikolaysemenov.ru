@@ -2,6 +2,25 @@
 
 Static single-page profile with polymer R&D projects, hosted at `nikolaysemenov.ru`. This folder mirrors the production files, including custom styles and media assets.
 
+## Development and publishing
+
+The production page is assembled from Nunjucks templates in `src/`; do not edit
+the legacy root `index.html`. Each visible section is in
+`src/_includes/components/`, the common document head is in
+`src/_includes/layouts/base.njk`, and the existing LESS sources remain in
+`styles/`.
+
+```bash
+npm install
+npm run build
+```
+
+The command writes a complete publishable site to `_site/`. GitHub Actions
+deploys that folder to GitHub Pages after a push to `main`.
+
+- `/black/` is copied unchanged into every build and remains available at the
+  same URL.
+
 
 ## Live Examples
 

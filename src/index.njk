@@ -1,0 +1,24 @@
+---
+layout: layouts/base.njk
+---
+<nav class="side-nav" id="sideNav" aria-label="Навигация по разделам"></nav>
+<div class="page">
+  {% include "components/hero.njk" %}
+
+  <main>
+    {% include "components/summary.njk" %}
+    {% include "components/competencies.njk" %}
+    {% include "components/experience.njk" %}
+    {% include "components/consulting.njk" %}
+    {% include "components/technical-skills.njk" %}
+    {% include "components/education.njk" %}
+    {% include "components/publications.njk" %}
+    {% include "components/additional.njk" %}
+    {% include "components/vibe-code.njk" %}
+  </main>
+
+  <footer></footer>
+</div>
+
+{% include "components/modals.njk" %}
+<script src="script.js"></script>

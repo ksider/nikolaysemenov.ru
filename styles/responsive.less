@@ -16,7 +16,7 @@
 // --- Mobile ---
 @media (max-width: 640px) {
   .page {
-    padding: 0 18px 72px;
+    padding: 0 14px 56px;
   }
 
   .hero {
@@ -30,6 +30,7 @@
 
   .hero-text {
     margin-top: 32px;
+    width: 100%;
   }
 
   .meta-row {
@@ -41,7 +42,33 @@
   }
 
   .card {
-    padding: 22px 20px;
+    padding: 18px 16px;
+    border-radius: 18px;
+  }
+
+  .card-top {
+    align-items: flex-start;
+    gap: 8px 12px;
+    flex-wrap: wrap;
+  }
+
+  .card-intro {
+    margin-bottom: 12px;
+  }
+
+  ul.achv-list {
+    padding: 14px 0 0;
+  }
+
+  ul.achv-list li {
+    padding-left: 14px;
+    margin-bottom: 10px;
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+
+  .callout {
+    padding: 18px;
   }
 
   .vibe-portal-footer {
@@ -82,12 +109,24 @@
 
   .consulting-case-list {
     grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 16px !important;
+    padding: 0 18px !important;
   }
 
   .consulting-case-list li,
   .consulting-case-list li:nth-child(n) {
     grid-column: 1;
     margin: 0 !important;
+    min-height: 0;
+    padding: 16px 16px 16px 42px !important;
+    font-size: 15px !important;
+    line-height: 1.5;
+    border-radius: 20px;
+  }
+
+  .consulting-case-list li::before {
+    left: 14px !important;
   }
 
   .consulting-next-step {
